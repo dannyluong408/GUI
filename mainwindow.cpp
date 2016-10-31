@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QHBoxLayout>
 #include "dragwidget.h"
+#include "dragbutton.h"
 #include <time.h>
 #include <QDebug>
 
@@ -20,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(addButton(int)) );
 
     ui->random->addWidget(new DragWidget);
+    ui->random->addWidget(new DragButton);
+    ui->random->setStretch(0,3);
+    ui->random->setStretch(1,1);
 
     ui->buttonGroup->setId(ui->slot_1,1);
     ui->buttonGroup->setId(ui->slot_2,2);
@@ -54,8 +58,8 @@ void MainWindow::addButton(int buttonId){
 //    newButton->setIcon(buttonIcon);
 //    newButton->setAutoRepeatInterval(100);
 //    newButton->show();
-//    printf("Button %i Pressed. Added a Button\n",buttonId);
-//    fflush(stdout);
+    printf("Button %i Pressed. Added a Button\n",buttonId);
+    fflush(stdout);
 
 
     QList<QAbstractButton *> a =  ui->buttonGroup->buttons();

@@ -147,6 +147,9 @@ void DragWidget::dropEvent(QDropEvent *event)
 
 void DragWidget::mousePressEvent(QMouseEvent *event)
 {
+    printf("Printed This old\n");
+    fflush(stdout);
+
     QLabel *child = static_cast<QLabel*>(childAt(event->pos()));
     if (!child)
         return;
