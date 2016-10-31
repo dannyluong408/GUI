@@ -15,11 +15,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     myopenglwidget.cpp \
-    dragwidget.cpp
+    dragwidget.cpp \
+    dragbutton.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
-    dragwidget.h
+    dragwidget.h \
+    dragbutton.h
 
 FORMS    += mainwindow.ui
 

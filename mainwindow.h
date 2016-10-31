@@ -24,6 +24,10 @@ public:
 public slots:
     void printValues();
 
+private slots:
+    void castSpell(int buttonPos);
+    void addButton(int button);
+
 private:
     //bool eventFilter(QObject *obj, QEvent *event);
     Ui::MainWindow *ui;

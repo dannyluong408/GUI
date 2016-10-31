@@ -61,19 +61,19 @@ DragWidget::DragWidget(QWidget *parent)
 
     QLabel *boatIcon = new QLabel(this);
     boatIcon->setPixmap(QPixmap(QString::fromUtf8(":/ui/images/boat.png")));
-    boatIcon->move(600, 500);
+    boatIcon->move(25, 25);
     boatIcon->show();
     boatIcon->setAttribute(Qt::WA_DeleteOnClose);
 
     QLabel *carIcon = new QLabel(this);
     carIcon->setPixmap(QPixmap(QString::fromUtf8(":/ui/images/car.png")));
-    carIcon->move(600, 400);
+    carIcon->move(25, 100);
     carIcon->show();
     carIcon->setAttribute(Qt::WA_DeleteOnClose);
 
     QLabel *houseIcon = new QLabel(this);
     houseIcon->setPixmap(QPixmap(QString::fromUtf8(":/ui/images/house.png")));
-    houseIcon->move(600, 600);
+    houseIcon->move(25, 175);
     houseIcon->show();
     houseIcon->setAttribute(Qt::WA_DeleteOnClose);
 }
