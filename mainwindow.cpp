@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QHBoxLayout>
-#include "dragwidget.h"
+//#include "dragwidget.h"
 #include "dragpushbutton.h"
 #include "actionbar.h"
 #include <time.h>

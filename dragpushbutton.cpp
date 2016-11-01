@@ -5,6 +5,9 @@
 PushButton::PushButton(QWidget *parent)
     : QPushButton(parent)
 {
+    dragStartPosition.setX(0);
+    dragStartPosition.setY(0);
+
     setFixedSize(50,50);
     setAcceptDrops(true);
     setObjectName(QStringLiteral("dragPushButton"));
@@ -13,8 +16,11 @@ PushButton::PushButton(QWidget *parent)
     setIcon(icon);
     setIconSize(QSize(50, 50));
     setAttribute(Qt::WA_DeleteOnClose);
+    connect(this,SIGNAL(clicked(bool)),this,SLOT(doThisClicked()));
     show();
 }
+
+
 
 void PushButton::doThisClicked(){
     qDebug() << "jajajaj";
@@ -81,14 +87,37 @@ void PushButton::dropEvent(QDropEvent *event)
 
 void PushButton::mousePressEvent(QMouseEvent *event)
 {
+    qDebug() << "QAPPDD1:" << QApplication::startDragDistance();
+    if (event->button() == Qt::LeftButton){
+        dragStartPosition = event->pos();
+        qDebug() << "PressEvent" << dragStartPosition;
+        emit clicked(true);
+    }
+    else{
+        qDebug() << "???";
+    }
+
+}
+
+void PushButton::mouseMoveEvent(QMouseEvent *event)
+{
     printf("DPB Printed This\n");
     fflush(stdout);
+
+    qDebug() << "EventPos:" << event->pos();
+    qDebug() << "DragStartPos:" << dragStartPosition;
+    qDebug() << "QAPPDD2:" << QApplication::startDragDistance();
+
+    if ((event->pos() - dragStartPosition).manhattanLength() < QApplication::startDragDistance()){
+           emit clicked(true);
+           return;
+    }
 
     QPixmap pixmap;
     PushButton *child2 = this;
     qDebug() << child2->metaObject()->className();
 
-    if( child2 && ((QString)child2->metaObject()->className() == "QPushButton")){
+    if( child2 && ((QString)child2->metaObject()->className() == "PushButton")){
         QIcon icon;
         pixmap = child2->icon().pixmap(65,65);
         qDebug() << "DPB Its valid!";
@@ -120,7 +149,7 @@ void PushButton::mousePressEvent(QMouseEvent *event)
             printf("DPB Inside4\n");
             fflush(stdout);
         } else {
-             child2->close();
+             child2->hide();
              printf("DPB Outside4\n");
              fflush(stdout);
         }
