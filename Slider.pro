@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     myopenglwidget.cpp \
     dragwidget.cpp \
-    dragbutton.cpp
+    dragpushbutton.cpp \
+    actionbar.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
     dragwidget.h \
-    dragbutton.h
+    dragpushbutton.h \
+    actionbar.h
 
 FORMS    += mainwindow.ui
 

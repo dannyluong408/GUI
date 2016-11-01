@@ -51,12 +51,12 @@
 #ifndef DRAGWIDGET_H
 #define DRAGWIDGET_H
 
-#include <QFrame>
+#include <QtWidgets>
 
 class QDragEnterEvent;
 class QDropEvent;
 
-class DragWidget : public QFrame
+class DragWidget : public QWidget
 {
 public:
     DragWidget(QWidget *parent = 0);

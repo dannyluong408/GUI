@@ -21,6 +21,7 @@ public:
     ~MainWindow();
     void loadImage(const QString &path);
 
+
 public slots:
     void printValues();
 
@@ -31,12 +32,6 @@ private slots:
 private:
     //bool eventFilter(QObject *obj, QEvent *event);
     Ui::MainWindow *ui;
-    void setupMenus();
-    void setupWidgets();
-
-    QPixmap puzzleImage;
-    PiecesList *piecesList;
-    PuzzleWidget *puzzleWidget;
 };
 
 #endif // MAINWINDOW_H

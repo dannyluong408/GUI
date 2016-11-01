@@ -53,10 +53,10 @@
 #include "dragwidget.h"
 
 DragWidget::DragWidget(QWidget *parent)
-    : QFrame(parent)
+    : QWidget(parent)
 {
-    setMinimumSize(200, 200);
-    setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
+    setFixedSize(300,300);
+    setMaximumSize(300,300);
     setAcceptDrops(true);
 
     QLabel *boatIcon = new QLabel(this);
@@ -102,12 +102,8 @@ void DragWidget::dragMoveEvent(QDragMoveEvent *event)
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
-            printf("Inside2");
-            fflush(stdout);
         } else {
             event->acceptProposedAction();
-            printf("Outside2");
-            fflush(stdout);
         }
     } else {
         event->ignore();
@@ -116,6 +112,8 @@ void DragWidget::dragMoveEvent(QDragMoveEvent *event)
 
 void DragWidget::dropEvent(QDropEvent *event)
 {
+    qDebug() << "Triggered";
+
     if (event->mimeData()->hasFormat("application/x-dnditemdata")) {
         QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -131,61 +129,147 @@ void DragWidget::dropEvent(QDropEvent *event)
         newIcon->setAttribute(Qt::WA_DeleteOnClose);
 
         if (event->source() == this) {
+            //if the button is the same button dont do anything
+            //else transfer data
             event->setDropAction(Qt::MoveAction);
             event->accept();
-            printf("Inside DnD\n");
+            printf("dnd1 Inside DnD\n");
             fflush(stdout);
         } else {
             event->acceptProposedAction();
-            printf("Outside DnD\n");
+            printf("dnd1 Outside DnD\n");
             fflush(stdout);
         }
-    } else {
+    }
+
+    else if (event->mimeData()->hasFormat("application/x-dnditemdata2")) {
+        QByteArray itemData = event->mimeData()->data("application/x-dnditemdata2 ");
+        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+
+        QPixmap pixmap;
+        QPoint offset;
+        dataStream >> pixmap >> offset;
+
+        QLabel *newIcon = new QLabel(this);
+        newIcon->setPixmap(pixmap);
+        newIcon->move(event->pos() - offset);
+        newIcon->show();
+        newIcon->setAttribute(Qt::WA_DeleteOnClose);
+
+        if (event->source() == this) {
+            event->setDropAction(Qt::MoveAction);
+            event->accept();
+            printf("dnd2 Inside DnD\n");
+            fflush(stdout);
+        } else {
+            event->acceptProposedAction();
+            printf("dnd2 Outside DnD\n");
+            fflush(stdout);
+        }
+    }
+    else {
         event->ignore();
     }
 }
 
 void DragWidget::mousePressEvent(QMouseEvent *event)
 {
-    printf("Printed This old\n");
+    printf("DW Printed This\n");
     fflush(stdout);
 
+    QPixmap pixmap;
+
     QLabel *child = static_cast<QLabel*>(childAt(event->pos()));
-    if (!child)
-        return;
+    QPushButton *child2 = static_cast<QPushButton*>(childAt(event->pos()));
 
-    QPixmap pixmap = *child->pixmap();
+    if(child) qDebug() << child->metaObject()->className();
+    if(child2) qDebug() << child2->metaObject()->className();
 
-    QByteArray itemData;
-    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << pixmap << QPoint(event->pos() - child->pos());
+    if(child && ((QString)child->metaObject()->className() == "QLabel")){
+        qDebug() << "Its valid!";
 
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/x-dnditemdata", itemData);
+        pixmap = *child->pixmap();
 
-    QDrag *drag = new QDrag(this);
-    drag->setMimeData(mimeData);
-    drag->setPixmap(pixmap);
-    drag->setHotSpot(event->pos() - child->pos());
+        qDebug() << "Its valid1.5!";
+        QByteArray itemData;
+        QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+        dataStream << pixmap << QPoint(event->pos() - child->pos());
 
-    QPixmap tempPixmap = pixmap;
-    QPainter painter;
-    painter.begin(&tempPixmap);
-    painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
-    painter.end();
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData("application/x-dnditemdata", itemData);
 
-    child->setPixmap(tempPixmap);
+        qDebug() << "Its valid2!";
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(mimeData);
+        drag->setPixmap(pixmap);
+        drag->setHotSpot(event->pos() - child->pos());
 
-    if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
-        child->close();
-        //child->show();
-        printf("Inside4\n");
-        fflush(stdout);
-    } else {
-        //child->show();
-        //child->setPixmap(pixmap);
-        child->close();
-        printf("Outside4\n");
-        fflush(stdout);
+        QPixmap tempPixmap = pixmap;
+        QPainter painter;
+        painter.begin(&tempPixmap);
+        painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
+        painter.end();
+        qDebug() << "Its valid3!";
+        child->setPixmap(tempPixmap);
+        qDebug() << "Its valid4!";
+
+        if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
+            child->close();
+            //child->show();
+            printf("Inside4\n");
+            fflush(stdout);
+        } else {
+            //child->show();
+            //child->setPixmap(pixmap);
+            child->close();
+            printf("Outside4\n");
+            fflush(stdout);
+        }
     }
+
+    else if( child2 && ((QString)child2->metaObject()->className() == "QPushButton")){
+        QIcon icon;
+        pixmap = child2->icon().pixmap(65,65);
+        qDebug() << "Its valid1.5!";
+        QByteArray itemData;
+        QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+        dataStream << pixmap << QPoint(event->pos() - child2->pos());
+
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData("application/x-dnditemdata", itemData);
+
+        qDebug() << "Its valid2!";
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(mimeData);
+        drag->setPixmap(pixmap);
+        drag->setHotSpot(event->pos() - child2->pos());
+
+        QPixmap tempPixmap = pixmap;
+        QPainter painter;
+        painter.begin(&tempPixmap);
+        painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
+        painter.end();
+
+        qDebug() << "Its valid3!";
+        //child2->setPixmap(tempPixmap);
+        QIcon buttonIcon(tempPixmap);
+        child2->setIcon(buttonIcon);
+        child2->setIconSize(pixmap.rect().size());
+
+        qDebug() << "Its valid4!";
+        if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
+            child2->close();
+            //child2->show();
+            printf("Inside4\n");
+            fflush(stdout);
+        } else {
+            drag->exec(Qt::MoveAction);
+            //child2->show();
+            //child2->setPixmap(pixmap);
+            child2->close();
+            printf("Outside4\n");
+            fflush(stdout);
+        }
+    }
+    return;
 }

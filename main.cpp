@@ -7,8 +7,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
-    w.showMaximized();
+    //w.setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    //w.showMaximized();
+    w.show();
 
 //    QWidget mainWidget;
 //    QHBoxLayout *horizontalLayout = new QHBoxLayout(&mainWidget);

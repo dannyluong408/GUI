@@ -2,9 +2,11 @@
 #include "ui_mainwindow.h"
 #include <QHBoxLayout>
 #include "dragwidget.h"
-#include "dragbutton.h"
+#include "dragpushbutton.h"
+#include "actionbar.h"
 #include <time.h>
 #include <QDebug>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,30 +15,28 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setAcceptDrops(true);
 
     connect(ui->xSlider, SIGNAL(sliderMoved(int)), this, SLOT(printValues()));
     connect(ui->ySlider, SIGNAL(sliderMoved(int)), this, SLOT(printValues()));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(printValues())); //do this when button pressed
     //connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(castSpell(int)));
-    connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(addButton(int)) );
+    //connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(addButton(int)) );
 
-    ui->random->addWidget(new DragWidget);
-    ui->random->addWidget(new DragButton);
-    ui->random->setStretch(0,3);
-    ui->random->setStretch(1,1);
+    ui->actionBarLayout->setAlignment(Qt::AlignAbsolute);
 
-    ui->buttonGroup->setId(ui->slot_1,1);
-    ui->buttonGroup->setId(ui->slot_2,2);
-    ui->buttonGroup->setId(ui->slot_3,3);
-    ui->buttonGroup->setId(ui->slot_4,4);
-    ui->buttonGroup->setId(ui->slot_5,5);
-    ui->buttonGroup->setId(ui->slot_6,6);
-    ui->buttonGroup->setId(ui->slot_7,7);
-    ui->buttonGroup->setId(ui->slot_8,8);
-    ui->buttonGroup->setId(ui->slot_9,9);
-    ui->buttonGroup->setId(ui->slot_10,10);
+    ActionBar *actionBar1 = new ActionBar;
+    ui->actionBarLayout->addWidget(actionBar1);
+    actionBar1->setMainBarHotkey();
 
-    qDebug() << ui->buttonGroup->buttons();
+
+    ActionBar *actionBar2 = new ActionBar;
+    ui->actionBarLayout->addWidget(actionBar2);
+    actionBar1->setStyleSheet("border-color:black;");
+    actionBar2->setStyleSheet("border-color:black;");
+
+    ui->chatLayout->setAlignment(Qt::AlignLeft);
+
 }
 
 MainWindow::~MainWindow()

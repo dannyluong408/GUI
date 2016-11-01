@@ -1,16 +1,20 @@
-#ifndef DRAGBUTTON_H
-#define DRAGBUTTON_H
+#ifndef DRAGPUSHBUTTON_H
+#define DRAGPUSHBUTTON_H
 
-#include <QPushButton>
-#include <QFrame>
+
+#include <QtWidgets>
+
 
 class QDragEnterEvent;
 class QDropEvent;
 
-class DragButton : public QFrame
+class PushButton : public QPushButton
 {
 public:
-    DragButton (QWidget *parent = 0);
+    PushButton(QWidget *parent = 0);
+
+public slots:
+    void doThisClicked();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
@@ -19,6 +23,4 @@ protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 };
 
-
-
-#endif // DRAGBUTTON_H
+#endif // DRAGPUSHBUTTON_H
