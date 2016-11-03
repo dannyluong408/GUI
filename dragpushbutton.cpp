@@ -12,23 +12,67 @@ PushButton::PushButton(QWidget *parent)
     setAcceptDrops(true);
     setObjectName(QStringLiteral("dragPushButton"));
     QIcon icon;
-    icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
+    icon.addFile(QStringLiteral(":/ui/images/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
     setIcon(icon);
     setIconSize(QSize(50, 50));
     setAttribute(Qt::WA_DeleteOnClose);
     connect(this,SIGNAL(clicked(bool)),this,SLOT(doThisClicked()));
+    connect(this,SIGNAL(valueChanged(bool)),this,SLOT(updateIcon(bool))); 
+    spell_id = 0;
     show();
 }
 
+void PushButton::setOGPix(QIcon ogIcon){
+   origIcon = ogIcon;
+}
 
 
 void PushButton::doThisClicked(){
-    qDebug() << "jajajaj";
+    qDebug() << "Do stuff here when pressed!";
 }
+
+void PushButton::setSpellId(uint32_t spellid){
+    spell_id = spellid;
+    emit valueChanged(true);
+}
+
+void PushButton::updateIcon(bool changed){
+    if (changed != true){
+        return;
+    }
+    //ghetto map here for now to test
+
+    QIcon newIcon;
+    switch(spell_id){
+        case 1:
+            qDebug() << "Boat Updated";
+            newIcon.addFile(QStringLiteral(":/ui/images/boat.png"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+        case 2:
+            qDebug() << "Car Updated";
+            newIcon.addFile(QStringLiteral(":/ui/images/car.png"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+        case 3:
+            qDebug() << "House Updated";
+            newIcon.addFile(QStringLiteral(":/ui/images/house.png"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+        case 0:
+            qDebug() << "Panda Updated";
+            newIcon.addFile(QStringLiteral(":/ui/images/panda.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+    }
+    setIcon(newIcon);
+}
+
+
+uint32_t PushButton::getSpellId(){
+    return spell_id;
+}
+
 
 void PushButton::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-dnditemdata2")) {
+    if (event->mimeData()->hasFormat("spellData")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
@@ -46,7 +90,7 @@ void PushButton::dragEnterEvent(QDragEnterEvent *event)
 
 void PushButton::dragMoveEvent(QDragMoveEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-dnditemdata2")) {
+    if (event->mimeData()->hasFormat("spellData")) {
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
@@ -60,14 +104,26 @@ void PushButton::dragMoveEvent(QDragMoveEvent *event)
 
 void PushButton::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat("application/x-dnditemdata2")) {
+    if (event->mimeData()->hasFormat("spellData")) {
 
-        qDebug() << "DPB This Pos" << this->pos();
-        qDebug() << "DPB Event Pos" << event->pos();
-
-        this->move(this->pos());
+//        qDebug() << "DPB This Pos" << this->pos();
+//        qDebug() << "DPB Event Pos" << event->pos();
 
 
+        QByteArray itemData = event->mimeData()->data("spellData");
+        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+
+        uint32_t newSpellId;
+        dataStream >> newSpellId;
+
+//        qDebug() << "Lol" << this->metaObject()->className();
+//        qDebug() << "Global Pos" << mapToGlobal(this->pos());
+        qDebug() << "Old SpellID:" << this->getSpellId();
+        qDebug() << "New SpellID:" << newSpellId;
+
+
+        qDebug() << "New Spell!";
+        this->setSpellId(newSpellId);
 
 
         if (event->source() == this) {
@@ -87,69 +143,70 @@ void PushButton::dropEvent(QDropEvent *event)
 
 void PushButton::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "QAPPDD1:" << QApplication::startDragDistance();
+    //qDebug() << "QAPPDD1:" << QApplication::startDragDistance();
     if (event->button() == Qt::LeftButton){
         dragStartPosition = event->pos();
-        qDebug() << "PressEvent" << dragStartPosition;
-        emit clicked(true);
+        //qDebug() << "DPB PressEvent" << dragStartPosition;
+        this->click();
     }
     else{
         qDebug() << "???";
     }
-
 }
 
 void PushButton::mouseMoveEvent(QMouseEvent *event)
 {
-    printf("DPB Printed This\n");
-    fflush(stdout);
+    //qDebug() << "DPB Printed This\n";
 
-    qDebug() << "EventPos:" << event->pos();
-    qDebug() << "DragStartPos:" << dragStartPosition;
-    qDebug() << "QAPPDD2:" << QApplication::startDragDistance();
+    //qDebug() << "EventPos:" << event->pos();
+    //qDebug() << "DragStartPos:" << dragStartPosition;
+    //qDebug() << "QAPPDD2:" << QApplication::startDragDistance();
 
     if ((event->pos() - dragStartPosition).manhattanLength() < QApplication::startDragDistance()){
-           emit clicked(true);
+           //qDebug() <<  (event->pos() - dragStartPosition).manhattanLength()<<" vs " <<  QApplication::startDragDistance();
            return;
     }
 
     QPixmap pixmap;
-    PushButton *child2 = this;
-    qDebug() << child2->metaObject()->className();
+    PushButton *child = this;
+    //qDebug() << child->metaObject()->className();
 
-    if( child2 && ((QString)child2->metaObject()->className() == "PushButton")){
-        QIcon icon;
-        pixmap = child2->icon().pixmap(65,65);
-        qDebug() << "DPB Its valid!";
+    if( child && ((QString)child->metaObject()->className() == "PushButton")){
+        //qDebug() << "DPB Its valid!";
+
+        if (spell_id == 0){
+            return;
+        }
+        //Transfers info to the drag
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-        dataStream << pixmap << QPoint(event->pos());
-
+        dataStream << child->spell_id;
         QMimeData *mimeData = new QMimeData;
-        mimeData->setData("application/x-dnditemdata2", itemData);
+        mimeData->setData("spellData", itemData);
 
         QDrag *drag = new QDrag(this);
         drag->setMimeData(mimeData);
-        drag->setPixmap(pixmap);
+        QIcon dragIcon = child->icon();
+        drag->setPixmap(dragIcon.pixmap(QSize(50,50)));
         drag->setHotSpot(event->pos());
 
-        QPixmap tempPixmap = pixmap;
-        QPainter painter;
-        painter.begin(&tempPixmap);
-        painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
-        painter.end();
+//        //This stuff to show icon while dragging
+//        QPixmap tempPixmap = pixmap;
+//        QPainter painter;
+//        painter.begin(&tempPixmap);
+//        painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
+//        painter.end();
+//        QIcon buttonIcon(tempPixmap);
+//        child->setIcon(buttonIcon);
+//        child->setIconSize(pixmap.rect().size());
 
-        //child2->setPixmap(tempPixmap);
-        QIcon buttonIcon(tempPixmap);
-        child2->setIcon(buttonIcon);
-        child2->setIconSize(pixmap.rect().size());
 
         if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
-            child2->show();
+            child->show();
             printf("DPB Inside4\n");
             fflush(stdout);
         } else {
-             child2->hide();
+             child->setSpellId(0);
              printf("DPB Outside4\n");
              fflush(stdout);
         }

@@ -20,6 +20,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void loadImage(const QString &path);
+    void resizeEvent(QResizeEvent *event);
 
 
 public slots:
@@ -27,7 +28,9 @@ public slots:
 
 private slots:
     void castSpell(int buttonPos);
-    void addButton(int button);
+
+signals:
+    void newSize(QSize newSize);
 
 private:
     //bool eventFilter(QObject *obj, QEvent *event);

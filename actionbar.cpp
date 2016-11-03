@@ -29,7 +29,24 @@ ActionBar::ActionBar(QWidget *parent)
         buttonGroup->setId(buttonSet[i], i+1);
     }
 
-    qDebug() << buttonGroup->buttons();
+}
+
+
+
+void ActionBar::resizeMe(QSize newSize){
+
+    const double scale_factor = (double)48 / (double)1080;
+    for (int i = 0; i < NUMBUTTONS; i++){
+         buttonSet[i]->resize(QSize(newSize.width()*scale_factor , newSize.height()*scale_factor));
+    }
+}
+
+void ActionBar::setButtonSpell(uint32_t spellid, uint32_t buttonNum){
+    buttonSet[buttonNum-1]->setSpellId(spellid);
+}
+
+uint32_t ActionBar::getButtonSpell(uint32_t buttonNum){
+    return buttonSet[buttonNum-1]->getSpellId();
 }
 
 void ActionBar::setMainBarHotkey(){
@@ -137,7 +154,7 @@ void ActionBar::dropEvent(QDropEvent *event)
 
 void ActionBar::mousePressEvent(QMouseEvent *event)
 {
-    printf("AB Printed This\n");
+    printf("AB Printed This Trying to Drag the Action Bar :TODO!!!\n");
     fflush(stdout);
 
     QPixmap pixmap;

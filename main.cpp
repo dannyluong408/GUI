@@ -6,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setOverrideCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png")));
     MainWindow w;
     //w.setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
     //w.showMaximized();

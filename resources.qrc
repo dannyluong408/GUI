@@ -1,10 +1,12 @@
 <RCC>
     <qresource prefix="/ui">
         <file>images/panda.jpg</file>
-        <file>customSlider.qml</file>
         <file>images/boat.png</file>
         <file>images/car.png</file>
         <file>images/house.png</file>
         <file>images/panda2.jpg</file>
+        <file>images/oldguy.ico</file>
+        <file>images/cursor_red.png</file>
+        <file>images/cursor_normal.png</file>
     </qresource>
 </RCC>

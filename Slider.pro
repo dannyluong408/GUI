@@ -17,18 +17,21 @@ SOURCES += main.cpp\
     myopenglwidget.cpp \
     dragwidget.cpp \
     dragpushbutton.cpp \
-    actionbar.cpp
+    actionbar.cpp \
+    bufficon.cpp \
+    buffframe.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
     dragwidget.h \
     dragpushbutton.h \
-    actionbar.h
+    actionbar.h \
+    bufficon.h \
+    buffframe.h
 
 FORMS    += mainwindow.ui
 
-DISTFILES += \
-    customSlider.qml
+DISTFILES +=
 
 RESOURCES += \
     resources.qrc

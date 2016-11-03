@@ -4,6 +4,8 @@
 //#include "dragwidget.h"
 #include "dragpushbutton.h"
 #include "actionbar.h"
+#include "bufficon.h"
+#include "buffframe.h"
 #include <time.h>
 #include <QDebug>
 
@@ -29,8 +31,73 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionBarLayout->addWidget(actionBar1);
     actionBar1->setMainBarHotkey();
 
+    actionBar1->setButtonSpell(1,1);
+    actionBar1->setButtonSpell(2,2);
+    actionBar1->setButtonSpell(3,3);
 
+    BuffFrame *buffFrame;
+    buffFrame = new BuffFrame(ui->centralWidget);
+    buffFrame->setObjectName(QStringLiteral("buffFrame"));
+    buffFrame->setMinimumSize(QSize(410, 410));
+    buffFrame->setFrameShape(QFrame::StyledPanel);
+    buffFrame->setFrameShadow(QFrame::Raised);
+    buffFrame->setGeometry(200,100,450,450);
+
+    BuffIcon *buffs[4];
+    QPixmap pix(":/ui/images/oldguy.ico");
+
+
+    qDebug() << size();
+
+    int width = size().width();
+    int height = size().height();
+
+    qDebug() << width << "," << height;
+
+    const double scale_factor = (double)32 / (double)1080;
+    int newSize = size().height()*scale_factor;
+
+    for(int i = 0; i < 4 ; i++){
+        buffs[i] = new BuffIcon(buffFrame);
+        buffFrame->insertBuff(buffs[i]);
+        buffs[i]->setGeometry((i*newSize),100*scale_factor,
+                              newSize,newSize);
+
+
+        switch(i%4){
+            case 0:
+                buffs[i]->setStyleSheet("border: 1px solid black");
+                break;
+            case 1:
+                buffs[i]->setStyleSheet("border: 1px solid green");
+                break;
+            case 2:
+                buffs[i]->setStyleSheet("border: 1px solid blue");
+                break;
+            case 3:
+                buffs[i]->setStyleSheet("border: 1px solid red");
+                break;
+            default:
+                buffs[i]->setStyleSheet("border: 1px solid yellow");
+                break;
+        }
+
+        buffs[i]->setPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(newSize,newSize,Qt::KeepAspectRatio));
+        buffs[i]->setOGPix(buffs[i]->pixmap());
+    }
+
+    for(int test = 0; test< 4; test++){
+        connect(this, SIGNAL(newSize(QSize)),buffs[test],SLOT(resizeMe(QSize)));
+    }
+
+    connect(this, SIGNAL(newSize(QSize)),buffFrame,SLOT(resizeMe(QSize)));
+    connect(this, SIGNAL(newSize(QSize)),actionBar1,SLOT(resizeMe(QSize)));
     ActionBar *actionBar2 = new ActionBar;
+    connect(this, SIGNAL(newSize(QSize)),actionBar2,SLOT(resizeMe(QSize)));
+
+
+
+
     ui->actionBarLayout->addWidget(actionBar2);
     actionBar1->setStyleSheet("border-color:black;");
     actionBar2->setStyleSheet("border-color:black;");
@@ -44,49 +111,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::addButton(int buttonId){
 
-//    QPushButton *newButton;
-//    newButton = new QPushButton(ui->groupBox);
-//    ui->buttonGroup->addButton(newButton,buttonId);
-//    newButton->setObjectName(QStringLiteral("newButton"));
-//    newButton->setGeometry(QRect(5, 8, 50, 50));
-//    //((buttonId - 1) * 50 ) + 5)
-//    newButton->setAcceptDrops(true);
-//    QIcon buttonIcon;
-//    buttonIcon.addFile(QStringLiteral(":/ui/images/panda2.jpg"), QSize(50,50), QIcon::Normal, QIcon::Off);
-//    newButton->setIcon(buttonIcon);
-//    newButton->setAutoRepeatInterval(100);
-//    newButton->show();
-    printf("Button %i Pressed. Added a Button\n",buttonId);
-    fflush(stdout);
-
-
-    QList<QAbstractButton *> a =  ui->buttonGroup->buttons();
-    QAbstractButton *iter;
-
-    for(int i = 0 ; i < a.length(); i++){
-       iter = a.at(i);
-       if(iter->objectName() == "slot_1"){
-           qDebug() << i << " :)";
-           delete iter;
-           break;
-       }
+void MainWindow::resizeEvent(QResizeEvent *event){
+    if (event->oldSize().height() < 0 || event->oldSize().width() < 0){
+        return;
     }
-
-
-
-    //printf("Value:%i\n",i);
-
-//    QPushButton *old = (QPushButton*)0xdcbda8;
-//    delete old;
-//    struct timespec ts;
-//    ts.tv_sec = 5;
-//    ts.tv_nsec = 0;
-//    nanosleep(&ts,NULL);
-
-//    delete newButton;
-
+    qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
+    emit newSize(event->size());
 }
 
 void MainWindow::printValues(){

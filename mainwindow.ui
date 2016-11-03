@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1600</width>
+    <width>1200</width>
     <height>900</height>
    </rect>
   </property>
@@ -16,10 +16,16 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>1600</width>
-    <height>900</height>
+    <width>99999</width>
+    <height>99999</height>
    </size>
   </property>
   <property name="cursor">
@@ -30,20 +36,20 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
    <property name="minimumSize">
     <size>
-     <width>1600</width>
+     <width>1200</width>
      <height>900</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>1600</width>
+     <width>1200</width>
      <height>900</height>
     </size>
    </property>
@@ -63,7 +69,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1,1">
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1">
          <item>
           <widget class="QSlider" name="xSlider">
            <property name="sizePolicy">
@@ -77,16 +83,6 @@
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="pixmap">
-            <pixmap resource="resources.qrc">:/ui/images/panda.jpg</pixmap>
            </property>
           </widget>
          </item>
@@ -127,7 +123,17 @@ QSlider::handle {
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="resources.qrc">:/ui/images/panda.jpg</pixmap>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout" stretch="1,3,1">
            <item>
             <widget class="QPushButton" name="pushButton">
              <property name="sizePolicy">
@@ -168,7 +174,14 @@ p, li { white-space: pre-wrap; }
               <string notr="true">font: 75 12pt &quot;MS Shell Dlg 2&quot;;</string>
              </property>
              <property name="text">
-              <string>PushButton</string>
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/ui/images/panda2.jpg</normaloff>:/ui/images/panda2.jpg</iconset>
+             </property>
+             <property name="autoRepeatDelay">
+              <number>300</number>
              </property>
             </widget>
            </item>
@@ -179,7 +192,7 @@ p, li { white-space: pre-wrap; }
        <item>
         <layout class="QHBoxLayout" name="bottomLayout" stretch="0">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,9">
+          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2">
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
            </property>
@@ -188,6 +201,13 @@ p, li { white-space: pre-wrap; }
              <property name="sizeConstraint">
               <enum>QLayout::SetFixedSize</enum>
              </property>
+             <item>
+              <layout class="QVBoxLayout" name="actionBarLayout">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetMaximumSize</enum>
+               </property>
+              </layout>
+             </item>
              <item>
               <widget class="QTextEdit" name="textEdit_2">
                <property name="sizePolicy">
@@ -218,13 +238,6 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </item>
-           <item>
-            <layout class="QVBoxLayout" name="actionBarLayout">
-             <property name="sizeConstraint">
-              <enum>QLayout::SetMaximumSize</enum>
-             </property>
-            </layout>
-           </item>
           </layout>
          </item>
         </layout>
@@ -240,7 +253,4 @@ p, li { white-space: pre-wrap; }
   <include location="resources.qrc"/>
  </resources>
  <connections/>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>
