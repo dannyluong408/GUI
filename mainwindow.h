@@ -27,6 +27,7 @@ public slots:
 
 private slots:
     void castSpell(int buttonPos);
+    void login();
 
 signals:
     void newSize(QSize newSize);
@@ -34,6 +35,7 @@ signals:
 private:
     //bool eventFilter(QObject *obj, QEvent *event);
     Ui::MainWindow *ui;
+    QWidget *loginScreen;
 };
 
 #endif // MAINWINDOW_H

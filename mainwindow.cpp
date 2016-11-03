@@ -18,20 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     setAcceptDrops(true);
 
-    ActionBar *actionBar1 = new ActionBar(this);
+    //screens *gameScreen = new screens(this);
+
+
+    ActionBar *actionBar1 = new ActionBar(ui->gameScreen);
     actionBar1->setMainBarHotkey();
     actionBar1->setButtonSpell(1,1);
     actionBar1->setButtonSpell(2,2);
     actionBar1->setButtonSpell(3,3);
-    ActionBar *actionBar2 = new ActionBar(this);
+    ActionBar *actionBar2 = new ActionBar(ui->gameScreen);
     actionBar1->move(350,750);
     actionBar2->move(350,800);
 
     BuffFrame *buffFrame;
-    buffFrame = new BuffFrame(ui->centralWidget);
+    buffFrame = new BuffFrame(ui->gameScreen);
     buffFrame->setObjectName(QStringLiteral("buffFrame"));
     buffFrame->setMinimumSize(QSize(410, 410));
     buffFrame->setFrameShape(QFrame::StyledPanel);
@@ -93,19 +95,40 @@ MainWindow::MainWindow(QWidget *parent) :
     actionBar1->setStyleSheet("border-color:black;");
     actionBar2->setStyleSheet("border-color:black;");
 
-    UnitFrame *playerFrame = new UnitFrame(this);
+    UnitFrame *playerFrame = new UnitFrame(ui->gameScreen);
     playerFrame->move(0,25);
 
-    UnitFrame *targetFrame = new UnitFrame(this);
+    UnitFrame *targetFrame = new UnitFrame(ui->gameScreen);
     targetFrame->move(250,25);
+
+
+    ui->gameScreen->hide();
+
+    loginScreen = new QWidget(this);
+    loginScreen->setGeometry(0,0,1200,900);
+    loginScreen->show();
+    loginScreen->setStyleSheet("background-color: pink");
+    QPushButton *test = new QPushButton(loginScreen);
+    test->setGeometry(550,400,100,100);
+    test->setIconSize(QSize(100,100));
+    test->setIcon(QIcon(":/ui/images/oldguy.ico"));
+
+
+    connect(test,SIGNAL(clicked(bool)),this,SLOT(login()));
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete loginScreen;
 }
 
+void MainWindow::login(){
+    qDebug() << "Login Sucessful!";
+    loginScreen->hide();
+    ui->gameScreen->show();
+}
 
 void MainWindow::resizeEvent(QResizeEvent *event){
     if (event->oldSize().height() < 0 || event->oldSize().width() < 0){
