@@ -6,7 +6,7 @@ ActionBar::ActionBar(QWidget *parent)
     : QWidget(parent)
 {
     setAcceptDrops(true);
-    setFixedSize(65*NUMBUTTONS,65);
+    setFixedSize(50*NUMBUTTONS,50);
 
     buttonGroup = new QButtonGroup;
 

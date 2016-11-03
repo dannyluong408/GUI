@@ -24,7 +24,6 @@ public:
 
 
 public slots:
-    void printValues();
 
 private slots:
     void castSpell(int buttonPos);

@@ -6,6 +6,8 @@
 #include "actionbar.h"
 #include "bufficon.h"
 #include "buffframe.h"
+#include "unitframe.h"
+#include "progressbar.h"
 #include <time.h>
 #include <QDebug>
 
@@ -19,21 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setAcceptDrops(true);
 
-    connect(ui->xSlider, SIGNAL(sliderMoved(int)), this, SLOT(printValues()));
-    connect(ui->ySlider, SIGNAL(sliderMoved(int)), this, SLOT(printValues()));
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(printValues())); //do this when button pressed
-    //connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(castSpell(int)));
-    //connect(ui->buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(addButton(int)) );
-
-    ui->actionBarLayout->setAlignment(Qt::AlignAbsolute);
-
     ActionBar *actionBar1 = new ActionBar(this);
-    ui->actionBarLayout->addWidget(actionBar1);
     actionBar1->setMainBarHotkey();
-
     actionBar1->setButtonSpell(1,1);
     actionBar1->setButtonSpell(2,2);
     actionBar1->setButtonSpell(3,3);
+    ActionBar *actionBar2 = new ActionBar(this);
+    actionBar1->move(350,750);
+    actionBar2->move(350,800);
 
     BuffFrame *buffFrame;
     buffFrame = new BuffFrame(ui->centralWidget);
@@ -41,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     buffFrame->setMinimumSize(QSize(410, 410));
     buffFrame->setFrameShape(QFrame::StyledPanel);
     buffFrame->setFrameShadow(QFrame::Raised);
-    buffFrame->setGeometry(200,100,450,450);
+    buffFrame->setGeometry(200,150,450,450);
 
     BuffIcon *buffs[4];
     QPixmap pix(":/ui/images/oldguy.ico");
@@ -92,17 +87,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this, SIGNAL(newSize(QSize)),buffFrame,SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar1,SLOT(resizeMe(QSize)));
-    ActionBar *actionBar2 = new ActionBar(this);
+
     connect(this, SIGNAL(newSize(QSize)),actionBar2,SLOT(resizeMe(QSize)));
 
-
-
-
-    ui->actionBarLayout->addWidget(actionBar2);
     actionBar1->setStyleSheet("border-color:black;");
     actionBar2->setStyleSheet("border-color:black;");
 
-    ui->chatLayout->setAlignment(Qt::AlignLeft);
+    UnitFrame *playerFrame = new UnitFrame(this);
+    playerFrame->move(0,25);
+
+    UnitFrame *targetFrame = new UnitFrame(this);
+    targetFrame->move(250,25);
 
 }
 
@@ -116,14 +111,10 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     if (event->oldSize().height() < 0 || event->oldSize().width() < 0){
         return;
     }
-    qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
+    //qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
     emit newSize(event->size());
 }
 
-void MainWindow::printValues(){
-    printf("Slider Change Detected! Values are: X:%i, Y:%i\n",ui->xSlider->value(),ui->ySlider->value());
-    fflush(stdout);
-}
 
 void MainWindow::castSpell(int buttonPos){
     printf("Casting from Slot %i\n", buttonPos);

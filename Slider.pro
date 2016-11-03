@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     actionbar.cpp \
     bufficon.cpp \
     buffframe.cpp \
-    unitframe.cpp
+    unitframe.cpp \
+    progressbar.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     actionbar.h \
     bufficon.h \
     buffframe.h \
-    unitframe.h
+    unitframe.h \
+    progressbar.h
 
 FORMS    += mainwindow.ui
 

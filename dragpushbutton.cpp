@@ -25,7 +25,7 @@ PushButton::PushButton(QWidget *parent)
 
 void PushButton::resizeMe(QSize newSize){
     const double scale_factor = (double)48 / (double)1080;
-    qDebug() << "Resizing Spell Buttons " << newSize;
+    //qDebug() << "Resizing Spell Buttons " << newSize;
     double size = newSize.height()*scale_factor;
     setIconSize(QSize(size,size));
     QPixmap newIcon = origIcon;
