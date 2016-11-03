@@ -12,8 +12,7 @@ ActionBar::ActionBar(QWidget *parent)
 
     for (int i = 0 ; i < NUMBUTTONS; i++){
         buttonSet[i] = new PushButton(this);
-        buttonSet[i]->setFixedSize(55,55);
-        buttonSet[i]->move(65*i,0);
+        buttonSet[i]->move(50*i,0);
 
         QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
@@ -23,7 +22,7 @@ ActionBar::ActionBar(QWidget *parent)
         QIcon icon;
         icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
         buttonSet[i]->setIcon(icon);
-        buttonSet[i]->setIconSize(QSize(50, 50));
+        buttonSet[i]->setIconSize(QSize(48, 48));
 
         buttonGroup->addButton(buttonSet[i]);
         buttonGroup->setId(buttonSet[i], i+1);
@@ -34,10 +33,12 @@ ActionBar::ActionBar(QWidget *parent)
 
 
 void ActionBar::resizeMe(QSize newSize){
+    const double scale_factor = (double)50 / (double)1080;
+    double size = newSize.height()*scale_factor;
 
-    const double scale_factor = (double)48 / (double)1080;
     for (int i = 0; i < NUMBUTTONS; i++){
-         buttonSet[i]->resize(QSize(newSize.width()*scale_factor , newSize.height()*scale_factor));
+         buttonSet[i]->resizeMe(newSize);
+         buttonSet[i]->setGeometry((size*i),0,size,size);
     }
 }
 

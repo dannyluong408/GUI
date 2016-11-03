@@ -11,6 +11,7 @@ class QDropEvent;
 
 class ActionBar : public QWidget
 {
+    Q_OBJECT
 public:
     ActionBar(QWidget *parent = 0);
     void setMainBarHotkey();
@@ -18,7 +19,7 @@ public:
     uint32_t getButtonSpell(uint32_t buttonNum);
 
 public slots:
-    void resizeMe(QSize);
+    void resizeMe(QSize newSize);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;

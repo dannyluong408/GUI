@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     dragpushbutton.cpp \
     actionbar.cpp \
     bufficon.cpp \
-    buffframe.cpp
+    buffframe.cpp \
+    unitframe.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
@@ -27,7 +28,8 @@ HEADERS  += mainwindow.h \
     dragpushbutton.h \
     actionbar.h \
     bufficon.h \
-    buffframe.h
+    buffframe.h \
+    unitframe.h
 
 FORMS    += mainwindow.ui
 

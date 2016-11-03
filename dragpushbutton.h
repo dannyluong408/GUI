@@ -18,7 +18,7 @@ public:
     PushButton(QWidget *parent = 0);
     uint32_t getSpellId();
     QIcon getIcon();
-    void setOGPix(QIcon ogIcon);
+    void resizeMe(QSize newSize);
 
 
 public slots:
@@ -39,7 +39,7 @@ protected:
 private:
     QPoint dragStartPosition;
     uint32_t spell_id;
-    QIcon origIcon;
+    QPixmap origIcon;
 };
 
 #endif // DRAGPUSHBUTTON_H

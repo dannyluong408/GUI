@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->actionBarLayout->setAlignment(Qt::AlignAbsolute);
 
-    ActionBar *actionBar1 = new ActionBar;
+    ActionBar *actionBar1 = new ActionBar(this);
     ui->actionBarLayout->addWidget(actionBar1);
     actionBar1->setMainBarHotkey();
 
@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(this, SIGNAL(newSize(QSize)),buffFrame,SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar1,SLOT(resizeMe(QSize)));
-    ActionBar *actionBar2 = new ActionBar;
+    ActionBar *actionBar2 = new ActionBar(this);
     connect(this, SIGNAL(newSize(QSize)),actionBar2,SLOT(resizeMe(QSize)));
 
 

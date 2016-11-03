@@ -7,24 +7,34 @@ PushButton::PushButton(QWidget *parent)
 {
     dragStartPosition.setX(0);
     dragStartPosition.setY(0);
-
-    setFixedSize(50,50);
+    resize(QSize(50,50));
     setAcceptDrops(true);
     setObjectName(QStringLiteral("dragPushButton"));
     QIcon icon;
     icon.addFile(QStringLiteral(":/ui/images/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
     setIcon(icon);
-    setIconSize(QSize(50, 50));
+    setIconSize(QSize(48, 48));
     setAttribute(Qt::WA_DeleteOnClose);
     connect(this,SIGNAL(clicked(bool)),this,SLOT(doThisClicked()));
     connect(this,SIGNAL(valueChanged(bool)),this,SLOT(updateIcon(bool))); 
+    origIcon = icon.pixmap(48,48);
     spell_id = 0;
+    setStyleSheet("border: 1px solid black"); //temp change it dynamically later
     show();
 }
 
-void PushButton::setOGPix(QIcon ogIcon){
-   origIcon = ogIcon;
+void PushButton::resizeMe(QSize newSize){
+    const double scale_factor = (double)48 / (double)1080;
+    qDebug() << "Resizing Spell Buttons " << newSize;
+    double size = newSize.height()*scale_factor;
+    setIconSize(QSize(size,size));
+    QPixmap newIcon = origIcon;
+    newIcon.scaled(size,size,Qt::KeepAspectRatio);
+    setIcon(QIcon(newIcon));
+
 }
+
+
 
 
 void PushButton::doThisClicked(){
@@ -58,10 +68,11 @@ void PushButton::updateIcon(bool changed){
             break;
         case 0:
             qDebug() << "Panda Updated";
-            newIcon.addFile(QStringLiteral(":/ui/images/panda.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+            newIcon.addFile(QStringLiteral(":/ui/images/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
             break;
     }
     setIcon(newIcon);
+    origIcon = newIcon.pixmap(QSize(48,48));
 }
 
 
