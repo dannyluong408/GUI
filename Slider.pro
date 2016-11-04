@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     bufficon.cpp \
     buffframe.cpp \
     unitframe.cpp \
-    progressbar.cpp
+    progressbar.cpp \
+    chatbox.cpp \
+    menubar.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
@@ -31,7 +33,9 @@ HEADERS  += mainwindow.h \
     bufficon.h \
     buffframe.h \
     unitframe.h \
-    progressbar.h
+    progressbar.h \
+    chatbox.h \
+    menubar.h
 
 FORMS    += mainwindow.ui
 

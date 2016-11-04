@@ -8,7 +8,9 @@
 #include "buffframe.h"
 #include "unitframe.h"
 #include "progressbar.h"
+#include "chatbox.h"
 #include <time.h>
+#include "menubar.h"
 #include <QDebug>
 
 
@@ -98,11 +100,20 @@ MainWindow::MainWindow(QWidget *parent) :
     UnitFrame *targetFrame = new UnitFrame(ui->gameScreen);
     targetFrame->move(250,25);
 
+    //chatbox
+    Chatbox *chat = new Chatbox(this);
+
+    //menubar
+    Menubar *menubar = new Menubar(this);
+    menubar->setGeometry(950,800,246,50);
+
+    //connect signals for custom resize
     connect(this, SIGNAL(newSize(QSize)),buffFrame,SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar[0],SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar[1],SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),playerFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),targetFrame,SLOT(resizeMe(QSize)));
+    connect(this,SIGNAL(newSize(QSize)),menubar,SLOT(resizeMe(QSize)));
 
     ui->gameScreen->hide();
 
@@ -119,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(test,SIGNAL(clicked(bool)),this,SLOT(login()));
 
+
 }
 
 MainWindow::~MainWindow()
@@ -131,6 +143,8 @@ void MainWindow::login(){
     qDebug() << "Login Sucessful!";
     loginScreen->hide();
     ui->gameScreen->show();
+    ui->gameScreen->setFocus();
+    ui->openGLWidget->hide();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event){

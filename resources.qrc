@@ -10,5 +10,10 @@
         <file>images/cursor_normal.png</file>
         <file>images/maxresdefault.jpg</file>
         <file>images/anime.jpg</file>
+        <file>images/setting.png</file>
+        <file>images/armor.png</file>
+        <file>images/backpack.png</file>
+        <file>images/map.png</file>
+        <file>images/spellbook.png</file>
     </qresource>
 </RCC>
