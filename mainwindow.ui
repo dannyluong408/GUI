@@ -53,6 +53,9 @@
      <height>900</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <widget class="QOpenGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>

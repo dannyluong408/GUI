@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "actionbar.h"
+
+
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +39,8 @@ private:
     //bool eventFilter(QObject *obj, QEvent *event);
     Ui::MainWindow *ui;
     QWidget *loginScreen;
+    ActionBar *actionBar[2];
+    int numBars;
 };
 
 #endif // MAINWINDOW_H

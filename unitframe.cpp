@@ -38,7 +38,6 @@ UnitFrame::UnitFrame(QWidget *parent)
                           "QProgressBar::chunk {"
                           "background-color: #2E64FE;"
                           "}");
-    connect(parent,SIGNAL(newSize(QSize)),this,SLOT(resizeMe(QSize)));
 }
 
 void UnitFrame::resizeMe(QSize newSize){ //todo
@@ -77,7 +76,7 @@ void UnitFrame::resizeMe(QSize newSize){ //todo
 //    mana->move(newSize.width()*scale_factor_icon,
 //               newSize.height()*scale_factor_h);
 
-    qDebug() << unitIcon->size() << health->size() << mana->size();
+    //qDebug() << unitIcon->size() << health->size() << mana->size();
 }
 
 void UnitFrame::setAvatar(QPixmap newAva){
