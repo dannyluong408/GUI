@@ -34,9 +34,11 @@ private slots:
 
 signals:
     void newSize(QSize newSize);
+    void toggleSpellbook();
 
 private:
-    //bool eventFilter(QObject *obj, QEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
+    void keyPressEvent(QKeyEvent *event);
     Ui::MainWindow *ui;
     QWidget *loginScreen;
     ActionBar *actionBar[2];

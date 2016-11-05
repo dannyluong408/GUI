@@ -9,6 +9,7 @@
 #include "unitframe.h"
 #include "progressbar.h"
 #include "chatbox.h"
+#include "popupframe.h"
 #include <time.h>
 #include "menubar.h"
 #include <QDebug>
@@ -44,14 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     BuffIcon *buffs[4];
     QPixmap pix(":/ui/images/oldguy.ico");
-
-
-    qDebug() << size();
-
-    int width = size().width();
-    int height = size().height();
-
-    qDebug() << width << "," << height;
 
     const double scale_factor = (double)32 / (double)1080;
     int newSize = size().height()*scale_factor;
@@ -102,10 +95,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //chatbox
     Chatbox *chat = new Chatbox(this);
+    chat->setText("Temp Chat Box!! In Progress!");
 
     //menubar
     Menubar *menubar = new Menubar(this);
     menubar->setGeometry(950,800,246,50);
+
+    //spellbook
+    PopupFrame *spellbook = new PopupFrame(this);
+    spellbook->setGeometry(850,200,200,400);
+    spellbook->hide();
 
     //connect signals for custom resize
     connect(this, SIGNAL(newSize(QSize)),buffFrame,SLOT(resizeMe(QSize)));
@@ -114,7 +113,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(newSize(QSize)),playerFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),targetFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),menubar,SLOT(resizeMe(QSize)));
-
+    connect(this,SIGNAL(newSize(QSize)),chat,SLOT(resizeMe(QSize)));
+    connect(this,SIGNAL(toggleSpellbook()),spellbook,SLOT(toggleMe()));
     ui->gameScreen->hide();
 
     loginScreen = new QWidget(this);
@@ -179,11 +179,18 @@ void MainWindow::castSpell(int buttonPos){
 }
 
 
-//bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-//{
-//  if (obj == ui->chat_input) {
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+//    qDebug() << "1";
+//  if (obj == this) {
+//      qDebug() << "2";
 //     if (event->type() == QEvent::KeyPress) {
 //         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+//         qDebug() << "3";
+//         if (keyEvent->key() == Qt::Key_P){
+//             printf("Key P Pressed!");
+//             emit toggleSpellbook();
+//         }
 //        if (keyEvent->key() == Qt::Key_Tab)
 //        {
 //            if(ui->chat_input->hasSelectedText() == false){
@@ -216,4 +223,15 @@ void MainWindow::castSpell(int buttonPos){
 //  }
 //     // pass the event on to the parent class
 //     return QMainWindow::eventFilter(obj, event);
-//}
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event){
+    switch (event->key()) {
+      case Qt::Key_P:
+          printf("Key P Pressed!");
+          emit toggleSpellbook();
+          break;
+      default:
+          QWidget::keyPressEvent(event);
+    }
+}

@@ -9,7 +9,13 @@ Chatbox::Chatbox(QWidget *parent)
     viewport()->setAutoFillBackground(true);
 
     QPalette p = palette();
-    p.setColor(QPalette::Base, QColor(255,255,255));
+    p.setColor(QPalette::Base, QColor(255/2,255/2,255/2));
     setPalette(p);
     setTextColor(Qt::cyan);
+}
+
+void Chatbox::resizeMe(QSize size){
+//    const double scale_factor = (double)50 /(double)1080;
+
+
 }

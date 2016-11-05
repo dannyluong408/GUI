@@ -55,19 +55,15 @@ void PushButton::updateIcon(bool changed){
     QIcon newIcon;
     switch(spell_id){
         case 1:
-            qDebug() << "Boat Updated";
             newIcon.addFile(QStringLiteral(":/ui/images/boat.png"), QSize(), QIcon::Normal, QIcon::Off);
             break;
         case 2:
-            qDebug() << "Car Updated";
             newIcon.addFile(QStringLiteral(":/ui/images/car.png"), QSize(), QIcon::Normal, QIcon::Off);
             break;
         case 3:
-            qDebug() << "House Updated";
             newIcon.addFile(QStringLiteral(":/ui/images/house.png"), QSize(), QIcon::Normal, QIcon::Off);
             break;
         case 0:
-            qDebug() << "Panda Updated";
             newIcon.addFile(QStringLiteral(":/ui/images/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
             break;
     }

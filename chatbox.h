@@ -10,6 +10,9 @@ class Chatbox: public QTextEdit
     public:
         Chatbox(QWidget *parent);
 
+    public slots:
+        void resizeMe(QSize size);
+
 };
 
 

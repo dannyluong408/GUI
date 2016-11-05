@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     unitframe.cpp \
     progressbar.cpp \
     chatbox.cpp \
-    menubar.cpp
+    menubar.cpp \
+    popupframe.cpp
 
 HEADERS  += mainwindow.h \
     myopenglwidget.h \
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     unitframe.h \
     progressbar.h \
     chatbox.h \
-    menubar.h
+    menubar.h \
+    popupframe.h
 
 FORMS    += mainwindow.ui
 
