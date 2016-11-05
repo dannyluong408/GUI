@@ -1,6 +1,8 @@
 #ifndef ACTIONBAR_H
 #define ACTIONBAR_H
 
+#pragma once
+
 #include <QtWidgets>
 #include "dragpushbutton.h"
 

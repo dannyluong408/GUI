@@ -1,6 +1,8 @@
 #ifndef CHATBOX_H
 #define CHATBOX_H
 
+#pragma once
+
 #include <QtWidgets>
 
 

@@ -1,6 +1,12 @@
 #ifndef MYOPENGLWIDGET_H
 #define MYOPENGLWIDGET_H
 
+
+
+#pragma once
+
+#include <QtWidgets>
+
 class MyGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
 public:

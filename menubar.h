@@ -1,6 +1,8 @@
 #ifndef MENUBAR_H
 #define MENUBAR_H
 
+#pragma once
+
 #include <QtWidgets>
 #include <dragpushbutton.h>
 

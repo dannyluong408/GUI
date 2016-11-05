@@ -2,6 +2,8 @@
 #define BUFFICON_H
 
 
+#pragma once
+
 
 #include <QtWidgets>
 

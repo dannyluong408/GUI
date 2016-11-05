@@ -51,6 +51,8 @@
 #ifndef DRAGWIDGET_H
 #define DRAGWIDGET_H
 
+#pragma once
+
 #include <QtWidgets>
 
 class QDragEnterEvent;

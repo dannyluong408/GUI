@@ -14,8 +14,11 @@ Chatbox::Chatbox(QWidget *parent)
     setTextColor(Qt::cyan);
 }
 
-void Chatbox::resizeMe(QSize size){
-//    const double scale_factor = (double)50 /(double)1080;
+void Chatbox::resizeMe(QSize size){ //fix this too for 1080p
+    const double scale_factor_y = (double)700/(double)900;
+    const double scale_factor_w = (double)200/(double)1200;
+    const double scale_factor_h = (double)200/(double)900;
 
-
+    move(0,size.height()*scale_factor_y);
+    resize(size.width()*scale_factor_w,size.height()*scale_factor_y);
 }

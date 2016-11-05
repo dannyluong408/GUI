@@ -1,6 +1,7 @@
 #ifndef DRAGPUSHBUTTON_H
 #define DRAGPUSHBUTTON_H
 
+#pragma once
 
 #include <QtWidgets>
 #include <QPushButton>

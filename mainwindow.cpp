@@ -99,11 +99,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //menubar
     Menubar *menubar = new Menubar(this);
-    menubar->setGeometry(950,800,246,50);
+    menubar->setGeometry(950,800,240,48);
 
     //spellbook
     PopupFrame *spellbook = new PopupFrame(this);
-    spellbook->setGeometry(850,200,200,400);
     spellbook->hide();
 
     //connect signals for custom resize
@@ -115,6 +114,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(newSize(QSize)),menubar,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),chat,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(toggleSpellbook()),spellbook,SLOT(toggleMe()));
+    connect(this,SIGNAL(newSize(QSize)),spellbook,SLOT(resizeMe(QSize)));
     ui->gameScreen->hide();
 
     loginScreen = new QWidget(this);
@@ -123,6 +123,7 @@ MainWindow::MainWindow(QWidget *parent) :
     loginScreen->setStyleSheet("background-color: pink;"
                                "background-image: url(:/ui/images/anime.jpg);");
     QPushButton *test = new QPushButton(loginScreen);
+    test->setText(QString("Login Button!"));
     test->setGeometry(550,400,100,100);
     test->setIconSize(QSize(100,100));
     test->setIcon(QIcon(":/ui/images/oldguy.ico"));
@@ -230,6 +231,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
       case Qt::Key_P:
           printf("Key P Pressed!");
           emit toggleSpellbook();
+          break;
+      case Qt::Key_Enter:
+          //enter will open and close chatbox
           break;
       default:
           QWidget::keyPressEvent(event);

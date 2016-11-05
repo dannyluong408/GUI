@@ -1,7 +1,7 @@
 #ifndef UNITFRAME_H
 #define UNITFRAME_H
 
-
+#pragma once
 
 
 #include <QtWidgets>

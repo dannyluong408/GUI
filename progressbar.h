@@ -1,6 +1,8 @@
 #ifndef PROGRESSBAR_H
 #define PROGRESSBAR_H
 
+#pragma once
+
 #include <QtWidgets>
 
 
