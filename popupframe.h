@@ -19,19 +19,22 @@ class PopupFrame : public QFrame
         void resizeMe(QSize newSize);
         void toggleMe();
 
+    private slots:
+        void pageLeft();
+        void pageRight();
 
     private:
         QLabel *frameTitle;
         QTabWidget *frameTabWidget;
-        QWidget *frameTabs[4];
+        QWidget *frameTabs[6];
+        QStackedWidget *frameStack[4];
         QGridLayout *frameGrid[4];
-        QFrame *spellSlotFrame[32];
-        QHBoxLayout *spellSlotFrameLayout[32];
-        PushButton *spellSlot[32];
-        QLabel *spellSlotDesc[32];
+        QFrame *spellSlotFrame[60];
+        QHBoxLayout *spellSlotFrameLayout[60];
+        PushButton *spellSlot[60];
+        QLabel *spellSlotDesc[60];
         QVBoxLayout *mainLayout;
         uint32_t spellCount;
-
 };
 
 

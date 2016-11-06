@@ -123,7 +123,6 @@ MainWindow::MainWindow(QWidget *parent) :
     loginScreen->setStyleSheet("background-color: pink;"
                                "background-image: url(:/ui/images/anime.jpg);");
     QPushButton *test = new QPushButton(loginScreen);
-    test->setText(QString("Login Button!"));
     test->setGeometry(550,400,100,100);
     test->setIconSize(QSize(100,100));
     test->setIcon(QIcon(":/ui/images/oldguy.ico"));
@@ -159,8 +158,8 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     ui->openGLWidget->resize(event->size());
 
     //temporarily keep action bar repositions here cause noob
-    const double scale_factor_x = (double)350 / (double)1080;
-    const double scale_factor_y = (double)750 / (double)1080;
+    double scale_factor_x = (double)350 / (double)1080;
+    double scale_factor_y = (double)750 / (double)1080;
     const double scale_height = (double)50 / (double)1080;
 
     for (int i=0; i< numBars; i++){
@@ -180,8 +179,8 @@ void MainWindow::castSpell(int buttonPos){
 }
 
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
+//bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+//{
 //    qDebug() << "1";
 //  if (obj == this) {
 //      qDebug() << "2";
@@ -224,12 +223,12 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 //  }
 //     // pass the event on to the parent class
 //     return QMainWindow::eventFilter(obj, event);
-}
+//}
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
       case Qt::Key_P:
-          printf("Key P Pressed!");
+          qDebug() << "Spellbook Toggled!";
           emit toggleSpellbook();
           break;
       case Qt::Key_Enter:

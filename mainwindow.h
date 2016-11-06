@@ -39,7 +39,7 @@ signals:
     void toggleSpellbook();
 
 private:
-    bool eventFilter(QObject *obj, QEvent *event);
+    //bool eventFilter(QObject *obj, QEvent *event);
     void keyPressEvent(QKeyEvent *event);
     Ui::MainWindow *ui;
     QWidget *loginScreen;
