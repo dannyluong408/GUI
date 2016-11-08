@@ -1,12 +1,15 @@
-#include "popupframe.h"
+#include "spellbook.h"
+
+#include <QtGlobal>
 
 
-PopupFrame::PopupFrame(QWidget *parent)
+
+SpellBook::SpellBook(QWidget *parent)
     : QFrame(parent)
 {
     setFrameStyle(QFrame::Box);
     setGeometry(800,200,300,400);
-
+    setObjectName("spellBook");
 
     QPalette* palette = new QPalette();
     palette->setColor(QPalette::Foreground,Qt::red);
@@ -60,7 +63,6 @@ PopupFrame::PopupFrame(QWidget *parent)
                 frameTabs[k-1]->setStyleSheet("background-color: green;");
                 for (int l = 1; l <= 10; l++){
                     int index3 = ((k-1)*10)+(l-1);
-                    qDebug() << index3;
                     spellSlotFrame[index3] = new QFrame(frameTabs[k-1]);
                     spellSlotFrameLayout[index3] = new QHBoxLayout(spellSlotFrame[index3]);
                     spellSlot[index3] = new PushButton(spellSlotFrame[index3]);
@@ -78,9 +80,9 @@ PopupFrame::PopupFrame(QWidget *parent)
     }
 
 
-    QPushButton *testL = new QPushButton(frameTabWidget);
+    testL = new QPushButton(frameTabWidget);
     testL->setObjectName("testL");
-    QPushButton *testR = new QPushButton(frameTabWidget);
+    testR = new QPushButton(frameTabWidget);
     testR->setObjectName(("testR"));
 
     testL->setGeometry(195,340,40,18);
@@ -88,37 +90,59 @@ PopupFrame::PopupFrame(QWidget *parent)
     testL->setText("Left");
     testR->setText("Right");
 
+    connect(frameTabWidget,SIGNAL(currentChanged(int)),this,SLOT(hideButtons(int)));
+    connect(testL,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
+    connect(testR,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
 
-
-    connect(testL,SIGNAL(clicked(bool)),this,SLOT(pageLeft()));
-    connect(testR,SIGNAL(clicked(bool)),this,SLOT(pageRight()));
+    setVisible(false);
 }
 
 
-void PopupFrame::pageLeft(){
-    const int i = frameTabWidget->currentIndex();
-    qDebug() << frameStack[i]->count();
-    if (frameStack[i]->currentIndex() == i){
-        return;
+void SpellBook::hideButtons(int tab){
+    if(frameStack[tab]->count() <= 1){
+       testL->hide();
+       testR->hide();
     }
-    frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()-1);\
-}
-
-void PopupFrame::pageRight(){
-    const int i = frameTabWidget->currentIndex();
-    if(frameStack[i]->currentIndex() == frameStack[i]->count() - 1){
-        return;
+    else{
+        testL->show();
+        testR->show();
     }
-    frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()+1);\
 }
 
-PopupFrame::~PopupFrame(){
+void SpellBook::pageTurn(){
+    QPushButton *check = qobject_cast<QPushButton*>(sender());
+    const int i = frameTabWidget->currentIndex();
+    if (check && check->objectName() == "testL"){
+        if (frameStack[i]->currentIndex() == i){
+            QMessageBox *msgBox = new QMessageBox(this);
+            msgBox->setText("Already at first page cant go left!");
+            msgBox->setIcon(QMessageBox::Warning);
+            msgBox->exec();
+            return;
+        }
+        frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()-1);\
+
+    }
+    else if (check && check->objectName() == "testR"){
+        if(frameStack[i]->currentIndex() == frameStack[i]->count() - 1){
+            QMessageBox *msgBox = new QMessageBox(this);
+            msgBox->setIcon(QMessageBox::Warning);
+            msgBox->setText("Already at last page cant go right!");
+            msgBox->exec();
+            return;
+        }
+        frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()+1);
+    }
+}
+
+
+SpellBook::~SpellBook(){
 
 }
 
 
 
-void PopupFrame::resizeMe(QSize newSize){
+void SpellBook::resizeMe(QSize newSize){
     double scale_factor_x = (double)800 / (double)1200;
     double scale_factor_y = (double)200 / (double)900;
     double scale_factor_w = (double)300 / (double)1200;
@@ -146,10 +170,6 @@ void PopupFrame::resizeMe(QSize newSize){
                                                                        newSize.height()*scale_factor_h);
      }
 
-}
-
-void PopupFrame::toggleMe(){
-    isVisible()?hide():show();
 }
 
 

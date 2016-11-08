@@ -14,6 +14,12 @@ class Menubar: public QFrame
     public slots:
         void resizeMe(QSize newSize);
 
+    private slots:
+        void toggleThis();
+
+    signals:
+        void openMenu();
+
     private:
         PushButton *menuButton[5];
 

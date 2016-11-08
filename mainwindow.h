@@ -5,7 +5,7 @@
 
 #include <QMainWindow>
 #include "actionbar.h"
-
+#include <QHostInfo>
 
 
 namespace Ui {
@@ -29,22 +29,25 @@ public:
 
 
 public slots:
+    void test(QString name);
 
 private slots:
     void castSpell(int buttonPos);
     void login();
+    void update();
+    void lookedUp(const QHostInfo &host);
 
 signals:
     void newSize(QSize newSize);
     void toggleSpellbook();
 
 private:
-    //bool eventFilter(QObject *obj, QEvent *event);
     void keyPressEvent(QKeyEvent *event);
     Ui::MainWindow *ui;
     QWidget *loginScreen;
     ActionBar *actionBar[2];
     int numBars;
+    QTimer timer;
 };
 
 #endif // MAINWINDOW_H

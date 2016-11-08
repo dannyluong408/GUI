@@ -12,7 +12,7 @@ UnitFrame::UnitFrame(QWidget *parent)
     health->setGeometry(80,0,150,40);
     mana->setGeometry(80,40,150,40);
 
-    avatar = QPixmap(":/ui/images/panda2.jpg");
+    avatar = QPixmap(":/ui/images/oldguy.ico");
     unitIcon->setPixmap(avatar.scaled(80,80,Qt::IgnoreAspectRatio));
     unitIcon->setContentsMargins(0, 0, 0, 0);
     unitIcon->setStyleSheet("border: 1px solid black;");

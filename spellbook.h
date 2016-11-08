@@ -1,5 +1,5 @@
-#ifndef POPUPFRAME_H
-#define POPUPFRAME_H
+#ifndef SpellBook_H
+#define SpellBook_H
 
 #pragma once
 
@@ -8,20 +8,19 @@
 
 
 
-class PopupFrame : public QFrame
+class SpellBook : public QFrame
 {
     Q_OBJECT
     public:
-        PopupFrame(QWidget *parent);
-        ~PopupFrame();
+        SpellBook(QWidget *parent);
+        ~SpellBook();
 
     public slots:
         void resizeMe(QSize newSize);
-        void toggleMe();
+        void hideButtons(int tab);
 
     private slots:
-        void pageLeft();
-        void pageRight();
+        void pageTurn();
 
     private:
         QLabel *frameTitle;
@@ -35,7 +34,8 @@ class PopupFrame : public QFrame
         QLabel *spellSlotDesc[60];
         QVBoxLayout *mainLayout;
         uint32_t spellCount;
+        QPushButton *testL,*testR;
 };
 
 
-#endif // POPUPFRAME_H
+#endif // SpellBook_H

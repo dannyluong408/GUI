@@ -6,7 +6,7 @@
 #include <QtWidgets>
 
 
-class Chatbox: public QTextEdit
+class Chatbox: public QFrame
 {
     Q_OBJECT
     public:
@@ -14,6 +14,12 @@ class Chatbox: public QTextEdit
 
     public slots:
         void resizeMe(QSize size);
+
+    private:
+        QVBoxLayout *mainLayout;
+        QTabWidget *chatTabs;
+        QVector<QWidget*> chatTabFrames;
+        QTextEdit *chatInput;
 
 };
 

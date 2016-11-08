@@ -3,7 +3,6 @@
 
 #include <QtWidgets>
 #include "bufficon.h"
-#include <vector>
 
 
 class BuffFrame : public QFrame
@@ -11,14 +10,19 @@ class BuffFrame : public QFrame
     Q_OBJECT
     public:
         BuffFrame(QWidget *parent);
-        void insertBuff(BuffIcon* buff);
+//      void insertBuff(BuffIcon* buff);
 //      void removeBuff(BuffIcon* buff);
+        void test();
+
+        void sort();
+
 
     public slots:
         void resizeMe(QSize newSize);
 
     private:
-        std::vector<BuffIcon*> buffs;
+        QGridLayout *buffLayout;
+        QVector<BuffIcon*> buffs;
 };
 
 
