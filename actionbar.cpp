@@ -6,19 +6,14 @@ ActionBar::ActionBar(QWidget *parent)
     : QWidget(parent)
 {
     setAcceptDrops(true);
-    setFixedSize(50*NUMBUTTONS,50);
+    resize(50*NUMBUTTONS,50);
+    setStyleSheet("border-color:black;");
 
     buttonGroup = new QButtonGroup;
 
     for (int i = 0 ; i < NUMBUTTONS; i++){
         buttonSet[i] = new PushButton(this);
         buttonSet[i]->move(50*i,0);
-
-        QSizePolicy sizePolicy3(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(buttonSet[i]->sizePolicy().hasHeightForWidth());
-        buttonSet[i]->setSizePolicy(sizePolicy3);
         QIcon icon;
         icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
         buttonSet[i]->setIcon(icon);
@@ -27,18 +22,25 @@ ActionBar::ActionBar(QWidget *parent)
         buttonGroup->addButton(buttonSet[i]);
         buttonGroup->setId(buttonSet[i], i+1);
     }
-
 }
 
 
 
 void ActionBar::resizeMe(QSize newSize){
-    const double scale_factor = (double)50 / (double)1080;
-    double size = newSize.height()*scale_factor;
+    double scale_factor_x  = (50.0*NUMBUTTONS)/1200.0;
+    const double scale_factor_y = 50.0/900.0;
 
+    resize(newSize.width()*scale_factor_x,
+           newSize.height()*scale_factor_y);
+
+
+    scale_factor_x  = 50.0/1200.0;
     for (int i = 0; i < NUMBUTTONS; i++){
          buttonSet[i]->resizeMe(newSize);
-         buttonSet[i]->setGeometry((size*i),0,size,size);
+         buttonSet[i]->setGeometry((newSize.width()*scale_factor_x*(double)i),
+                                   0,
+                                   newSize.width()*scale_factor_x,
+                                   newSize.height()*scale_factor_y);
     }
 }
 

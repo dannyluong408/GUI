@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     dragpushbutton.cpp \
     actionbar.cpp \
     bufficon.cpp \
-    buffframe.cpp \
     unitframe.cpp \
     progressbar.cpp \
     chatbox.cpp \
@@ -38,14 +37,16 @@ SOURCES += main.cpp\
     gamemenu.cpp \
     spellbook.cpp \
     guildframe.cpp \
-    options.cpp
+    options.cpp \
+    playerbuffframe.cpp \
+    targetbuffframe.cpp \
+    partyframe.cpp
 
 HEADERS  += mainwindow.h \
     dragwidget.h \
     dragpushbutton.h \
     actionbar.h \
     bufficon.h \
-    buffframe.h \
     unitframe.h \
     progressbar.h \
     chatbox.h \
@@ -60,7 +61,10 @@ HEADERS  += mainwindow.h \
     gamemenu.h \
     spellbook.h \
     guildframe.hpp \
-    options.hpp
+    options.hpp \
+    playerbuffframe.hpp \
+    targetbuffframe.hpp \
+    partyframe.hpp
 
 FORMS    += mainwindow.ui
 

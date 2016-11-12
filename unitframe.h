@@ -13,15 +13,20 @@ class UnitFrame : public QFrame
     public:
         UnitFrame(QWidget *parent);
         void setAvatar(QPixmap newAva);
+        void setIsParty(bool party);
+        void setScale(double scale);
 
     public slots:
         void resizeMe(QSize newSize);
 
     private:
-        QLabel *unitIcon;
+        QLabel *unitIcon, *name;
         QProgressBar *health;
         QProgressBar *mana;
         QPixmap avatar;
+        QString unitName;
+        bool isParty;
+        double partyScale;
 };
 
 

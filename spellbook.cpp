@@ -15,6 +15,7 @@ SpellBook::SpellBook(QWidget *parent)
     palette->setColor(QPalette::Foreground,Qt::red);
     setPalette(*palette);
 
+
     mainLayout = new QVBoxLayout(this);
     frameTitle = new QLabel(this);
     frameTabWidget = new QTabWidget(this);
@@ -28,6 +29,13 @@ SpellBook::SpellBook(QWidget *parent)
     frameTitle->setStyleSheet("border: 1px solid black;"
                               "background-color: cyan;"
                               "font-weight: bold;");
+
+    x = new QPushButton(this);
+    x->setText("X");
+    x->setGeometry(284,1,15,15);
+    x->show();
+    connect(x,SIGNAL(clicked(bool)),this,SLOT(hide()));
+
 
     for(int i=1; i<=4; i++){
         int index1 = i - 1;
@@ -46,8 +54,8 @@ SpellBook::SpellBook(QWidget *parent)
             spellSlot[index2] = new PushButton(spellSlotFrame[index2]);
             spellSlotDesc[index2] = new QLabel(spellSlotFrame[index2]);
             spellSlotDesc[index2]->setWordWrap(true);
-            QString test = QString("Spell %1").arg(index2);
-            spellSlotDesc[index2]->setText(test);
+            QString name = QString("Spell %1").arg(index2);
+            spellSlotDesc[index2]->setText(name);
             spellSlotDesc[index2]->setStyleSheet("border: 1px solid black;");
             spellSlotFrameLayout[index2]->addWidget(spellSlot[index2]);
             spellSlotFrameLayout[index2]->addWidget(spellSlotDesc[index2]);
@@ -68,8 +76,8 @@ SpellBook::SpellBook(QWidget *parent)
                     spellSlot[index3] = new PushButton(spellSlotFrame[index3]);
                     spellSlotDesc[index3] = new QLabel(spellSlotFrame[index3]);
                     spellSlotDesc[index3]->setWordWrap(true);
-                    QString test = QString("Spell %1").arg(index3);
-                    spellSlotDesc[index3]->setText(test);
+                    QString name= QString("Spell %1").arg(index3);
+                    spellSlotDesc[index3]->setText(name);
                     spellSlotDesc[index3]->setStyleSheet("border: 1px solid black;");
                     spellSlotFrameLayout[index3]->addWidget(spellSlot[index3]);
                     spellSlotFrameLayout[index3]->addWidget(spellSlotDesc[index3]);
@@ -80,39 +88,41 @@ SpellBook::SpellBook(QWidget *parent)
     }
 
 
-    testL = new QPushButton(frameTabWidget);
-    testL->setObjectName("testL");
-    testR = new QPushButton(frameTabWidget);
-    testR->setObjectName(("testR"));
+    pageL = new QPushButton(frameTabWidget);
+    pageL->setObjectName("pageL");
+    pageR = new QPushButton(frameTabWidget);
+    pageR->setObjectName(("pageR"));
 
-    testL->setGeometry(195,340,40,18);
-    testR->setGeometry(235,340,40,18);
-    testL->setText("Left");
-    testR->setText("Right");
+    pageL->setGeometry(195,340,40,18);
+    pageR->setGeometry(235,340,40,18);
+    pageL->setText("Left");
+    pageR->setText("Right");
 
     connect(frameTabWidget,SIGNAL(currentChanged(int)),this,SLOT(hideButtons(int)));
-    connect(testL,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
-    connect(testR,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
+    connect(pageL,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
+    connect(pageR,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
 
     setVisible(false);
 }
 
-
+void SpellBook::hide(){
+    setVisible(false);
+}
 void SpellBook::hideButtons(int tab){
     if(frameStack[tab]->count() <= 1){
-       testL->hide();
-       testR->hide();
+       pageL->hide();
+       pageR->hide();
     }
     else{
-        testL->show();
-        testR->show();
+        pageL->show();
+        pageR->show();
     }
 }
 
 void SpellBook::pageTurn(){
     QPushButton *check = qobject_cast<QPushButton*>(sender());
     const int i = frameTabWidget->currentIndex();
-    if (check && check->objectName() == "testL"){
+    if (check && check->objectName() == "pageL"){
         if (frameStack[i]->currentIndex() == i){
             QMessageBox *msgBox = new QMessageBox(this);
             msgBox->setText("Already at first page cant go left!");
@@ -123,7 +133,7 @@ void SpellBook::pageTurn(){
         frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()-1);\
 
     }
-    else if (check && check->objectName() == "testR"){
+    else if (check && check->objectName() == "pageR"){
         if(frameStack[i]->currentIndex() == frameStack[i]->count() - 1){
             QMessageBox *msgBox = new QMessageBox(this);
             msgBox->setIcon(QMessageBox::Warning);
@@ -134,13 +144,6 @@ void SpellBook::pageTurn(){
         frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()+1);
     }
 }
-
-
-SpellBook::~SpellBook(){
-
-}
-
-
 
 void SpellBook::resizeMe(QSize newSize){
     double scale_factor_x = (double)800 / (double)1200;
@@ -158,17 +161,20 @@ void SpellBook::resizeMe(QSize newSize){
     scale_factor_h = (double)18 / (double)900;
     const double scale_factor_offset = (double) 40 / (double)1200;
 
-    if (frameTabWidget->findChild<QPushButton *>("testL") && frameTabWidget->findChild<QPushButton *>("testR")){
-        frameTabWidget->findChild<QPushButton *>("testL")->setGeometry(newSize.width()*scale_factor_x,
-                                                                       newSize.height()*scale_factor_y,
-                                                                       newSize.width()*scale_factor_w,
-                                                                       newSize.height()*scale_factor_h);
-        frameTabWidget->findChild<QPushButton *>("testR")->setGeometry(newSize.width()*scale_factor_x+
-                                                                       newSize.width()*scale_factor_offset,
-                                                                       newSize.height()*scale_factor_y,
-                                                                       newSize.width()*scale_factor_w,
-                                                                       newSize.height()*scale_factor_h);
-     }
+    if (frameTabWidget->findChild<QPushButton *>("pageL") &&
+            frameTabWidget->findChild<QPushButton *>("pageR")){
+        frameTabWidget->findChild<QPushButton *>("pageL")->
+                setGeometry(newSize.width()*scale_factor_x,
+                           newSize.height()*scale_factor_y,
+                           newSize.width()*scale_factor_w,
+                           newSize.height()*scale_factor_h);
+        frameTabWidget->findChild<QPushButton *>("pageR")->
+                setGeometry(newSize.width()*scale_factor_x+
+                           newSize.width()*scale_factor_offset,
+                           newSize.height()*scale_factor_y,
+                           newSize.width()*scale_factor_w,
+                           newSize.height()*scale_factor_h);
+    }
 
 }
 

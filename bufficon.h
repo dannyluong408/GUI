@@ -15,6 +15,7 @@ class BuffIcon : public QLabel
         void setOGPix(const QPixmap *ogPix);
         void setBuffDuration(uint64_t time);
         uint64_t getBuffDuration() const;
+        void setIsPlayer(bool player);
 
     public slots:
         void resizeMe(QSize newSize);
@@ -24,6 +25,7 @@ class BuffIcon : public QLabel
         uint32_t buff_type;
         QPixmap origPix;
         uint64_t end_time;
+        bool isPlayer;
 };
 
 

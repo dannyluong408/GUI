@@ -13,11 +13,11 @@ class SpellBook : public QFrame
     Q_OBJECT
     public:
         SpellBook(QWidget *parent);
-        ~SpellBook();
 
     public slots:
         void resizeMe(QSize newSize);
         void hideButtons(int tab);
+        void hide();
 
     private slots:
         void pageTurn();
@@ -34,7 +34,7 @@ class SpellBook : public QFrame
         QLabel *spellSlotDesc[60];
         QVBoxLayout *mainLayout;
         uint32_t spellCount;
-        QPushButton *testL,*testR;
+        QPushButton *pageL,*pageR,*x;
 };
 
 

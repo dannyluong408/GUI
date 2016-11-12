@@ -9,8 +9,10 @@ GuildFrame::GuildFrame(QWidget *parent)
     setObjectName("guildFrame");
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
-    setGeometry(150,250,300,400);
-    setStyleSheet("border: 1px solid black;");
+    setGeometry(200,200,300,400);
+    setStyleSheet("border: 1px solid black;"
+                  "background-color: white;");
+
 
     guild_name = new QLabel(this);
     guild_name->setText("Both My Dads Play Druids");

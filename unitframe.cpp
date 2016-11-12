@@ -3,18 +3,27 @@
 UnitFrame::UnitFrame(QWidget *parent)
     : QFrame(parent)
 {
-    resize(230,80);
+    resize(250,100);
     unitIcon = new QLabel(this);
     health = new QProgressBar(this);
     mana = new QProgressBar(this);
+    name = new QLabel(this);
+    setStyleSheet("border: 1px solid black;");
 
-    unitIcon->setGeometry(0,0,80,80);
-    health->setGeometry(80,0,150,40);
-    mana->setGeometry(80,40,150,40);
+    name->setGeometry(100,0,150,20);
+    unitName = "Gamer";
+    name->setText(unitName);
+    name->setAlignment(Qt::AlignCenter);
+
+    unitIcon->setGeometry(0,0,100,100);
+    health->setGeometry(100,20,150,40);
+    mana->setGeometry(100,60,150,40);
+
+
 
     avatar = QPixmap(":/ui/images/oldguy.ico");
-    unitIcon->setPixmap(avatar.scaled(80,80,Qt::IgnoreAspectRatio));
-    unitIcon->setContentsMargins(0, 0, 0, 0);
+    unitIcon->setPixmap(avatar.scaled(99,99,Qt::IgnoreAspectRatio));
+    unitIcon->setContentsMargins(1, 1, 1, 1);
     unitIcon->setStyleSheet("border: 1px solid black;");
 
     health->setRange(0,100);
@@ -38,45 +47,100 @@ UnitFrame::UnitFrame(QWidget *parent)
                           "QProgressBar::chunk {"
                           "background-color: #2E64FE;"
                           "}");
+    partyScale = 1;
+    isParty = false;
+}
+
+void UnitFrame::setIsParty(bool party){
+    isParty = party;
+}
+
+void UnitFrame::setScale(double scale){
+    partyScale = scale;
 }
 
 void UnitFrame::resizeMe(QSize newSize){ //todo
-//    const double scale_factor = (double)32 / (double)1080;
-//    resize(QSize(newSize.height()*scale_factor , newSize.height()*scale_factor));
+    double scale_factor_icon_w;
+    double scale_factor_icon_h;
+    double scale_factor_h;
+    double scale_factor_name_h;
+    double scale_factor_w;
+    double scale_factor_mana_y;
+    double sf_frame_w;
+    double sf_frame_h;
 
-    const double scale_factor_icon = (double)80 / double(1080);
-    const double scale_factor_h = (double)40 / (double)1080;
-    const double scale_factor_w = (double)150 / (double)1080;
 
+    if(!isParty){
+        scale_factor_icon_w = (double)100 / (double)1200;
+        scale_factor_icon_h = (double)100 / (double)900;
+        scale_factor_h = (double)40 / (double)900;
+        scale_factor_name_h = (double)20 / (double)900;
+        scale_factor_w = (double)150 / (double)1200;
+        scale_factor_mana_y = (double)60 / (double)900;
+        sf_frame_w = (double)250 / (double)1200;
+        sf_frame_h = (double)100 / (double)900;
 
-    //todo fix icon scaling too
-    unitIcon->setPixmap(avatar.scaled(newSize.width()*scale_factor_icon,
-                                      newSize.height()*scale_factor_icon,
-                                      Qt::IgnoreAspectRatio));
-//    unitIcon->resize(newSize.width()*scale_factor_icon,newSize.height()*scale_factor_icon);
-//    health->resize(newSize.width()*scale_factor_w,newSize.height()*scale_factor_h);
-//    mana->resize(newSize.width()*scale_factor_w,newSize.height()*scale_factor_h);
-    unitIcon->setGeometry(0,0,
-                          newSize.width()*scale_factor_icon,
-                          newSize.height()*scale_factor_icon);
-    health->setGeometry(newSize.width()*scale_factor_icon,
-                        0,
-                        newSize.width()*scale_factor_w,
-                        newSize.height()*scale_factor_h);
-    mana->setGeometry(newSize.width()*scale_factor_icon,
-                      newSize.height()*scale_factor_h,
-                      newSize.width()*scale_factor_w,
-                      newSize.height()*scale_factor_h);
+        //todo fix icon scaling too
+        unitIcon->setPixmap(avatar.scaled(newSize.width()*scale_factor_icon_w,
+                                          newSize.height()*scale_factor_icon_h,
+                                          Qt::IgnoreAspectRatio));
 
-    resize(newSize.width()*scale_factor_icon+
-           newSize.width()*scale_factor_w,
-           newSize.height()*scale_factor_h*2);
+        name->setGeometry(newSize.width()*scale_factor_icon_w,
+                          0,
+                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_name_h);
 
-//    health->move(newSize.width()*scale_factor_icon,0);
-//    mana->move(newSize.width()*scale_factor_icon,
-//               newSize.height()*scale_factor_h);
+        unitIcon->setGeometry(0,0,
+                              newSize.width()*scale_factor_icon_w,
+                              newSize.height()*scale_factor_icon_h);
+        health->setGeometry(newSize.width()*scale_factor_icon_w,
+                            newSize.height()*scale_factor_name_h,
+                            newSize.width()*scale_factor_w,
+                            newSize.height()*scale_factor_h);
+        mana->setGeometry(newSize.width()*scale_factor_icon_w,
+                          newSize.height()*scale_factor_mana_y,
+                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_h);
 
-    //qDebug() << unitIcon->size() << health->size() << mana->size();
+        resize(newSize.width()*sf_frame_w,
+              newSize.height()*sf_frame_h);
+    }
+    else{
+        scale_factor_icon_w = ((double)100 * partyScale)/ (double)1200;
+        scale_factor_icon_h = ((double)100 * partyScale)/ (double)900;
+        scale_factor_h = ((double)40 * partyScale)/ (double)900;
+        scale_factor_name_h = ((double)20* partyScale) / (double)900;
+        scale_factor_w = ((double)150* partyScale) / (double)1200;
+        scale_factor_mana_y = ((double)60* partyScale) / (double)900;
+        sf_frame_w = ((double)250 * partyScale) / (double)1200;
+        sf_frame_h = ((double)100 * partyScale)/ (double)900;
+
+        //todo fix icon scaling too
+        unitIcon->setPixmap(avatar.scaled(newSize.width()*scale_factor_icon_w,
+                                          newSize.height()*scale_factor_icon_h,
+                                          Qt::IgnoreAspectRatio));
+
+        name->setGeometry(newSize.width()*scale_factor_icon_w,
+                          0,
+                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_name_h);
+
+        unitIcon->setGeometry(0,0,
+                              newSize.width()*scale_factor_icon_w,
+                              newSize.height()*scale_factor_icon_h);
+        health->setGeometry(newSize.width()*scale_factor_icon_w,
+                            newSize.height()*scale_factor_name_h,
+                            newSize.width()*scale_factor_w,
+                            newSize.height()*scale_factor_h);
+        mana->setGeometry(newSize.width()*scale_factor_icon_w,
+                          newSize.height()*scale_factor_mana_y,
+                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_h);
+
+        resize(newSize.width()*sf_frame_w,
+              newSize.height()*sf_frame_h);
+    }
+
 }
 
 void UnitFrame::setAvatar(QPixmap newAva){

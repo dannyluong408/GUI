@@ -1,43 +1,51 @@
-#include "buffframe.h"
+#include "targetbuffframe.hpp"
 #include <QtGlobal>
 
 static bool lessThan(const BuffIcon* e1, const BuffIcon* e2){
     return e1->getBuffDuration() < e2->getBuffDuration();
 }
 
-BuffFrame::BuffFrame(QWidget *parent)
+TargetBuffFrame::TargetBuffFrame(QWidget *parent)
     : QFrame(parent)
 {
-    setObjectName(QStringLiteral("buffFrame"));
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
     resize(250,25);
     buffLayout = new QGridLayout(this);
-    buffLayout->setSpacing(5);
-    buffLayout->setMargin(0);
-
+    buffLayout->setSpacing(1);
+    buffLayout->setMargin(1);
+    setStyleSheet("border: none");
+    isDebuff = false;
     test();
     sort();
 }
 
-void BuffFrame::resizeMe(QSize newSize) {
-    const double scale_factor = (double)25 / (double)1080;
-    resize(QSize(newSize.height()*scale_factor , newSize.height()*scale_factor));
-    const int minsize = (newSize.height() > newSize.width()) ? newSize.width() : newSize.height();
-    //reposition here
-    int count = 0;
-    for (BuffIcon* i: buffs) {
-       i->move(QPoint(scale_factor*minsize*count,100*scale_factor));
-       count++;
+void TargetBuffFrame::shiftMe(bool shift){
+    if (shift && this->isDebuff){
+        this->move(this->pos().x(),this->pos().y()+42);
+    }
+    else if (!shift && this->isDebuff){
+        this->move(this->pos().x(),this->pos().y()-42);
     }
 }
 
-void BuffFrame::sort(){
+void TargetBuffFrame::setAsDebuff(bool state){
+    isDebuff = state;
+}
+
+void TargetBuffFrame::resizeMe(QSize newSize) {
+    const double scale_factor_w = (double)250 / (double)1200;
+    const double scale_factor_h = (double)25 / (double)900;
+    resize(QSize(newSize.width()*scale_factor_w , newSize.height()*scale_factor_h));
+
+}
+
+void TargetBuffFrame::sort(){
     qSort(buffs.begin(),buffs.end(),lessThan);
 
     delete(buffLayout);
     buffLayout = new QGridLayout(this);
-    buffLayout->setSpacing(5);
+    buffLayout->setSpacing(3);
     buffLayout->setMargin(0);
 
     BuffIcon **temp = buffs.data();
@@ -46,7 +54,7 @@ void BuffFrame::sort(){
     }
 }
 
-void BuffFrame::test(){
+void TargetBuffFrame::test(){
     for(int i = buffs.size(); i < 10; i++){
         BuffIcon *buff = new BuffIcon(this);
         switch(i%4){

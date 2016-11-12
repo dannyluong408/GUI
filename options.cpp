@@ -5,7 +5,8 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     : QFrame(parent)
 {
     resize(525,450);
-    setStyleSheet("border: 2px solid black;");
+    setStyleSheet("border: 2px solid black;"
+                  "background-color: white;");
     setObjectName("optionsFrame");
     move(600 - this->width()/2, 450 - this->height()/2);
     hide();
@@ -16,7 +17,8 @@ OptionsFrame::OptionsFrame(QWidget *parent)
 
     buttonFrame = new QFrame(this);
     buttonFrame->setFixedSize(75,450);
-    buttonFrame->setStyleSheet("border-right: none;");
+    buttonFrame->setStyleSheet("border-right: none;"
+                               "border-bottom:5px solid black;");
 
     buttonLayout = new QVBoxLayout(buttonFrame);
     buttonLayout->setSpacing(1);
@@ -29,7 +31,6 @@ OptionsFrame::OptionsFrame(QWidget *parent)
         switch (i){
             case 0:
                options[i]->setObjectName("Video");
-               options[i]->setStyleSheet("border-right: 5px solid white;");
                break;
             case 1:
                options[i]->setObjectName("Sound");
@@ -86,12 +87,14 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                 break;
             case 5:
               optionFrame[j]->setObjectName("Macros");
-              optionFrame[j]->setStyleSheet("background: solid yellow;");
+              optionFrame[j]->setStyleSheet("background: solid yellow;"
+                                            "border-bottom: 5px solid black;");
                 break;
         }
 
         optionsStacked->addWidget(optionFrame[j]);
     }
+    options[0]->setStyleSheet("border-right: 5px solid white;");
 }
 
 void OptionsFrame::currentOption(){

@@ -4,18 +4,36 @@
 BuffIcon::BuffIcon(QWidget *parent)
     : QLabel(parent)
 {
-    resize(24,24);
+    resize(25,25);
     buffID = 0;
+    isPlayer = false;
 }
 
 void BuffIcon::resizeMe(QSize newSize){
-    const double scale_factor = (double)24 / (double)1080;
-    double size = newSize.height()*scale_factor;
-    resize(QSize(size,size));
-    setPixmap(origPix.scaled(size,size,Qt::KeepAspectRatio));
+    double scale_factor_w = (double)25/ (double)1200;
+    double scale_factor_h = (double)25/ (double)900;
+    if (!isPlayer){ //target size
+        resize(newSize.width()*scale_factor_w,
+               newSize.height()*scale_factor_h);
+        setPixmap(origPix.scaled(newSize.width()*scale_factor_w,
+                                 newSize.height()*scale_factor_h,
+                                 Qt::KeepAspectRatio));
+    }
+    else{ //player size
+        scale_factor_w = (double)42 / (double)1200;
+        scale_factor_h = (double)42 / (double)900;
+        resize(newSize.width()*scale_factor_w,
+               newSize.height()*scale_factor_h);
+        setPixmap(origPix.scaled(newSize.width()*scale_factor_w,
+                                 newSize.height()*scale_factor_h,
+                                 Qt::KeepAspectRatio));
+    }
 }
 
 
+void BuffIcon::setIsPlayer(bool player){
+    isPlayer = player;
+}
 
 void BuffIcon::setOGPix(const QPixmap *ogPix){
    origPix = *ogPix;
