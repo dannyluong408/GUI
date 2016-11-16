@@ -93,7 +93,6 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Just a Key Detected";
         qDebug() << QKeySequence(event->key()).toString();
         if(event->key() == Qt::Key_Escape){
-            qDebug() << "Escaped";
             event->ignore();
         }
         delete(this);
@@ -103,7 +102,6 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
 
 void KeybindDialog::keyPressEvent(QKeyEvent *event){
     if (event->key() == Qt::Key_Escape){
-        qDebug() << "Esc pressed down";
         event->ignore();
     }
 }
