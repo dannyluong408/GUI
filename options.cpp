@@ -74,8 +74,8 @@ OptionsFrame::OptionsFrame(QWidget *parent)
         if(j == 4){
             keybindMenu = new KeybindMenu(optionsStacked);
             keybindMenu->resize(450,450);
-            connect(keybindMenu,SIGNAL(disableShortcut()),this,SLOT(disableShortcutsRec()));
-            connect(keybindMenu,SIGNAL(enableShortcut()),this,SLOT(enableShortcutsRec()));
+            connect(keybindMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcutsRec()));
+            connect(keybindMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcutsRec()));
             optionsStacked->addWidget(keybindMenu);
         }
 
