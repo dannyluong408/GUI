@@ -17,6 +17,7 @@ class SpellBook : public QFrame
     public slots:
         void resizeMe(QSize newSize);
         void hideButtons(int tab);
+        void greyButtons(int index);
         void hide();
 
     private slots:

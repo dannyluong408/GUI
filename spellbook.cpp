@@ -46,6 +46,7 @@ SpellBook::SpellBook(QWidget *parent)
         frameTabWidget->addTab(frameStack[index1],QString("Tab %1").arg(i));
         frameTabs[index1]->setPalette(*palette);
         frameTabs[index1]->setStyleSheet("background-color: green;");
+        connect(frameStack[index1],SIGNAL(currentChanged(int)),this,SLOT(greyButtons(int)));
 
         for (int j = 1; j <= 10; j++){
             int index2 = (index1*10)+(j-1);
@@ -102,6 +103,7 @@ SpellBook::SpellBook(QWidget *parent)
     connect(pageL,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
     connect(pageR,SIGNAL(clicked(bool)),this,SLOT(pageTurn()));
 
+    greyButtons(0);
     setVisible(false);
 }
 
@@ -117,30 +119,37 @@ void SpellBook::hideButtons(int tab){
         pageL->show();
         pageR->show();
     }
+    if(frameStack[tab]->currentIndex() ==  0){
+        pageL->hide();
+    }
+    if(frameStack[tab]->currentIndex() ==  frameStack[tab]->count()-1){
+        pageR->hide();
+    }
+}
+
+void SpellBook::greyButtons(int index){
+   const int i = frameTabWidget->currentIndex();
+   if (index == 0){
+       pageL->hide();
+   }
+   if (index == frameStack[i]->count()-1){
+       pageR->hide();
+   }
+   if (index != 0 && index != frameStack[i]->count()-1){
+       pageL->show();
+       pageR->show();
+   }
+
 }
 
 void SpellBook::pageTurn(){
     QPushButton *check = qobject_cast<QPushButton*>(sender());
     const int i = frameTabWidget->currentIndex();
     if (check && check->objectName() == "pageL"){
-        if (frameStack[i]->currentIndex() == i){
-            QMessageBox *msgBox = new QMessageBox(this);
-            msgBox->setText("Already at first page cant go left!");
-            msgBox->setIcon(QMessageBox::Warning);
-            msgBox->exec();
-            return;
-        }
         frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()-1);\
 
     }
     else if (check && check->objectName() == "pageR"){
-        if(frameStack[i]->currentIndex() == frameStack[i]->count() - 1){
-            QMessageBox *msgBox = new QMessageBox(this);
-            msgBox->setIcon(QMessageBox::Warning);
-            msgBox->setText("Already at last page cant go right!");
-            msgBox->exec();
-            return;
-        }
         frameStack[i]->setCurrentIndex(frameStack[i]->currentIndex()+1);
     }
 }
@@ -176,6 +185,14 @@ void SpellBook::resizeMe(QSize newSize){
                            newSize.height()*scale_factor_h);
     }
 
+    scale_factor_x = 284.0 / 1200.0;
+    scale_factor_y = 1.0 / 900.0;
+    scale_factor_w = 15.0 / 1200.0;
+    scale_factor_h = 15.0 / 900.0;
+    x->setGeometry(newSize.width()*scale_factor_x,
+                  newSize.height()*scale_factor_y,
+                  newSize.width()*scale_factor_w,
+                  newSize.height()*scale_factor_h);
 }
 
 

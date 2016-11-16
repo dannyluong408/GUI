@@ -11,14 +11,17 @@ class GuildFrame : public QFrame
     public:
         GuildFrame(QWidget *parent);
     public slots:
+        void resizeMe(QSize size);
         void hide();
 
     private:
-        QLabel *guild_name,*online,*meme;
+        QLabel *guildName,*online,*guildLogo;
         QPushButton *x,*info,*settings,*add;
         QTableView *guildTable;
         QCheckBox *showOffline;
         QTextBrowser *gmotd;
+        QTableView *view;\
+        QPixmap guildLogoPix;
 };
 
 

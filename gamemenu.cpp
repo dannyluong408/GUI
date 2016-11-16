@@ -43,6 +43,30 @@ GameMenu::GameMenu(QWidget *parent)
     setVisible(false);
 }
 
+
+void GameMenu::resizeMe(QSize newSize){
+    double scale_factor_w = 100.0/1200.0;
+    double scale_factor_h = 220.0/900.0;
+
+    resize(newSize.width()*scale_factor_w,
+           newSize.height()*scale_factor_h);
+
+//    scale_factor_h = 200.0/900.0;
+//    layoutFrame->resize(newSize.width()*scale_factor_w,
+//                          newSize.height()*scale_factor_h);
+
+    scale_factor_h = 22.0/900.0;
+    frameLabel->resize(newSize.width()*scale_factor_w,
+                   newSize.height()*scale_factor_h);
+
+    scale_factor_h = 25.0/900.0;
+    for(int i = 0;i<8;i++){
+        options[i]->resize(newSize.width()*scale_factor_w,
+                           newSize.height()*scale_factor_h);
+    }
+
+}
+
 void GameMenu::openOption(){
     QString name = sender()->objectName();
     name.remove(QString("option"));
@@ -75,3 +99,5 @@ void GameMenu::openOption(){
             break;
     }
 }
+
+

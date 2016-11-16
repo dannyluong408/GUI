@@ -15,6 +15,7 @@ class GameMenu : public QFrame
 
     public slots:
         void openOption();
+        void resizeMe(QSize newSize);
 
     signals:
         void openThis(QString name);

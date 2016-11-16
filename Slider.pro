@@ -26,7 +26,6 @@ SOURCES += main.cpp\
     bufficon.cpp \
     unitframe.cpp \
     progressbar.cpp \
-    chatbox.cpp \
     menubar.cpp \
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
@@ -40,7 +39,12 @@ SOURCES += main.cpp\
     options.cpp \
     playerbuffframe.cpp \
     targetbuffframe.cpp \
-    partyframe.cpp
+    partyframe.cpp \
+    honorframe.cpp \
+    chatframe.cpp \
+    textedit.cpp \
+    keybindmenu.cpp \
+    keybinddialog.cpp
 
 HEADERS  += mainwindow.h \
     dragwidget.h \
@@ -49,7 +53,6 @@ HEADERS  += mainwindow.h \
     bufficon.h \
     unitframe.h \
     progressbar.h \
-    chatbox.h \
     menubar.h \
     modules/buffs_module.h \
     modules/spell_module.h \
@@ -64,7 +67,13 @@ HEADERS  += mainwindow.h \
     options.hpp \
     playerbuffframe.hpp \
     targetbuffframe.hpp \
-    partyframe.hpp
+    partyframe.hpp \
+    honorframe.hpp \
+    chatframe.hpp \
+    textedit.hpp \
+    keybindmenu.hpp \
+    miscenum.hpp \
+    keybindialog.hpp
 
 FORMS    += mainwindow.ui
 

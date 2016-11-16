@@ -13,22 +13,21 @@ GuildFrame::GuildFrame(QWidget *parent)
     setStyleSheet("border: 1px solid black;"
                   "background-color: white;");
 
-
-    guild_name = new QLabel(this);
-    guild_name->setText("Both My Dads Play Druids");
-    guild_name->setStyleSheet("border: 1px solid black;");
-    guild_name->setGeometry(40,0,245,15);
-    guild_name->setAlignment(Qt::AlignCenter);
+    guildName = new QLabel(this);
+    guildName->setText("Both My Dads Play Druids");
+    guildName->setStyleSheet("border: 1px solid black;");
+    guildName->setGeometry(40,0,245,15);
+    guildName->setAlignment(Qt::AlignCenter);
 
     x = new QPushButton(this);
     x->setText("X");
     x->setGeometry(285,0,15,15);
     connect(x,SIGNAL(clicked(bool)),this,SLOT(hide()));
 
-    meme = new QLabel(this);
-    QPixmap oldguy(":/ui/images/oldguy.ico");
-    meme->setPixmap(oldguy.scaled(40,40,Qt::KeepAspectRatio));
-    meme->setGeometry(0,0,40,40);
+    guildLogo = new QLabel(this);
+    guildLogoPix = QPixmap(":/ui/images/oldguy.ico");
+    guildLogo->setPixmap(guildLogoPix.scaled(40,40,Qt::KeepAspectRatio));
+    guildLogo->setGeometry(0,0,40,40);
 
     info = new QPushButton(this);
     info->setText("Information");
@@ -56,7 +55,7 @@ GuildFrame::GuildFrame(QWidget *parent)
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("Zone"));
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("Class"));
 
-    QTableView *view = new QTableView(this);
+    view = new QTableView(this);
     view->setGeometry(10,45,280,230);
     view->setModel(model);
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -91,6 +90,128 @@ GuildFrame::GuildFrame(QWidget *parent)
     setVisible(false);
 }
 
+void GuildFrame::resizeMe(QSize size){
+    double scale_x = 300.0/1200.0;
+    double scale_y = 400.0/900.0;
+
+    double new_w = size.width();
+    double new_h = size.height();
+
+    //parent frame
+    resize(new_w*scale_x,
+           new_h*scale_y);
+
+
+    //guild frame name
+    scale_x = 40.0/1200.0;
+    double scale_w = 245.0/1200.0;
+    double scale_h = 15.0/900.0;
+
+
+    guildName->setGeometry(new_w*scale_x,
+                           0,
+                           new_w*scale_w,
+                           new_h*scale_h);
+
+    //x
+    scale_x = 285.0/1200.0;
+    scale_w = 15.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    x->setGeometry(new_w*scale_x,
+                   0,
+                   new_w*scale_w,
+                   new_h*scale_h);
+
+    //guildLogo
+    scale_w = 40.0/1200.0;
+    scale_h = 40.0/900.0;
+
+    guildLogo->setGeometry(0,
+                           0,
+                           new_w*scale_w,
+                           new_h*scale_h);
+    guildLogo->setPixmap(guildLogoPix.scaled(new_w*scale_w,
+                                             new_h*scale_h,
+                                             Qt::KeepAspectRatio));
+
+    //info
+    scale_x = 40.0/1200.0;
+    scale_y= 15.0/900.0;
+    scale_w = 75.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    info->setGeometry(new_w*scale_x,
+                      new_h*scale_y,
+                      new_w*scale_w,
+                      new_h*scale_h);
+
+    //settings
+    scale_x = 115.0/1200.0;
+    scale_y = 15.0/900.0;
+    scale_w = 75.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    settings->setGeometry(new_w*scale_x,
+                          new_h*scale_y,
+                          new_w*scale_w,
+                          new_h*scale_h);
+    //add
+    scale_x = 190.0/1200.0;
+    scale_y = 15.0/900.0;
+    scale_w = 75.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    add->setGeometry(new_w*scale_x,
+                     new_h*scale_y,
+                     new_w*scale_w,
+                     new_h*scale_h);
+
+    //tableview
+    scale_x = 10.0/1200.0;
+    scale_y = 45.0/900.0;
+    scale_w = 280.0/1200.0;
+    scale_h = 230.0/900.0;
+
+    view->setGeometry(new_w*scale_x,
+                      new_h*scale_y,
+                      new_w*scale_w,
+                      new_h*scale_h);
+
+    //online
+    scale_x = 10.0/1200.0;
+    scale_y = 280.0/900.0;
+    scale_w = 100.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    online->setGeometry(new_w*scale_x,
+                        new_h*scale_y,
+                        new_w*scale_w,
+                        new_h*scale_h);
+
+    //offline
+    scale_x = 150.0/1200.0;
+    scale_y = 280.0/900.0;
+    scale_w = 140.0/1200.0;
+    scale_h = 15.0/900.0;
+
+    showOffline->setGeometry(new_w*scale_x,
+                             new_h*scale_y,
+                             new_w*scale_w,
+                             new_h*scale_h);
+
+    //gmotd
+    scale_x = 10.0/1200.0;
+    scale_y = 300.0/900.0;
+    scale_w = 280.0/1200.0;
+    scale_h = 90.0/900.0;
+
+    gmotd->setGeometry(new_w*scale_x,
+                       new_h*scale_y,
+                       new_w*scale_w,
+                       new_h*scale_h);
+
+}
 
 void GuildFrame::hide(){
     setVisible(false);
