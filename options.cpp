@@ -76,6 +76,9 @@ OptionsFrame::OptionsFrame(QWidget *parent)
             keybindMenu->resize(450,450);
             connect(keybindMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcutsRec()));
             connect(keybindMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcutsRec()));
+            connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SLOT(newBindRec(QKeySequence,int)));
+            connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
+            connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
             optionsStacked->addWidget(keybindMenu);
         }
 
@@ -114,6 +117,11 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     }
 
 }
+
+void OptionsFrame::newBindRec(QKeySequence newBind, int num){
+    emit newBindSend(newBind,num);
+}
+
 void OptionsFrame::disableShortcutsRec(){
     emit disableShortcutsSend();
 }

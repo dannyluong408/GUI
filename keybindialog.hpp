@@ -14,10 +14,15 @@ class KeybindDialog: public QFrame
         void keyReleaseEvent(QKeyEvent *event);
         void keyPressEvent(QKeyEvent *event);
         void reject();
+        int num;
+
+    signals:
+        void newBind(QKeySequence newBind, int num);
 
     private:
         QLabel *info;
         QString keyPress;
+
 };
 
 

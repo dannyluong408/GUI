@@ -13,19 +13,30 @@ class KeybindMenu: public QFrame
     Q_OBJECT
     public:
         KeybindMenu(QWidget *parent);
+        void updateBind(QKeySequence newKeybind, int num);
 
     public slots:
         void updateKeybinds(QString *shortcuts);
         void setBindMain(int num);
         void setBindBackup(int num);
+        void newBindRecv(QKeySequence newKeybind, int num);
 
     signals:
         void disableShortcuts();
         void enableShortcuts();
+        void newBindSend(QKeySequence newKeybind, int num);
+        void defaultBinds();
+        //void removeBinds();
+        void saveBinds();
+
 
     private:
         QGridLayout *mainLayout;
         QFrame *mainFrame,*secondFrame;
+
+        QCheckBox *secondFrameCheckbox[2];
+        QPushButton *secondFrameButtons[4];
+
         QPushButton *moveKeybind[7],*moveKeybindBackup[7],
                     *combatKeybind,*combatKeybindBackup,
                     *targetingKeybind[30],*targetingKeybindBackup[30],
@@ -87,7 +98,18 @@ class KeybindMenu: public QFrame
         1 + 3  = 4  chat
         1 + 1  = 2  misc
                = 82 rows , 73 buttons
+
+        0-6 = move
+        7 = combat
+        8-37 = targeting
+        38-40 = camera
+        41-60 = action
+        61-68 = interface
+        69-71 = chat
+        72 = misc
         */
+
+
 
 };
 

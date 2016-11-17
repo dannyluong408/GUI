@@ -14,8 +14,7 @@ class ChatFrame: public QFrame
         ChatFrame(QWidget *parent);
         bool inputVisible();
         void setInputVisible(bool visible);
-        void toggleInputFocus(bool focus);
-        void test();
+        void setInputFocus(bool focus);
 
     public slots:
         void handleSend();

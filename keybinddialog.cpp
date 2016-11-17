@@ -13,6 +13,7 @@ KeybindDialog::KeybindDialog(QWidget *parent)
     info->resize(150,150);
     info->setText("Press a Key Combination!");
     info->setAlignment(Qt::AlignCenter);
+    num = -1;
     grabKeyboard();
     show();
 }
@@ -26,6 +27,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Shift Control Alt Detected";
         keyPress.append("Shift+Ctrl+Alt");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -35,6 +37,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Shift Control Detected";
         keyPress.append("Shift+Ctrl+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -44,6 +47,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Shift Alt Detected";
         keyPress.append("Shift+Alt+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -53,6 +57,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Control Alt Detected";
         keyPress.append("Ctrl+Alt+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -61,6 +66,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Shift Detected";
         keyPress.append("Shift+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -69,6 +75,7 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Control Detected";
         keyPress.append("Ctrl+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
@@ -77,21 +84,27 @@ void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
         qDebug() << "Alt Detected";
         keyPress.append("Alt+");
         qDebug() << QKeySequence(keyPress + event->key()).toString();
+        emit newBind(QKeySequence(keyPress + event->key()),num);
         delete(this);
         return;
     }
 
     else{
-        if (event->text() == ""){
-            if(event->key() == Qt::Key_unknown){
-                qDebug() << "Unknown";
-            }
+        if(event->key() == Qt::Key_unknown){
+            qDebug() << "Unknown Key";
+            delete(this);
+            return;
+        }
+        else if (event->key() == Qt::Key_Alt ||
+                 event->key() == Qt::Key_Control ||
+                 event->key() == Qt::Key_Shift){
             qDebug() << "Need a key with modifier for bind";
             delete(this);
             return;
         }
         qDebug() << "Just a Key Detected";
         qDebug() << QKeySequence(event->key()).toString();
+        emit newBind(QKeySequence(event->key()),num);
         if(event->key() == Qt::Key_Escape){
             event->ignore();
         }

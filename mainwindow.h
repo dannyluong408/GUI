@@ -48,23 +48,29 @@ public:
     ~MainWindow();
     void loadImage(const QString &path);
     void resizeEvent(QResizeEvent *event);
-    typedef void (MainWindow::*functPointer)(void);
     void initDefaultKeybinds();
     void initKeybinds();
-    void updateKeybinds();
-    void saveKeybinds();
 
     //keybind functions
     void movePlayer(int direction);
     void togglePane(int pane);
 
-    //keybind subfunctions
+    void toggleAttack();
+    void targetingBind(int target);
+    void cameraBind(int option);
+    void toggleChat();
+    void whisper(int type);
+    void screenshot();
+
 
 public slots:
     void test(QString name);
     void test2();
     void disableShortcuts();
     void enableShortcuts();
+    void newBindRecv(QKeySequence newKeybind, int num);
+    void saveKeybinds();
+    void defaultKeybinds();
 
 private slots:
     void castSpell(int buttonPos);
@@ -102,11 +108,8 @@ private:
     GuildFrame *guildFrame;
     HonorFrame *honorFrame;
     GameMenu *gameMenu; //pops up when u hit esc
-    OptionsFrame *mainMenu; //pops up after u click options
+    OptionsFrame *optionsMenu; //pops up after u click options
 
-    //test stuff
-    //typedef void (*MainWindow::functPointer)(void);
-    QHash<int,functPointer> mainkeyBinds;
     QString keybindString[73];
     QShortcut *shortcut[73];
     QSignalMapper *keybindMapper;

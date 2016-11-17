@@ -19,6 +19,7 @@ public:
     void setMainBarHotkey();
     void setButtonSpell(uint32_t spellid, uint32_t buttonNum);
     uint32_t getButtonSpell(uint32_t buttonNum);
+    void callSlotSpell(int i);
 
 public slots:
     void resizeMe(QSize newSize);

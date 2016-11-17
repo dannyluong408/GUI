@@ -89,7 +89,7 @@ ChatFrame::ChatFrame(QWidget *parent)
 
 void ChatFrame::handleSend(){
     //handles send here
-    qDebug() << "handle message to send here";
+    qDebug() << "Handle message to send here";
     chatInput->clear();
     chatInput->clearFocus();
     chatInput->hide();
@@ -142,7 +142,7 @@ void ChatFrame::setInputVisible(bool visible)
 {
     visible?chatInput->setVisible(true):chatInput->setVisible(false);
 }
-void ChatFrame::toggleInputFocus(bool focus){
+void ChatFrame::setInputFocus(bool focus){
     focus?chatInput->setFocus():chatInput->clearFocus();
 }
 

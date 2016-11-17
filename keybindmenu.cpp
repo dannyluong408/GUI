@@ -395,11 +395,228 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrame->setGeometry(0,350,450,100);
     secondFrame->setStyleSheet("border: 2px solid black;");
 
+
+    secondFrameCheckbox[0] = new QCheckBox(secondFrame);
+    secondFrameCheckbox[0]->setObjectName("Keybind Mode");
+    secondFrameCheckbox[0]->setText("Keybind Mode");
+    secondFrameCheckbox[0]->setGeometry(10,20,115,25);
+    secondFrameCheckbox[0]->setStyleSheet("border: none;");
+
+    secondFrameCheckbox[1] = new QCheckBox(secondFrame);
+    secondFrameCheckbox[1]->setObjectName("Character Specific");
+    secondFrameCheckbox[1]->setText("Character Specific");
+    secondFrameCheckbox[1]->setGeometry(10,55,115,25);
+    secondFrameCheckbox[1]->setStyleSheet("border: none;");
+
+    secondFrameButtons[0] = new QPushButton(secondFrame);
+    secondFrameButtons[0]->setObjectName("Defaults");
+    secondFrameButtons[0]->setText("Defaults");
+    secondFrameButtons[0]->setGeometry(135,30,70,40);
+    connect(secondFrameButtons[0],SIGNAL(clicked(bool)),this,SIGNAL(defaultBinds()));
+
+    secondFrameButtons[1] = new QPushButton(secondFrame);
+    secondFrameButtons[1]->setObjectName("Remove Bind");
+    secondFrameButtons[1]->setText("Remove Bind");
+    secondFrameButtons[1]->setGeometry(215,30,70,40);
+
+    secondFrameButtons[2] = new QPushButton(secondFrame);
+    secondFrameButtons[2]->setObjectName("Apply");
+    secondFrameButtons[2]->setText("Apply");
+    secondFrameButtons[2]->setGeometry(290,30,70,40);
+    connect(secondFrameButtons[2],SIGNAL(clicked(bool)),this,SIGNAL(saveBinds()));
+
+    secondFrameButtons[3] = new QPushButton(secondFrame);
+    secondFrameButtons[3]->setObjectName("Cancel");
+    secondFrameButtons[3]->setText("Cancel");
+    secondFrameButtons[3]->setGeometry(365,30,70,40);
+
     //turn it all into a scroll area
     scrollArea->setWidget(mainFrame);
     scrollArea->setGeometry(0,0,450,350);
 
 
+}
+
+//void KeybindMenu::defaultBinds(){
+//}
+//void KeybindMenu::removeBinds(){
+//}
+
+void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
+    //qDebug() << newKeybind.toString() << num;
+    if(num < 0){
+        qDebug() << "Error";
+    }
+    else if(num < 7){
+        moveKeybind[num]->setText(newKeybind.toString());
+        qDebug() << "Setup Move";
+    }
+    else if(num == 7){
+        combatKeybind->setText(newKeybind.toString());
+        qDebug() << "Setup Combat";
+    }
+    else if(num < 38){
+        targetingKeybind[num-7]->setText(newKeybind.toString());
+        qDebug() << "Setup Targeting";
+    }
+    else if(num < 41){
+        cameraKeybind[num-38]->setText(newKeybind.toString());
+        qDebug() << "Setup Camera";
+    }
+    else if(num < 51){
+        actionPrimaryButtonKeybind[num-41]->setText(newKeybind.toString());
+        qDebug() << "Setup Action Primary";
+    }
+    else if(num < 61){
+        actionSecondaryButtonKeybind[num-51]->setText(newKeybind.toString());
+        qDebug() << "Setup Action Secondary";
+    }
+    else if(num < 69){
+        interfaceKeybind[num-61]->setText(newKeybind.toString());
+        qDebug() << "Setup Interface";
+    }
+    else if(num < 72){
+        chatKeybind[num-69]->setText(newKeybind.toString());
+        qDebug() << "Setup Chat";
+    }
+    else if(num == 72){
+        miscKeybind->setText(newKeybind.toString());
+        qDebug() << "Setup Misc";
+    }
+
+    //check if overwriting other binds by assigning this keyseq
+    int i,index = 0;
+
+    for(i=0; i<7; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(moveKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                moveKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+
+
+    if (index == num){
+        index++;
+    }
+    else{
+        if(combatKeybind->text() == newKeybind.toString()){
+            qDebug() << "Same Bind" << index << num;
+            combatKeybind->setText("");
+            //emit signal here to update shortkey
+            emit newBindSend(QKeySequence(),index);
+        }
+        index++;
+    }
+
+    for(i=0; i<30; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(targetingKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                targetingKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+    for(i=0; i<3; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(cameraKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                cameraKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+    for(i=0; i<10; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(actionPrimaryButtonKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                actionPrimaryButtonKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+    for(i=0; i<10; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(actionSecondaryButtonKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                actionSecondaryButtonKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+    for(i=0; i<8; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(interfaceKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                interfaceKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+    for(i=0; i<3; i++){
+        if (index == num){
+            index++;
+        }
+        else{
+            if(chatKeybind[i]->text() == newKeybind.toString()){
+                qDebug() << "Same Bind" << index << num;
+                chatKeybind[i]->setText("");
+                //emit signal here to update shortkey
+                emit newBindSend(QKeySequence(),index);
+            }
+            index++;
+        }
+    }
+
+    if (index == num){
+        index++;
+    }
+    else{
+        if(miscKeybind->text() == newKeybind.toString()){
+            qDebug() << "Same Bind" << index << num;
+            miscKeybind->setText("");
+            //emit signal here to update shortkey
+            emit newBindSend(QKeySequence(),index);
+        }
+    }
+}
+
+void KeybindMenu::newBindRecv(QKeySequence newKeybind, int num){
+    updateBind(newKeybind,num);
+    emit newBindSend(newKeybind,num);
 }
 
 void KeybindMenu::setBindMain(int num){
@@ -416,39 +633,11 @@ void KeybindMenu::setBindMain(int num){
     }
     emit disableShortcuts();
     KeybindDialog *keybindPrompt = new KeybindDialog(this);
+    keybindPrompt->num = num;
+    connect(keybindPrompt,SIGNAL(newBind(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
     connect(keybindPrompt,SIGNAL(destroyed(QObject*)),this,SIGNAL(enableShortcuts()));
 
-    qDebug() << num;
-    if(num < 0){
-        qDebug() << "Error";
-    }
-    else if(num < 7){
-        qDebug() << "Setup Move";
-    }
-    else if(num == 7){
-        qDebug() << "Setup Combat";
-    }
-    else if(num < 38){
-        qDebug() << "Setup Targeting";
-    }
-    else if(num < 41){
-        qDebug() << "Setup Camera";
-    }
-    else if(num < 51){
-        qDebug() << "Setup Action Primary";
-    }
-    else if(num < 61){
-        qDebug() << "Setup Action Secondary";
-    }
-    else if(num < 69){
-        qDebug() << "Setup Interface";
-    }
-    else if(num < 72){
-        qDebug() << "Setup Chat";
-    }
-    else if(num == 72){
-        qDebug() << "Setup Misc";
-    }
+    qDebug() << "\n\nSetting Keybind Num:" << num;
 }
 
 void KeybindMenu::setBindBackup(int num){

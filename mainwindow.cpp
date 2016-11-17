@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
     gameMenu = new GameMenu(ui->gameScreen);
 
     //game menu options popups
-    mainMenu = new OptionsFrame(ui->gameScreen);
+    optionsMenu = new OptionsFrame(ui->gameScreen);
 
     //game menu keybind popup
     //KeybindMenu *keybindMenu = new KeybindMenu(ui->gameScreen);
@@ -140,75 +140,29 @@ MainWindow::MainWindow(QWidget *parent) :
         connect(shortcut[i],SIGNAL(activated()),keybindMapper,SLOT(map()));
         keybindMapper->setMapping(shortcut[i],i);
     }
+
+    //init keybinds on load check for file, else default
+    connect(this,SIGNAL(pushKeybinds(QString*)),optionsMenu,SLOT(updateKeybinds(QString*)));
+    connect(optionsMenu,SIGNAL(disableShortcutsSend()),this,SLOT(disableShortcuts()));
+    connect(optionsMenu,SIGNAL(enableShortcutsSend()),this,SLOT(enableShortcuts()));
+    connect(optionsMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
+    connect(optionsMenu,SIGNAL(saveBinds()),this,SLOT(saveKeybinds()));
+    connect(optionsMenu,SIGNAL(defaultBinds()),this,SLOT(defaultKeybinds()));
+
+    qDebug() << "Initializing Keybinds";
+    initKeybinds();
+    qDebug() << "Keybinds Complete";
+    //connect(optionsMenu,SIGNAL()
+
+}
+
+void MainWindow::defaultKeybinds(){
     initDefaultKeybinds();
-    connect(this,SIGNAL(pushKeybinds(QString*)),mainMenu,SLOT(updateKeybinds(QString*)));
+}
 
-    QString *pushKeybindStrings = keybindString;
-    emit pushKeybinds(pushKeybindStrings);
-
-    connect(mainMenu,SIGNAL(disableShortcutsSend()),this,SLOT(disableShortcuts()));
-    connect(mainMenu,SIGNAL(enableShortcutsSend()),this,SLOT(enableShortcuts()));
-
-
-//    qDebug() << shortcut[0]->key().toString();
-//    qDebug() << shortcut[9]->key().toString();
-//    qDebug() << shortcut[10]->key().toString();
-
-//    qDebug() << "Shortcut Testing...";
-    //shortcut testing stuff
-
-//      QKeySequence testx = QKeySequence("Space");
-//   QKeySequence testy = QKeySequence("Alt+R");
-//      shortcut[0]->setKey(testx);
-//    shortcut[1]->setKey(testy);
-//      connect(shortcut[0],SIGNAL(activated()),keybindMapper,SLOT(map()));
-//      keybindMapper->setMapping(shortcut[0],0);
-
-//    connect(shortcut[1],SIGNAL(activated()),keybindMapper,SLOT(map()));
-//    keybindMapper->setMapping(shortcut[1],1);
-
-
-//    functPointer fp;
-//    fp = &MainWindow::showHonor;
-//    mainkeyBinds[test] = fp;
-//    qDebug() << "Shortcut Testing2...";
-
-//    //test save keybinds to file
-//    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
-//    if (!file.open(QIODevice::WriteOnly)){
-//          qDebug() << file.errorString();
-//          return;
-//    }
-
-    //do stuff here
-//    QDataStream out(&file);
-//    QString a = "1", b = "2" , c = "3";
-//    out << a << b << c;
-//    file.close();
-//    qDebug() << "Shortcut Testing3...";
-
-//    //test reading keybinds from file
-//    if (!file.open(QIODevice::ReadOnly)){
-//          qDebug() << file.errorString();
-//          return;
-//    }
-
-//    //do stuff here
-//    QDataStream in(&file);
-//    QString name2;
-//    QKeySequence test2;
-//    in >> name2 >> test2;
-
-//    qDebug() << "Shortcut Testing3.5...";
-//    file.close();
-
-//    qDebug() << name2 << test2;
-//    shortcut[0]->setKey(test2);
-//    shortcut[0].setObjectName
-
-//    qDebug() << "Shortcut Testing4...";
-
-    //END SHORTCUT TESTING STUFF
+void MainWindow::newBindRecv(QKeySequence newKeybind, int num){
+    qDebug() << "Setting shortcut:" << num << " to "<< newKeybind.toString();
+    shortcut[num]->setKey(newKeybind);
 }
 
 void MainWindow::disableShortcuts(){
@@ -240,8 +194,8 @@ void MainWindow::togglePane(int pane){
         }
         case MAINMENU:{
             qDebug() << "Escape Hotkey Procced";
-            if (mainMenu->isVisible()){
-                mainMenu->setVisible(false);
+            if (optionsMenu->isVisible()){
+                optionsMenu->setVisible(false);
                 break;
             }
             gameMenu->isVisible()? gameMenu->setVisible(false):gameMenu->show();
@@ -260,6 +214,35 @@ void MainWindow::togglePane(int pane){
             break;
         }
     }
+}
+
+void MainWindow::targetingBind(int target){
+    qDebug() << "Targeting In Progress" << target;
+}
+void MainWindow::cameraBind(int option){
+    qDebug() << "CameraBind In Progress" << option;
+}
+void MainWindow::toggleAttack(){
+    qDebug() << "Toggle Attack In Progress";
+}
+
+void MainWindow::toggleChat(){
+    if (chatFrame->inputVisible()){
+        chatFrame->setInputFocus(false);
+        chatFrame->setInputVisible(false);
+    }
+    else{
+        chatFrame->setInputFocus(true);
+        chatFrame->setInputVisible(true);
+    }
+}
+
+void MainWindow::whisper(int type){
+    qDebug() << "Whisper feature In Progress" << type;
+}
+
+void MainWindow::screenshot(){
+     qDebug() << "Screenshot feature In Progress";
 }
 
 void MainWindow::movePlayer(int direction){
@@ -313,226 +296,226 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             break;
         }
         case 6:{
-
-            break;
-        }
-        case 7:{
-
-            break;
-        }
-        case 8:{
             movePlayer(JUMP);
             break;
         }
+        case 7:{
+            toggleAttack();
+            break;
+        }
+        case 8:{ //targeting 0
+            targetingBind(TARGET_NEAREST_ENEMY);
+            break;
+        }
         case 9:{
-
+            targetingBind(TARGET_PREVIOUS_ENEMY);
             break;
         }
         case 10:{
-
+            targetingBind(TARGET_NEAREST_ENEMY_PLAYER);
             break;
         }
         case 11:{
-
+            targetingBind(TARGET_PREVIOUS_ENEMY_PLAYER);
             break;
         }
         case 12:{
-
+            targetingBind(TARGET_NEAREST_FRIENDLY_PLAYER);
             break;
         }
-        case 13:{
-
+        case 13:{//5
+            targetingBind(TARGET_PREVIOUS_ENEMY_PLAYER);
             break;
         }
         case 14:{
-
+            targetingBind(TARGET_SELF);
             break;
         }
         case 15:{
-
+            targetingBind(TARGET_PARTY_MEMBER_1);
             break;
         }
         case 16:{
-
+            targetingBind(TARGET_PARTY_MEMBER_2);
             break;
         }
         case 17:{
-
+            targetingBind(TARGET_PARTY_MEMBER_3);
             break;
         }
-        case 18:{
-
+        case 18:{//10
+            targetingBind(TARGET_PARTY_MEMBER_4);
             break;
         }
         case 19:{
-
+            targetingBind(TARGET_PET);
             break;
         }
         case 20:{
-
+            targetingBind(TARGET_PARTY_PET_1);
             break;
         }
         case 21:{
-
+            targetingBind(TARGET_PARTY_PET_2);
             break;
         }
         case 22:{
-
+            targetingBind(TARGET_PARTY_PET_3);
             break;
         }
         case 23:{
-
+            targetingBind(TARGET_PARTY_PET_4);
             break;
         }
         case 24:{
-
+            targetingBind(ASSIST_TARGET);
             break;
         }
         case 25:{
-
+            targetingBind(TOGGLE_NAMEPLATES);
             break;
         }
         case 26:{
-
+            targetingBind(TOGGLE_FRIENDLY_NAMEPLATES);
             break;
         }
         case 27:{
-
+            targetingBind(SET_FOCUS);
             break;
         }
-        case 28:{
-
+        case 28:{//20
+            targetingBind(FOCUS_ARENA_1);
             break;
         }
         case 29:{
-
+            targetingBind(FOCUS_ARENA_2);
             break;
         }
         case 30:{
-
+            targetingBind(FOCUS_ARENA_3);
             break;
         }
         case 31:{
-
+            targetingBind(FOCUS_ARENA_4);
             break;
         }
         case 32:{
-
+            targetingBind(FOCUS_ARENA_5);
             break;
         }
         case 33:{
-
+            targetingBind(TARGET_ARENA_1);
             break;
         }
         case 34:{
-
+            targetingBind(TARGET_ARENA_2);
             break;
         }
         case 35:{
-
+            targetingBind(TARGET_ARENA_3);
             break;
         }
         case 36:{
-
+            targetingBind(TARGET_ARENA_4);
             break;
         }
         case 37:{
-
+            targetingBind(TARGET_ARENA_5);
             break;
         }
-        case 38:{
-
+        case 38:{   //camera keybinds 38 39 40
+            cameraBind(CAMERA_ZOOM_IN);
             break;
         }
         case 39:{
-
+            cameraBind(CAMERA_ZOOM_IN);
             break;
         }
         case 40:{
-
+            cameraBind(CAMERA_REVERSE);
             break;
         }
         case 41:{
-
+            actionBar[0]->callSlotSpell(0);
             break;
         }
         case 42:{
-
+            actionBar[0]->callSlotSpell(1);
             break;
         }
         case 43:{
-
+            actionBar[0]->callSlotSpell(2);
             break;
         }
         case 44:{
-
+            actionBar[0]->callSlotSpell(3);
             break;
         }
         case 45:{
-
+            actionBar[0]->callSlotSpell(4);
             break;
         }
         case 46:{
-
+            actionBar[0]->callSlotSpell(5);
             break;
         }
         case 47:{
-
+            actionBar[0]->callSlotSpell(6);
             break;
         }
         case 48:{
-
+            actionBar[0]->callSlotSpell(7);
             break;
         }
         case 49:{
-
+            actionBar[0]->callSlotSpell(8);
             break;
         }
         case 50:{
-
+            actionBar[0]->callSlotSpell(9);
             break;
         }
-        case 51:{
-
+        case 51:{ //start bar 2
+            actionBar[1]->callSlotSpell(0);
             break;
         }
         case 52:{
-
+            actionBar[1]->callSlotSpell(1);
             break;
         }
         case 53:{
-
+            actionBar[1]->callSlotSpell(2);
             break;
         }
         case 54:{
-
+            actionBar[1]->callSlotSpell(3);
             break;
         }
         case 55:{
-
+            actionBar[1]->callSlotSpell(4);
             break;
         }
         case 56:{
-
+            actionBar[1]->callSlotSpell(5);
             break;
         }
         case 57:{
-
+            actionBar[1]->callSlotSpell(6);
             break;
         }
         case 58:{
-
+            actionBar[1]->callSlotSpell(7);
             break;
         }
         case 59:{
-
+            actionBar[1]->callSlotSpell(8);
             break;
         }
         case 60:{
-
+            actionBar[1]->callSlotSpell(9);
             break;
         }
-        case 61:{
+        case 61:{ //interface 0
             togglePane(SPELLBOOK);
             break;
         }
@@ -560,24 +543,24 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             togglePane(SOCIAL);
             break;
         }
-        case 68:{
+        case 68:{ //interface 7
             togglePane(MAP);
             break;
         }
         case 69:{
-            //OPEN CHAT
+            toggleChat();
             break;
         }
-        case 70:{
-            //Reply Whisper
+        case 70:{//Reply Whisper
+            whisper(REPLY_WHISPER);
             break;
         }
-        case 71:{
-            //Re-Whisper
+        case 71:{//Re-Whisper
+            whisper(RE_WHISPER);
             break;
         }
         case 72:{
-            //Take Screenshot
+            screenshot();//Take Screenshot
             break;
         }
 
@@ -692,7 +675,7 @@ void MainWindow::initDefaultKeybinds(){
     shortcut[i]->setKey(QKeySequence(tr("9"))); //Primary Button 8
     i++;
     //50
-    shortcut[i]->setKey(QKeySequence(tr("10"))); //Primary Button 9
+    shortcut[i]->setKey(QKeySequence(tr("0"))); //Primary Button 9
     i++;
     shortcut[i]->setKey(QKeySequence()); //Secondary Button 0
     i++;
@@ -717,13 +700,13 @@ void MainWindow::initDefaultKeybinds(){
     i++;
     shortcut[i]->setKey(QKeySequence(tr("P"))); //Toggle Spellbook
     i++;
-    shortcut[i]->setKey(QKeySequence()); //Toggle Clan
+    shortcut[i]->setKey(QKeySequence(tr("G"))); //Toggle Clan
     i++;
     shortcut[i]->setKey(QKeySequence(tr("H"))); //Toggle Honor
     i++;
     shortcut[i]->setKey(QKeySequence(tr("Escape"))); //Open Main Menu
     i++;
-    shortcut[i]->setKey(QKeySequence()); //Toggle Char Menu
+    shortcut[i]->setKey(QKeySequence(tr("C"))); //Toggle Char Menu
     i++;
     shortcut[i]->setKey(QKeySequence()); //Toggle Macro Menu
     i++;
@@ -731,7 +714,7 @@ void MainWindow::initDefaultKeybinds(){
     i++;
     shortcut[i]->setKey(QKeySequence(tr("M"))); //Toggle Map
     i++;
-    shortcut[i]->setKey(QKeySequence(tr("Enter"))); //Open Chat
+    shortcut[i]->setKey(QKeySequence(tr("Return"))); //Open Chat
     i++;
     //70
     shortcut[i]->setKey(QKeySequence(tr("R"))); //Reply Whisper
@@ -744,36 +727,49 @@ void MainWindow::initDefaultKeybinds(){
         keybindString[i] = shortcut[i]->key().toString();
     }
 
+    saveKeybinds();
+    emit pushKeybinds(keybindString);
 }
 
-void MainWindow::updateKeybinds(){
-
-}
 
 void MainWindow::initKeybinds(){
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds.txt");
-    if (!file.open(QIODevice::ReadOnly)){
-          qDebug() << file.errorString();
+    QFile *file = new QFile("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
+    if (!file->open(QIODevice::ReadOnly)){
+          qDebug() << file->errorString();
+          initDefaultKeybinds();
           return;
     }
 
-    QDataStream in(&file);
-    for (int i = 0; i < KEYBINDCOUNT; i++){
-        QKeySequence readShortcut;
-        if(in.atEnd()){
+    QString tempShortcut[KEYBINDCOUNT];
+    QDataStream in(file);
+    QString readShortcut;
+    int i = 0;
+
+    for (i = 0; i < KEYBINDCOUNT; i++){
+        if(in.atEnd() && i != KEYBINDCOUNT-1){
             //use default values
+            qDebug() << i << KEYBINDCOUNT;
+            qDebug() << "Invalid file initializing defaults";
+            file->close();
             initDefaultKeybinds();
-            break;
+            return;
         }
         in >> readShortcut;//handle shortcut after
-        shortcut[i]->setKey(readShortcut);
+        //qDebug() << "Read:" << i << readShortcut;
+        tempShortcut[i] = readShortcut;
     }
 
-    file.close();
+    for (i = 0; i < KEYBINDCOUNT; i++){
+        shortcut[i]->setKey(tempShortcut[i]);
+        keybindString[i] = shortcut[i]->key().toString();
+    }
+    emit pushKeybinds(keybindString);
+    file->close();
 }
 
 void MainWindow::saveKeybinds(){
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds.txt");
+    qDebug() << "Saving Keybinds to File";
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
     if (!file.open(QIODevice::WriteOnly)){
           qDebug() << file.errorString();
           return;
@@ -781,7 +777,8 @@ void MainWindow::saveKeybinds(){
 
     QDataStream out(&file);
     for (int i = 0; i < KEYBINDCOUNT; i++){
-        out << shortcut[i]->key();
+        //qDebug() << "Saving shortcut" << i << shortcut[i]->key().toString();
+        out << shortcut[i]->key().toString();
     }
 
     file.close();
@@ -798,7 +795,27 @@ void MainWindow::test2(){
 
 MainWindow::~MainWindow()
 {
+    delete actionBar[0];
+    delete actionBar[1];
+    delete playerFrame;
+    delete targetFrame;
+    delete partyFrame;
+    delete playerBuff;
+    delete playerDebuff;
+    delete targetBuff;
+    delete targetDebuff;
+    delete chatFrame;
+    delete menuBar;
+    delete spellBook;
+    delete guildFrame;
+    delete honorFrame;
+    delete gameMenu;
+    delete optionsMenu;
+    for(auto i: shortcut){
+        delete i;
+    }
     delete ui;
+    delete loginButton;
     delete loginScreen;
 }
 

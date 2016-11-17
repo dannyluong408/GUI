@@ -26,6 +26,10 @@ ActionBar::ActionBar(QWidget *parent)
 
 
 
+void ActionBar::callSlotSpell(int i){
+    buttonSet[i]->doThisClicked();
+}
+
 void ActionBar::resizeMe(QSize newSize){
     double scale_factor_x  = (50.0*NUMBUTTONS)/1200.0;
     const double scale_factor_y = 50.0/900.0;

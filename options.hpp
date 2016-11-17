@@ -17,10 +17,14 @@ class OptionsFrame : public QFrame
         void updateKeybinds(QString *keybinds);
         void disableShortcutsRec();
         void enableShortcutsRec();
+        void newBindRec(QKeySequence newBind, int num);
 
     signals:
         void disableShortcutsSend();
         void enableShortcutsSend();
+        void newBindSend(QKeySequence newBind, int num);
+        void saveBinds();
+        void defaultBinds();
 
     private:
         QHBoxLayout *mainLayout;
