@@ -1,4 +1,4 @@
-#include <nx_profiling.h>
+#include <nx_include/nx_profiling.h>
 
 #ifdef __cplusplus
 extern "C" {

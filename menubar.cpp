@@ -1,5 +1,5 @@
 #include "menubar.h"
-#include "gamemenu.h"
+#include "gamemenu.hpp"
 
 Menubar:: Menubar(QWidget *parent)
     : QFrame(parent)
@@ -99,4 +99,5 @@ void Menubar::resizeMe(QSize newSize){ //lol what a mess fix for 1080p resolutio
     menuButton[4]->setIcon(QPixmap(":/ui/images/setting.png").scaled(newSize.width()*scale_factor_w,
                                                                      newSize.height()*scale_factor_h,
                                                                      Qt::KeepAspectRatio));
+    return;
 }

@@ -1,4 +1,4 @@
-#include <nx_timing.h>
+#include <nx_include/nx_timing.h>
 #ifdef __cplusplus
 extern "C" {
 #endif

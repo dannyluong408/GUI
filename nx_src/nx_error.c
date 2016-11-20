@@ -1,4 +1,4 @@
-#include <nx_error.h>
+#include <nx_include/nx_error.h>
 
 #define NX_DEFAULT_OUTPUT stdout
 

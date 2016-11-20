@@ -20,6 +20,7 @@ class KeybindMenu: public QFrame
         void setBindMain(int num);
         void setBindBackup(int num);
         void newBindRecv(QKeySequence newKeybind, int num);
+        void resizeMe(QSize newSize);
 
     signals:
         void disableShortcuts();
@@ -29,10 +30,11 @@ class KeybindMenu: public QFrame
         //void removeBinds();
         void saveBinds();
 
-
     private:
-        QGridLayout *mainLayout;
-        QFrame *mainFrame,*secondFrame;
+        QGridLayout *gridLayout;
+        QVBoxLayout *mainLayout, *secondFrameVLayout[5];
+        QFrame *mainFrame,*secondFrame,*secondFrameV[5];
+        QHBoxLayout *secondLayout;
 
         QCheckBox *secondFrameCheckbox[2];
         QPushButton *secondFrameButtons[4];

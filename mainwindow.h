@@ -19,7 +19,7 @@
 #include "progressbar.h"
 #include "chatframe.hpp"
 #include "spellbook.h"
-#include "gamemenu.h"
+#include "gamemenu.hpp"
 #include "guildframe.hpp"
 #include "honorframe.hpp"
 #include "partyframe.hpp"
@@ -33,11 +33,6 @@
 namespace Ui {
 class MainWindow;
 }
-
-class PiecesList;
-class PuzzleWidget;
-class QListWidgetItem;
-
 
 class MainWindow : public QMainWindow
 {

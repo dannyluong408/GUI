@@ -152,6 +152,7 @@ void HonorFrame::resizeMe(QSize size){
 //                       new_h*scale_y,
 //                       new_w*scale_w,
 //                       new_h*scale_h);
+    return;
 
 }
 

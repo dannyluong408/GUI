@@ -33,4 +33,5 @@ void PartyFrame::resizeMe(QSize newSize){
     for(int i = 0; i<2; i++){
         player[i]->resizeMe(newSize);
     }
+    return;
 }

@@ -17,7 +17,7 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     mainLayout->setMargin(0);
 
     buttonFrame = new QFrame(this);
-    buttonFrame->setFixedSize(75,450);
+    buttonFrame->resize(75,450);
     buttonFrame->setObjectName("buttonFrame");
     buttonFrame->setStyleSheet("QFrame#buttonFrame{"
                                "border: 2px solid black;}");
@@ -26,11 +26,17 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     buttonLayout->setSpacing(0);
     buttonLayout->setMargin(0);
 
+
+    QSizePolicy sizePolicy;
+    sizePolicy.setVerticalPolicy(QSizePolicy::Expanding);
+    sizePolicy.setHorizontalPolicy(QSizePolicy::Expanding);
+
     for(int i = 0; i< 6; i++){
         options[i] = new QPushButton(buttonFrame);
         options[i]->setObjectName("optionButtons");
         options[i]->setStyleSheet("border: 2px solid black;");
-        options[i]->setFixedSize(75,75);
+        options[i]->resize(75,75);
+        options[i]->setSizePolicy(sizePolicy);
         options[i]->setIconSize(QSize(50,50));
         switch (i){
             case 0:
@@ -58,9 +64,17 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     }
     options[0]->setStyleSheet("border-right: none;");
 
+    mainFrame = new QFrame(this);
+    mainFrame->resize(450,450);
+    mainFrame->setSizePolicy(sizePolicy);
+    optionLayout = new QVBoxLayout(mainFrame);
+    optionLayout->setSpacing(0);
+    optionLayout->setMargin(0);
+
     optionsStacked = new QStackedWidget(this);
     optionsStacked->setObjectName("stackFrame");
-    optionsStacked->setFixedSize(450,450);
+    optionsStacked->resize(450,450);
+
     optionsStacked->setStyleSheet("QStackedWidget#stackFrame{"
                                   "border-top: 2px solid black;"
                                   "border-right: 2px solid black;"
@@ -68,24 +82,32 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                                   "border-left: none;}");
 
     mainLayout->addWidget(buttonFrame);
-    mainLayout->addWidget(optionsStacked);
+    mainLayout->addWidget(mainFrame);
+    mainLayout->setStretch(0,1);
+    mainLayout->setStretch(1,7);
+
+    optionLayout->addWidget(optionsStacked);
 
     for (int j = 0; j < 6; j++){
-        if(j == 4){
-            keybindMenu = new KeybindMenu(optionsStacked);
-            keybindMenu->resize(450,450);
-            connect(keybindMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcutsRec()));
-            connect(keybindMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcutsRec()));
-            connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SLOT(newBindRec(QKeySequence,int)));
-            connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
-            connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
-            optionsStacked->addWidget(keybindMenu);
-        }
+//        if(j == 4){
+//            keybindMenu = new KeybindMenu(optionsStacked);
+//            keybindMenu->resize(450,450);
+//            connect(keybindMenu,SIGNAL(disableShortcuts()),this,SIGNAL(disableShortcuts()));
+//            connect(keybindMenu,SIGNAL(enableShortcuts()),this,SIGNAL(enableShortcuts()));
+//            connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SIGNAL(newBindSend(QKeySequence,int)));
+//            connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
+//            connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
+//            optionFrameLayout = new QVBoxLayout(
+//            optionsStacked->addWidget(keybindMenu);
+//        }
 
-        else{
+//        else{
             optionFrame[j] = new QFrame(optionsStacked);
             optionFrame[j]->resize(450,450);
-
+            optionFrame[j]->setSizePolicy(sizePolicy);
+            optionFrameLayout[j] = new QVBoxLayout(optionFrame[j]);
+            optionFrameLayout[j]->setSpacing(0);
+            optionFrameLayout[j]->setMargin(0);
 
             switch (j){
                 case 0:
@@ -106,6 +128,17 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                     break;
                 case 4:
                     //do nothing
+                    optionFrame[j]->setObjectName("Interface");
+                    keybindMenu = new KeybindMenu(this);
+                    keybindMenu->resize(450,450);
+                    keybindMenu->setSizePolicy(sizePolicy);
+                    connect(keybindMenu,SIGNAL(disableShortcuts()),this,SIGNAL(disableShortcuts()));
+                    connect(keybindMenu,SIGNAL(enableShortcuts()),this,SIGNAL(enableShortcuts()));
+                    connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SIGNAL(newBindSend(QKeySequence,int)));
+                    connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
+                    connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
+                    connect(this,SIGNAL(resizeChildren(QSize)),keybindMenu,SLOT(resizeMe(QSize)));
+                    optionFrameLayout[j]->addWidget(keybindMenu);
                     break;
                 case 5:
                     optionFrame[j]->setObjectName("Macros");
@@ -113,22 +146,25 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                     break;
             }
             optionsStacked->addWidget(optionFrame[j]);
-        }
+//        }
     }
 
 }
+void OptionsFrame::resizeMe(QSize newSize){
+    if (newSize == this->size()){
+        qDebug() << "returned";
+        return;
+    }
+    double scale_factor_w = 527.0/1200.0;
+    double scale_factor_h = 452.0/900.0;
 
-void OptionsFrame::newBindRec(QKeySequence newBind, int num){
-    emit newBindSend(newBind,num);
+    this->resize(newSize.width()*scale_factor_w,
+           newSize.height()*scale_factor_h);
+
+    emit resizeChildren(newSize);
 }
 
-void OptionsFrame::disableShortcutsRec(){
-    emit disableShortcutsSend();
-}
 
-void OptionsFrame::enableShortcutsRec(){
-    emit enableShortcutsSend();
-}
 
 void OptionsFrame::currentOption(){
     for(int i = 0; i< 6; i++){

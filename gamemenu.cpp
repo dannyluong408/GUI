@@ -1,4 +1,4 @@
-#include "gamemenu.h"
+#include "gamemenu.hpp"
 
 
 
@@ -6,8 +6,12 @@ GameMenu::GameMenu(QWidget *parent)
     : QFrame(parent)
 {
     setFrameStyle(QFrame::Box);
-    setGeometry(550,350,100,220);
+    setGeometry(550,380,100,145);
     setObjectName("gameMenu");
+
+    mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setSpacing(0);
 
     QLabel *frameLabel = new QLabel(this);
     frameLabel->setGeometry(0,0,100,20);
@@ -15,56 +19,61 @@ GameMenu::GameMenu(QWidget *parent)
     frameLabel->setAlignment(Qt::AlignCenter);
     frameLabel->setStyleSheet("border: 1px solid black;");
 
-    QWidget *layoutFrame = new QWidget(this);
-    layoutFrame->setGeometry(0,20,100,200);
+    QFrame *buttonFrame = new QFrame(this);
+    buttonFrame->setGeometry(0,20,100,125);
 
-    mainLayout = new QVBoxLayout(layoutFrame);
-    mainLayout->setContentsMargins(1,1,1,1);
-    mainLayout->setSpacing(1);
+    mainLayout->addWidget(frameLabel);
+    mainLayout->addWidget(buttonFrame);
 
-    for(int i = 0; i < 8; i++){
+    buttonLayout = new QVBoxLayout(buttonFrame);
+    buttonLayout->setContentsMargins(0,0,0,0);
+    buttonLayout->setSpacing(0);
+
+    for(int i = 0; i < 5; i++){
         options[i] = new QPushButton(this);
         options[i]->resize(100,25);
         QString objName = QString("option%1").arg(i);
         options[i]->setObjectName(objName);
-        mainLayout->addWidget(options[i]);
+        buttonLayout->addWidget(options[i]);
         connect(options[i],SIGNAL(clicked(bool)),this,SLOT(openOption()));
     }
 
     options[0]->setText("Help");
     options[1]->setText("Options");
-    options[2]->setText("Interface");
-    options[3]->setText("Key Bindings");
-    options[4]->setText("Macros");
-    options[5]->setText("Logout");
-    options[6]->setText("Exit Game");
-    options[7]->setText("Return to Game");
+    options[2]->setText("Logout");
+    options[3]->setText("Exit Game");
+    options[4]->setText("Return to Game");
 
     setVisible(false);
 }
 
 
 void GameMenu::resizeMe(QSize newSize){
-    double scale_factor_w = 100.0/1200.0;
-    double scale_factor_h = 220.0/900.0;
-
-    resize(newSize.width()*scale_factor_w,
-           newSize.height()*scale_factor_h);
-
-//    scale_factor_h = 200.0/900.0;
-//    layoutFrame->resize(newSize.width()*scale_factor_w,
-//                          newSize.height()*scale_factor_h);
-
-    scale_factor_h = 22.0/900.0;
-    frameLabel->resize(newSize.width()*scale_factor_w,
-                   newSize.height()*scale_factor_h);
-
-    scale_factor_h = 25.0/900.0;
-    for(int i = 0;i<8;i++){
-        options[i]->resize(newSize.width()*scale_factor_w,
-                           newSize.height()*scale_factor_h);
+    if (newSize == this->size()){
+        qDebug() << "returned";
+        return;
     }
 
+    double scale_factor_w = 100.0/1200.0;
+    double scale_factor_h = 145.0/900.0;
+
+    this->resize(newSize.width()*scale_factor_w,
+           newSize.height()*scale_factor_h);
+    return;
+
+    //not needed they auto resize (thanks layouts!!)
+//    scale_factor_h = 25.0/900.0;
+//    for(int i=0; i<5; i++){
+//        options[i]->resize(newSize.width()*scale_factor_w,
+//                           newSize.height()*scale_factor_h);
+//    }
+//    scale_factor_h = 22.0/900.0;
+//    frameLabel->resize(newSize.width()*scale_factor_w,
+//                   newSize.height()*scale_factor_h);
+//    scale_factor_h = 125.0/900.0;
+//    buttonFrame->resize(newSize.width()*scale_factor_w,
+//                          newSize.height()*scale_factor_h);
+//    return;
 }
 
 void GameMenu::openOption(){
@@ -72,7 +81,6 @@ void GameMenu::openOption(){
     name.remove(QString("option"));
 
     switch(name.toInt()){
-
         case 0:
             emit(openThis("Help"));
             break;
@@ -80,21 +88,12 @@ void GameMenu::openOption(){
             emit(openThis("Options"));
             break;
         case 2:
-            emit(openThis("Interface"));
-            break;
-        case 3:
-            emit(openThis("Key Bindings"));
-            break;
-        case 4:
-            emit(openThis("Macros"));
-            break;
-        case 5:
             emit(openThis("Logout"));
             break;
-        case 6:
+        case 3:
             emit(openThis("Exit Game"));
             break;
-        case 7:
+        case 4:
             this->setVisible(false);
             break;
     }

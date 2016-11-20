@@ -132,6 +132,7 @@ void ChatFrame::resizeMe(QSize size){ //fix this too for 1080p
                                         size.height()*scale_factor_h);
         chatBrowsers[i]->resize(chatTabFrames[i]->size());
     }
+    return;
 }
 
 bool ChatFrame::inputVisible(){

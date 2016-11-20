@@ -108,27 +108,30 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(newSize(QSize)),guildFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),honorFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),gameMenu,SLOT(resizeMe(QSize)));
+    connect(this,SIGNAL(newSize(QSize)),optionsMenu,SLOT(resizeMe(QSize)));
 
+    ui->openGLWidget->hide();
     //hide screen + login screen
-    ui->gameScreen->hide();
+//    ui->gameScreen->hide();
 
-    loginScreen = new QWidget(this);
-    loginScreen->setGeometry(0,0,1200,900);
-    loginScreen->show();
-    loginScreen->setStyleSheet("background-color: pink;"
-                               "background-image: url(:/ui/images/anime.jpg);");
+//    loginScreen = new QWidget(this);
+//    loginScreen->setGeometry(0,0,1200,900);
+//    loginScreen->show();
+//    loginScreen->setStyleSheet("background-color: pink;"
+//                               "background-image: url(:/ui/images/anime.jpg);");
 
-    qDebug() << "Looking for IP of login.sniperdad.com ...";
-    QHostInfo::lookupHost("login.sniperdad.com",this,SLOT(lookedUp(QHostInfo)));
 
-    loginButton = new QPushButton(loginScreen);
-    loginButton->setGeometry(550,400,100,100);
-    loginButton->setIconSize(QSize(100,100));
-    loginButton->setIcon(QIcon(":/ui/images/oldguy.ico"));
+//    qDebug() << "Looking for IP of login.sniperdad.com ...";
+//    QHostInfo::lookupHost("login.sniperdad.com",this,SLOT(lookedUp(QHostInfo)));
+
+//    loginButton = new QPushButton(loginScreen);
+//    loginButton->setGeometry(550,400,100,100);
+//    loginButton->setIconSize(QSize(100,100));
+//    loginButton->setIcon(QIcon(":/ui/images/oldguy.ico"));
 
 
     //our "constantly calling update function stuff"
-    connect(loginButton,SIGNAL(clicked(bool)),this,SLOT(login()));
+//    connect(loginButton,SIGNAL(clicked(bool)),this,SLOT(login()));
     connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
     //this->timer.start(1); //call update every 1us
 
@@ -143,8 +146,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //init keybinds on load check for file, else default
     connect(this,SIGNAL(pushKeybinds(QString*)),optionsMenu,SLOT(updateKeybinds(QString*)));
-    connect(optionsMenu,SIGNAL(disableShortcutsSend()),this,SLOT(disableShortcuts()));
-    connect(optionsMenu,SIGNAL(enableShortcutsSend()),this,SLOT(enableShortcuts()));
+    connect(optionsMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcuts()));
+    connect(optionsMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcuts()));
     connect(optionsMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
     connect(optionsMenu,SIGNAL(saveBinds()),this,SLOT(saveKeybinds()));
     connect(optionsMenu,SIGNAL(defaultBinds()),this,SLOT(defaultKeybinds()));
@@ -198,8 +201,19 @@ void MainWindow::togglePane(int pane){
                 optionsMenu->setVisible(false);
                 break;
             }
-            gameMenu->isVisible()? gameMenu->setVisible(false):gameMenu->show();
-            break;
+            else{
+                if(guildFrame->isVisible()){
+                    guildFrame->hide();
+                }
+                if(honorFrame->isVisible()){
+                    honorFrame->hide();
+                }
+                if(spellBook->isVisible()){
+                    spellBook->hide();
+                }
+                gameMenu->isVisible()? gameMenu->setVisible(false):gameMenu->show();
+                break;
+            }
         }
         case CHARACTER:{
             break;
@@ -733,15 +747,15 @@ void MainWindow::initDefaultKeybinds(){
 
 
 void MainWindow::initKeybinds(){
-    QFile *file = new QFile("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
-    if (!file->open(QIODevice::ReadOnly)){
-          qDebug() << file->errorString();
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
+    if (!file.open(QIODevice::ReadOnly)){
+          qDebug() << file.errorString();
           initDefaultKeybinds();
           return;
     }
 
     QString tempShortcut[KEYBINDCOUNT];
-    QDataStream in(file);
+    QDataStream in(&file);
     QString readShortcut;
     int i = 0;
 
@@ -750,7 +764,7 @@ void MainWindow::initKeybinds(){
             //use default values
             qDebug() << i << KEYBINDCOUNT;
             qDebug() << "Invalid file initializing defaults";
-            file->close();
+            file.close();
             initDefaultKeybinds();
             return;
         }
@@ -764,7 +778,7 @@ void MainWindow::initKeybinds(){
         keybindString[i] = shortcut[i]->key().toString();
     }
     emit pushKeybinds(keybindString);
-    file->close();
+    file.close();
 }
 
 void MainWindow::saveKeybinds(){
@@ -864,15 +878,10 @@ void MainWindow::login(){
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event){
-    if (event->oldSize().height() < 0 || event->oldSize().width() < 0){
+    if (event->oldSize().height() == -1 || event->oldSize().width() == -1){
         return;
     }
-    //qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
-    emit newSize(event->size());
 
-    ui->gameScreen->resize(event->size());
-    //resize openglwidget too ? need to resize other stuff inside this when init'd
-    ui->openGLWidget->resize(event->size());
 
     //temporarily keep action bar repositions here cause noob
     double scale_factor_x = (double)350 / (double)1200;
@@ -956,6 +965,19 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     targetDebuff->move(event->size().width()*scale_factor_x,
                        event->size().height()*scale_factor_y);
 
+    scale_factor_x = (double)(600 - 527/2) / (double) 1200;
+    scale_factor_y = (double)(450 - 452/2) / (double) 900;
+
+    optionsMenu->move(event->size().width()*scale_factor_x,
+                      event->size().height()*scale_factor_y);
+
+
+    //qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
+    ui->gameScreen->resize(event->size());
+    //resize openglwidget too ? need to resize other stuff inside this when init'd
+    ui->openGLWidget->resize(event->size());
+
+    emit newSize(event->size());
 }
 
 

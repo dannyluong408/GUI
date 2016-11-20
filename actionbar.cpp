@@ -46,6 +46,7 @@ void ActionBar::resizeMe(QSize newSize){
                                    newSize.width()*scale_factor_x,
                                    newSize.height()*scale_factor_y);
     }
+    return;
 }
 
 void ActionBar::setButtonSpell(uint32_t spellid, uint32_t buttonNum){

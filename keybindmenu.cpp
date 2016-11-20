@@ -6,22 +6,25 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     setObjectName("keybindMenu");
     resize(450,450);
     move(600 - this->width()/2, 450 - this->height()/2);
-    setStyleSheet("keybindMenu{"
+    setStyleSheet("#keybindMenu{"
                   "border: 2px solid black;"
                   "border-left: none}");
 
     scrollArea = new QScrollArea(this);
 
     mainFrame = new QFrame(this);
-    mainFrame->setGeometry(0,0,430,2000);
+    mainFrame->setGeometry(0,0,415,2000);
 
-    mainLayout = new QGridLayout(mainFrame);
-    mainLayout->setMargin(10);
-    mainLayout->setSpacing(10);
+    gridLayout = new QGridLayout(mainFrame);
+    gridLayout->setMargin(10);
+    gridLayout->setSpacing(10);
 
-    mainLayout->setColumnMinimumWidth(0,(double)this->width()*0.4);
-    mainLayout->setColumnMinimumWidth(0,(double)this->width()*0.3);
-    mainLayout->setColumnMinimumWidth(0,(double)this->width()*0.3);
+    gridLayout->setColumnMinimumWidth(0,180);
+    gridLayout->setColumnMinimumWidth(1,100);
+    gridLayout->setColumnMinimumWidth(2,100);
+    gridLayout->setRowMinimumHeight(0,25);
+    gridLayout->setRowMinimumHeight(1,25);
+    gridLayout->setRowMinimumHeight(2,25);
 
     QString objectName;
     //init signal mappers
@@ -46,9 +49,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     header[1]->setFixedHeight(25);
     header[2]->setText("Key 2");
     header[2]->setFixedHeight(25);
-    mainLayout->addWidget(header[0],index,0);
-    mainLayout->addWidget(header[1],index,1);
-    mainLayout->addWidget(header[2],index,2);
+    gridLayout->addWidget(header[0],index,0);
+    gridLayout->addWidget(header[1],index,1);
+    gridLayout->addWidget(header[2],index,2);
     index++;
 
     //move section labels
@@ -57,7 +60,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Movement Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -83,9 +86,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(moveKeybindBackup[i],SIGNAL(clicked()),keybindMapperBackup,SLOT(map()));
         keybindMapperBackup->setMapping(moveKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(moveKeybindDesc[i],index,0);
-        mainLayout->addWidget(moveKeybind[i],index,1);
-        mainLayout->addWidget(moveKeybindBackup[i],index,2);
+        gridLayout->addWidget(moveKeybindDesc[i],index,0);
+        gridLayout->addWidget(moveKeybind[i],index,1);
+        gridLayout->addWidget(moveKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -96,7 +99,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Combat Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -122,9 +125,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     keybindMapperBackup->setMapping(combatKeybindBackup,buttonNum);
 
 
-    mainLayout->addWidget(combatKeybindDesc,index,0);
-    mainLayout->addWidget(combatKeybind,index,1);
-    mainLayout->addWidget(combatKeybindBackup,index,2);
+    gridLayout->addWidget(combatKeybindDesc,index,0);
+    gridLayout->addWidget(combatKeybind,index,1);
+    gridLayout->addWidget(combatKeybindBackup,index,2);
     index++;
     buttonNum++;
 
@@ -135,7 +138,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Targeting Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -161,9 +164,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(targetingKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(targetingKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(targetingKeybindDesc[i],index,0);
-        mainLayout->addWidget(targetingKeybind[i],index,1);
-        mainLayout->addWidget(targetingKeybindBackup[i],index,2);
+        gridLayout->addWidget(targetingKeybindDesc[i],index,0);
+        gridLayout->addWidget(targetingKeybind[i],index,1);
+        gridLayout->addWidget(targetingKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -174,7 +177,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Camera Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -200,9 +203,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(cameraKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(cameraKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(cameraKeybindDesc[i],index,0);
-        mainLayout->addWidget(cameraKeybind[i],index,1);
-        mainLayout->addWidget(cameraKeybindBackup[i],index,2);
+        gridLayout->addWidget(cameraKeybindDesc[i],index,0);
+        gridLayout->addWidget(cameraKeybind[i],index,1);
+        gridLayout->addWidget(cameraKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -213,7 +216,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Action Button Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -239,9 +242,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(actionPrimaryButtonKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(actionPrimaryButtonKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(actionPrimaryButtonKeybindDesc[i],index,0);
-        mainLayout->addWidget(actionPrimaryButtonKeybind[i],index,1);
-        mainLayout->addWidget(actionPrimaryButtonKeybindBackup[i],index,2);
+        gridLayout->addWidget(actionPrimaryButtonKeybindDesc[i],index,0);
+        gridLayout->addWidget(actionPrimaryButtonKeybind[i],index,1);
+        gridLayout->addWidget(actionPrimaryButtonKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -268,9 +271,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(actionSecondaryButtonKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(actionSecondaryButtonKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(actionSecondaryButtonKeybindDesc[i],index,0);
-        mainLayout->addWidget(actionSecondaryButtonKeybind[i],index,1);
-        mainLayout->addWidget(actionSecondaryButtonKeybindBackup[i],index,2);
+        gridLayout->addWidget(actionSecondaryButtonKeybindDesc[i],index,0);
+        gridLayout->addWidget(actionSecondaryButtonKeybind[i],index,1);
+        gridLayout->addWidget(actionSecondaryButtonKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -281,7 +284,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Interface Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -307,9 +310,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(interfaceKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(interfaceKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(interfaceKeybindDesc[i],index,0);
-        mainLayout->addWidget(interfaceKeybind[i],index,1);
-        mainLayout->addWidget(interfaceKeybindBackup[i],index,2);
+        gridLayout->addWidget(interfaceKeybindDesc[i],index,0);
+        gridLayout->addWidget(interfaceKeybind[i],index,1);
+        gridLayout->addWidget(interfaceKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -320,7 +323,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Chat Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -346,9 +349,9 @@ KeybindMenu::KeybindMenu(QWidget *parent)
         connect(chatKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
         keybindMapperMain->setMapping(chatKeybindBackup[i],buttonNum);
 
-        mainLayout->addWidget(chatKeybindDesc[i],index,0);
-        mainLayout->addWidget(chatKeybind[i],index,1);
-        mainLayout->addWidget(chatKeybindBackup[i],index,2);
+        gridLayout->addWidget(chatKeybindDesc[i],index,0);
+        gridLayout->addWidget(chatKeybind[i],index,1);
+        gridLayout->addWidget(chatKeybindBackup[i],index,2);
         index++;
         buttonNum++;
     }
@@ -359,7 +362,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     sectionHeader[sectionIndex]->setText("Misc Options");
     sectionHeader[sectionIndex]->setStyleSheet("font-weight: bold;");
     sectionHeader[sectionIndex]->setFixedHeight(25);
-    mainLayout->addWidget(sectionHeader[sectionIndex],index,0);
+    gridLayout->addWidget(sectionHeader[sectionIndex],index,0);
     index++;
     sectionIndex++;
 
@@ -384,56 +387,87 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     connect(miscKeybindBackup,SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
     keybindMapperMain->setMapping(miscKeybindBackup,buttonNum);
 
-    mainLayout->addWidget(miscKeybindDesc,index,0);
-    mainLayout->addWidget(miscKeybind,index,1);
-    mainLayout->addWidget(miscKeybindBackup,index,2);
+    gridLayout->addWidget(miscKeybindDesc,index,0);
+    gridLayout->addWidget(miscKeybind,index,1);
+    gridLayout->addWidget(miscKeybindBackup,index,2);
     index++;
     buttonNum++;
 
     //second frame stuff
     secondFrame = new QFrame(this);
+    objectName = "secondFrame";
+    secondFrame->setObjectName(objectName);
     secondFrame->setGeometry(0,350,450,100);
-    secondFrame->setStyleSheet("border: 2px solid black;");
+    secondFrame->setStyleSheet("#secondFrame{"
+                               "border: 2px solid black;}");
 
+    secondLayout = new QHBoxLayout(secondFrame);
+    secondLayout->setMargin(0);
+    secondLayout->setSpacing(0);
 
-    secondFrameCheckbox[0] = new QCheckBox(secondFrame);
+    for(i = 0; i < 5; i++){
+        secondFrameV[i] = new QFrame(this);
+        secondFrameVLayout[i] = new QVBoxLayout(secondFrameV[i]);
+        secondLayout->addWidget(secondFrameV[i]);
+        secondFrameVLayout[i]->setContentsMargins(5,10,5,10);
+    }
+    secondFrameCheckbox[0] = new QCheckBox(this);
     secondFrameCheckbox[0]->setObjectName("Keybind Mode");
     secondFrameCheckbox[0]->setText("Keybind Mode");
     secondFrameCheckbox[0]->setGeometry(10,20,115,25);
     secondFrameCheckbox[0]->setStyleSheet("border: none;");
+    secondFrameVLayout[0]->addWidget(secondFrameCheckbox[0]);
 
-    secondFrameCheckbox[1] = new QCheckBox(secondFrame);
+    secondFrameCheckbox[1] = new QCheckBox(this);
     secondFrameCheckbox[1]->setObjectName("Character Specific");
     secondFrameCheckbox[1]->setText("Character Specific");
     secondFrameCheckbox[1]->setGeometry(10,55,115,25);
     secondFrameCheckbox[1]->setStyleSheet("border: none;");
+    secondFrameVLayout[0]->addWidget(secondFrameCheckbox[1]);
 
-    secondFrameButtons[0] = new QPushButton(secondFrame);
+
+    secondFrameButtons[0] = new QPushButton(this);
     secondFrameButtons[0]->setObjectName("Defaults");
     secondFrameButtons[0]->setText("Defaults");
     secondFrameButtons[0]->setGeometry(135,30,70,40);
     connect(secondFrameButtons[0],SIGNAL(clicked(bool)),this,SIGNAL(defaultBinds()));
+    secondFrameVLayout[1]->addWidget(secondFrameButtons[0]);
 
-    secondFrameButtons[1] = new QPushButton(secondFrame);
+
+    secondFrameButtons[1] = new QPushButton(this);
     secondFrameButtons[1]->setObjectName("Remove Bind");
     secondFrameButtons[1]->setText("Remove Bind");
     secondFrameButtons[1]->setGeometry(215,30,70,40);
+    secondFrameVLayout[2]->addWidget(secondFrameButtons[1]);
 
-    secondFrameButtons[2] = new QPushButton(secondFrame);
+
+    secondFrameButtons[2] = new QPushButton(this);
     secondFrameButtons[2]->setObjectName("Apply");
     secondFrameButtons[2]->setText("Apply");
     secondFrameButtons[2]->setGeometry(290,30,70,40);
     connect(secondFrameButtons[2],SIGNAL(clicked(bool)),this,SIGNAL(saveBinds()));
+    secondFrameVLayout[3]->addWidget(secondFrameButtons[2]);
 
-    secondFrameButtons[3] = new QPushButton(secondFrame);
+
+    secondFrameButtons[3] = new QPushButton(this);
     secondFrameButtons[3]->setObjectName("Cancel");
     secondFrameButtons[3]->setText("Cancel");
     secondFrameButtons[3]->setGeometry(365,30,70,40);
+    secondFrameVLayout[4]->addWidget(secondFrameButtons[3]);
+
 
     //turn it all into a scroll area
     scrollArea->setWidget(mainFrame);
     scrollArea->setGeometry(0,0,450,350);
 
+
+    mainLayout = new QVBoxLayout(this);
+    mainLayout->addWidget(scrollArea);
+    mainLayout->addWidget(secondFrame);
+    mainLayout->setStretch(0,8);
+    mainLayout->setStretch(1,1);
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
 
 }
 
@@ -711,4 +745,36 @@ void KeybindMenu::updateKeybinds(QString *shortcut){
     }
 
     miscKeybind->setText(shortcut[index]);
+}
+
+void KeybindMenu::resizeMe(QSize newSize){
+    if (newSize == this->size()){
+        qDebug() << "returned";
+        return;
+    }
+
+    qDebug() << "This is getting called!";
+    double scale_factor_w = 415.0/1200.0;
+    double scale_factor_h = 350.0/900.0;
+
+    mainFrame->resize(newSize.width()*scale_factor_w,
+               mainFrame->size().height());
+
+    scale_factor_w = 450.0/1200.0;
+    scrollArea->resize(newSize.width()*scale_factor_w,
+                       scrollArea->size().height());
+//    scale_factor_w = 450.0/1200.0;
+//    scale_factor_h = 100.0/900.0;
+
+//    secondFrame->resize(newSize.width()*scale_factor_w,
+//               newSize.height()*scale_factor_h);
+
+//    scale_factor_w = 430.0/1200.0;
+//    scale_factor_h = 350.0/900.0;
+
+//    scrollArea->resize(newSize.width()*scale_factor_w,
+//               newSize.height()*scale_factor_h);
+
+    qDebug() << "End";
+    return;
 }

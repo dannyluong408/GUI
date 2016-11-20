@@ -37,7 +37,7 @@ void TargetBuffFrame::resizeMe(QSize newSize) {
     const double scale_factor_w = (double)250 / (double)1200;
     const double scale_factor_h = (double)25 / (double)900;
     resize(QSize(newSize.width()*scale_factor_w , newSize.height()*scale_factor_h));
-
+    return;
 }
 
 void TargetBuffFrame::sort(){

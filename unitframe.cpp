@@ -140,7 +140,7 @@ void UnitFrame::resizeMe(QSize newSize){ //todo
         resize(newSize.width()*sf_frame_w,
               newSize.height()*sf_frame_h);
     }
-
+    return;
 }
 
 void UnitFrame::setAvatar(QPixmap newAva){

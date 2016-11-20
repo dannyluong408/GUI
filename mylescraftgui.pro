@@ -61,7 +61,6 @@ HEADERS  += mainwindow.h \
     nx_include/nx_error.h \
     nx_include/nx_timing.h \
     nx_include/nx_profiling.h \
-    gamemenu.h \
     spellbook.h \
     guildframe.hpp \
     options.hpp \
@@ -73,7 +72,8 @@ HEADERS  += mainwindow.h \
     textedit.hpp \
     keybindmenu.hpp \
     miscenum.hpp \
-    keybindialog.hpp
+    keybindialog.hpp \
+    gamemenu.hpp
 
 FORMS    += mainwindow.ui
 

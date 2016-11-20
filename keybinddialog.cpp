@@ -18,7 +18,7 @@ KeybindDialog::KeybindDialog(QWidget *parent)
     show();
 }
 
-
+//possibly use QKeySequenceEdit in the future but probably not
 void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
     QKeySequence keybind;
     if(event->modifiers() & Qt::ControlModifier &&

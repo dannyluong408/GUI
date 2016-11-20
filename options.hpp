@@ -15,23 +15,23 @@ class OptionsFrame : public QFrame
     public slots:
         void currentOption();
         void updateKeybinds(QString *keybinds);
-        void disableShortcutsRec();
-        void enableShortcutsRec();
-        void newBindRec(QKeySequence newBind, int num);
+        void resizeMe(QSize newSize);
 
     signals:
-        void disableShortcutsSend();
-        void enableShortcutsSend();
+        void disableShortcuts();
+        void enableShortcuts();
         void newBindSend(QKeySequence newBind, int num);
         void saveBinds();
         void defaultBinds();
+        void resizeChildren(QSize newSize);
 
     private:
         QHBoxLayout *mainLayout;
         QVBoxLayout *buttonLayout;
+        QVBoxLayout *optionLayout, *optionFrameLayout[6];
         QPushButton *options[6];
         QStackedWidget *optionsStacked;
-        QFrame *optionFrame[6], *buttonFrame;
+        QFrame *optionFrame[6], *buttonFrame, *mainFrame;
         KeybindMenu *keybindMenu;
 };
 

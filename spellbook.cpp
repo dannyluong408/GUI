@@ -193,6 +193,7 @@ void SpellBook::resizeMe(QSize newSize){
                   newSize.height()*scale_factor_y,
                   newSize.width()*scale_factor_w,
                   newSize.height()*scale_factor_h);
+    return;
 }
 
 

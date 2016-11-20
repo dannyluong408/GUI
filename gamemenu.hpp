@@ -21,11 +21,10 @@ class GameMenu : public QFrame
         void openThis(QString name);
 
     private:
-        QFrame *mainFrame;
         QLabel *frameLabel;
-        QWidget *layoutFrame;
-        QVBoxLayout *mainLayout;
-        QPushButton *options[8];
+        QFrame *buttonFrame;
+        QVBoxLayout *mainLayout, *buttonLayout;
+        QPushButton *options[5];
 };
 
 
