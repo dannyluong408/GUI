@@ -34,9 +34,10 @@ void TargetBuffFrame::setAsDebuff(bool state){
 }
 
 void TargetBuffFrame::resizeMe(QSize newSize) {
-    const double scale_factor_h = (double)25 / (double)900;
-    resize(newSize.height()*scale_factor_h*10,
-           newSize.height()*scale_factor_h);
+    const double minSize = 900.0;
+    const double iconSize = 25.0 / minSize;
+    resize(newSize.height()*iconSize*10,
+           newSize.height()*iconSize);
     return;
 }
 

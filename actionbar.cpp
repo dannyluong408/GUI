@@ -32,8 +32,6 @@ void ActionBar::callSlotSpell(int i){
 
 void ActionBar::resizeMe(QSize newSize){
     const double minSize = 900.0;
-//    const double minSize = newSize.width() > newSize.height() ? 900.0 : 1200.0;
-//    const double scale = newSize.width() > newSize.height() ? newSize.width() : newSize.height();
     const double scale_factor_y = 48.0/minSize;
 
     for (int i = 0; i < NUMBUTTONS; i++){

@@ -35,21 +35,20 @@ void PlayerBuffFrame::setAsDebuff(bool state){
 }
 
 void PlayerBuffFrame::resizeMe(QSize newSize) {
-    const double minSize = newSize.width() < newSize.height() ? 1200.0 : 900.0;
+    const double minSize = 900.0;
     const double iconSize = 42.0 / minSize;
-    const double scale_factor_x = 15.0 / minSize;
-    const double scale_factor_y = 15.0 / minSize;
+    const double scale_factor = 15.0 / minSize;
     const double padding = 15.0 / 1200.0;
 
     if (!isDebuff){
         setGeometry(newSize.width()-((newSize.height()*iconSize*10+newSize.width()*padding)),
-                    newSize.height()*scale_factor_y,
+                    newSize.height()*scale_factor,
                     newSize.height()*iconSize*10,
                     newSize.height()*iconSize);
     }
     else{
         setGeometry(newSize.width()-((newSize.height()*iconSize*10+newSize.width()*padding)),
-                    newSize.height()*scale_factor_y+newSize.height()*iconSize,
+                    newSize.height()*scale_factor+newSize.height()*iconSize,
                     newSize.height()*iconSize*10,
                     newSize.height()*iconSize);
     }
