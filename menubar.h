@@ -21,7 +21,7 @@ class Menubar: public QFrame
         void openMenu();
 
     private:
-        PushButton *menuButton[5];
+        QPushButton *menuButton[5];
 
 };
 

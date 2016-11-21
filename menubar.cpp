@@ -7,13 +7,14 @@ Menubar:: Menubar(QWidget *parent)
     setFrameStyle(QFrame::Box);
     setObjectName("menuBar");
     setGeometry(950,800,240,48);
+    setAcceptDrops(false);
 
     QPalette* palette = new QPalette();
     palette->setColor(QPalette::Foreground,Qt::red);
     setPalette(*palette);
 
      for (int i = 0 ; i < 5; i++){
-         menuButton[i] = new PushButton(this);
+         menuButton[i] = new QPushButton(this);
          menuButton[i]->setGeometry((i*48),0,48,48);
          menuButton[i]->setIconSize(QSize(48,48));
      }
@@ -67,7 +68,7 @@ void Menubar::toggleThis(){
 }
 
 void Menubar::resizeMe(QSize newSize){ //lol what a mess fix for 1080p resolution later
-    const double scale_factor_x = 950.0 / 1200.0;
+//    const double scale_factor_x = 950.0 / 1200.0;
     const double scale_factor_y = 800.0 / 900.0;
     const double scale_factor_icon= 48.0/900.0;
 
