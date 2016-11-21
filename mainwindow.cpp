@@ -961,7 +961,6 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     //resize openglwidget too ? need to resize other stuff inside this when init'd
     ui->openGLWidget->resize(event->size());
 
-    qDebug() << event->size();
     emit newSize(event->size());
 }
 
