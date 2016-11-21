@@ -31,21 +31,23 @@ void ActionBar::callSlotSpell(int i){
 }
 
 void ActionBar::resizeMe(QSize newSize){
-    double scale_factor_x  = (50.0*NUMBUTTONS)/1200.0;
-    const double scale_factor_y = 50.0/900.0;
+    const double minSize = 900.0;
+//    const double minSize = newSize.width() > newSize.height() ? 900.0 : 1200.0;
+//    const double scale = newSize.width() > newSize.height() ? newSize.width() : newSize.height();
+    const double scale_factor_y = 48.0/minSize;
 
-    resize(newSize.width()*scale_factor_x,
-           newSize.height()*scale_factor_y);
-
-
-    scale_factor_x  = 50.0/1200.0;
     for (int i = 0; i < NUMBUTTONS; i++){
+         buttonSet[i]->move(50*i,0);
          buttonSet[i]->resizeMe(newSize);
-         buttonSet[i]->setGeometry((newSize.width()*scale_factor_x*(double)i),
+         buttonSet[i]->setGeometry(newSize.height()*scale_factor_y*i,
                                    0,
-                                   newSize.width()*scale_factor_x,
+                                   newSize.height()*scale_factor_y,
                                    newSize.height()*scale_factor_y);
     }
+
+    const double scale_factor_x = 50.0/minSize;
+    resize(newSize.width()*scale_factor_x*NUMBUTTONS,
+           newSize.height()*scale_factor_x);
     return;
 }
 

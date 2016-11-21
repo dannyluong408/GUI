@@ -24,17 +24,19 @@ PushButton::PushButton(QWidget *parent)
 }
 
 void PushButton::resizeMe(QSize newSize){
-    const double scale_factor_x = (double)48 / (double)1200;
-    const double scale_factor_y = (double)48 / (double)900;
+    const double minSize = newSize.width() < newSize.height() ? 1200.0 : 900.0;
+    const double square_icon_frame = 50.0 / minSize;
+    this->resize(newSize.height()*square_icon_frame,
+                 newSize.height()*square_icon_frame);
+    const double square_icon = 48.0 / minSize;
     //qDebug() << "Resizing Spell Buttons " << newSize;
-    setIconSize(QSize(newSize.width()*scale_factor_x,
-                      newSize.height()*scale_factor_y));
+    this->setIconSize(QSize(newSize.height()*square_icon,
+                      newSize.height()*square_icon));
     QPixmap newIcon = origIcon;
-    newIcon.scaled(newSize.width()*scale_factor_x,
-                   newSize.height()*scale_factor_y,
+    newIcon.scaled(newSize.height()*square_icon,
+                   newSize.height()*square_icon,
                    Qt::KeepAspectRatio);
     setIcon(QIcon(newIcon));
-
 }
 
 

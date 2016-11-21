@@ -10,24 +10,20 @@ BuffIcon::BuffIcon(QWidget *parent)
 }
 
 void BuffIcon::resizeMe(QSize newSize){
-    double scale_factor_w = (double)25/ (double)1200;
-    double scale_factor_h = (double)25/ (double)900;
+    const double minSize = newSize.width() < newSize.height() ? 1200.0 : 900.0;
+    double square_icon;
     if (!isPlayer){ //target size
-        resize(newSize.width()*scale_factor_w,
-               newSize.height()*scale_factor_h);
-        setPixmap(origPix.scaled(newSize.width()*scale_factor_w,
-                                 newSize.height()*scale_factor_h,
-                                 Qt::KeepAspectRatio));
+        square_icon = (double)25 / minSize;
     }
     else{ //player size
-        scale_factor_w = (double)42 / (double)1200;
-        scale_factor_h = (double)42 / (double)900;
-        resize(newSize.width()*scale_factor_w,
-               newSize.height()*scale_factor_h);
-        setPixmap(origPix.scaled(newSize.width()*scale_factor_w,
-                                 newSize.height()*scale_factor_h,
-                                 Qt::KeepAspectRatio));
+        square_icon = (double)42 / minSize;
+
     }
+    resize(newSize.height()*square_icon,
+           newSize.height()*square_icon);
+    setPixmap(origPix.scaled(newSize.height()*square_icon,
+                             newSize.height()*square_icon,
+                             Qt::KeepAspectRatio));
 }
 
 

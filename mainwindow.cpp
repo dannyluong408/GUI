@@ -809,6 +809,9 @@ void MainWindow::test2(){
 
 MainWindow::~MainWindow()
 {
+    for(int i = 0; i<KEYBINDCOUNT; i++){
+        delete shortcut[i];
+    }
     delete actionBar[0];
     delete actionBar[1];
     delete playerFrame;
@@ -823,14 +826,12 @@ MainWindow::~MainWindow()
     delete spellBook;
     delete guildFrame;
     delete honorFrame;
-    delete gameMenu;
     delete optionsMenu;
-    for(auto i: shortcut){
-        delete i;
-    }
-    delete ui;
+    delete gameMenu;
+    delete keybindMapper;
     delete loginButton;
     delete loginScreen;
+    delete ui;
 }
 
 void MainWindow::test(QString name){
@@ -939,19 +940,17 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     partyFrame->move(event->size().width()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
-
     scale_factor_x = (double)767.5 / (double) 1200;
     scale_factor_y = (double)12.5 / (double) 900;
 
     playerBuff->move(event->size().width()*scale_factor_x,
-                     event->size().height()*scale_factor_y);
+                   event->size().height()*scale_factor_y);
 
 
     scale_factor_y = (double)56.5 / (double) 900;
 
     playerDebuff->move(event->size().width()*scale_factor_x,
-                       event->size().height()*scale_factor_y);
-
+                     event->size().height()*scale_factor_y);
 
     scale_factor_x = (double)287.5 / (double) 1200;
     scale_factor_y = (double)117.5 / (double) 900;
