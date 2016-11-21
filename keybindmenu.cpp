@@ -409,7 +409,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondLayout->setMargin(0);
     secondLayout->setSpacing(0);
 
-    for(i = 0; i < 5; i++){
+    for(i = 0; i < 4; i++){
         secondFrameV[i] = new QFrame(this);
         secondFrameVLayout[i] = new QVBoxLayout(secondFrameV[i]);
         secondLayout->addWidget(secondFrameV[i]);
@@ -418,18 +418,20 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrameCheckbox[0] = new QCheckBox(this);
     secondFrameCheckbox[0]->setObjectName("Keybind Mode");
     secondFrameCheckbox[0]->setText("Keybind Mode");
-    secondFrameCheckbox[0]->setGeometry(10,20,115,25);
+    secondFrameCheckbox[0]->resize(115,25);
+    secondFrameCheckbox[0]->setMinimumWidth(115);
     secondFrameCheckbox[0]->setStyleSheet("border: none;");
+    secondFrameV[0]->setMinimumWidth(115);
     secondFrameVLayout[0]->addWidget(secondFrameCheckbox[0]);
 
 
     secondFrameCheckbox[1] = new QCheckBox(this);
     secondFrameCheckbox[1]->setObjectName("Character Specific");
     secondFrameCheckbox[1]->setText("Character Specific");
-    secondFrameCheckbox[1]->setGeometry(10,55,115,25);
+    secondFrameCheckbox[1]->resize(115,25);
+    secondFrameCheckbox[1]->setMinimumWidth(115);
     secondFrameCheckbox[1]->setStyleSheet("border: none;");
     secondFrameVLayout[0]->addWidget(secondFrameCheckbox[1]);
-
 
 
     secondFrameButtons[0] = new QPushButton(this);
@@ -454,19 +456,11 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     connect(secondFrameButtons[2],SIGNAL(clicked(bool)),this,SIGNAL(saveBinds()));
     secondFrameVLayout[3]->addWidget(secondFrameButtons[2]);
 
-
-    secondFrameButtons[3] = new QPushButton(this);
-    secondFrameButtons[3]->setObjectName("Cancel");
-    secondFrameButtons[3]->setText("Cancel");
-    secondFrameButtons[3]->setGeometry(365,30,70,40);
-    secondFrameVLayout[4]->addWidget(secondFrameButtons[3]);
-
-    secondFrameV[0]->setMinimumWidth(115);
-    secondLayout->setStretch(0,2);
+    secondLayout->setStretch(0,5);
     secondLayout->setStretch(1,1);
     secondLayout->setStretch(2,1);
     secondLayout->setStretch(3,1);
-    secondLayout->setStretch(4,1);
+    secondLayout->insertSpacing(1,40);
 
 
     //turn it all into a scroll area
@@ -765,8 +759,6 @@ void KeybindMenu::resizeMe(QSize newSize){
         qDebug() << "returned";
         return;
     }
-
-    double scale_factor_w = 415.0/1200.0;
 
     if(scrollArea->size().width()-20 > 250){
         mainFrame->resize(scrollArea->size().width()-20,

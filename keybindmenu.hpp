@@ -32,12 +32,12 @@ class KeybindMenu: public QFrame
 
     private:
         QGridLayout *gridLayout;
-        QVBoxLayout *mainLayout, *secondFrameVLayout[5];
-        QFrame *mainFrame,*secondFrame,*secondFrameV[5];
+        QVBoxLayout *mainLayout, *secondFrameVLayout[4];
+        QFrame *mainFrame,*secondFrame,*secondFrameV[4];
         QHBoxLayout *secondLayout;
 
         QCheckBox *secondFrameCheckbox[2];
-        QPushButton *secondFrameButtons[4];
+        QPushButton *secondFrameButtons[3];
 
         QPushButton *moveKeybind[7],*moveKeybindBackup[7],
                     *combatKeybind,*combatKeybindBackup,

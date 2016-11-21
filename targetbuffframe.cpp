@@ -36,8 +36,17 @@ void TargetBuffFrame::setAsDebuff(bool state){
 void TargetBuffFrame::resizeMe(QSize newSize) {
     const double minSize = 900.0;
     const double iconSize = 25.0 / minSize;
-    resize(newSize.height()*iconSize*10,
+    const double spacing = 27.00 / 900.0;
+
+    resize(newSize.height()*spacing*10,
            newSize.height()*iconSize);
+
+    BuffIcon **temp = buffs.data();
+    for(int i = 0; i< buffs.size(); i++){
+        temp[i]->resizeMe(newSize);
+    }
+    temp = nullptr;
+    free(temp);
     return;
 }
 
@@ -46,13 +55,15 @@ void TargetBuffFrame::sort(){
 
     delete(buffLayout);
     buffLayout = new QGridLayout(this);
-    buffLayout->setSpacing(3);
-    buffLayout->setMargin(0);
+    buffLayout->setSpacing(1);
+    buffLayout->setMargin(1);
 
     BuffIcon **temp = buffs.data();
     for(int i = 0; i< buffs.size(); i++){
         buffLayout->addWidget(temp[i],i/10,i%10);
     }
+    temp = nullptr;
+    free(temp);
 }
 
 void TargetBuffFrame::test(){
@@ -75,7 +86,7 @@ void TargetBuffFrame::test(){
                 buff->setStyleSheet("border: 1px solid yellow");
                 break;
         }
-        buff->setPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(24,24,Qt::KeepAspectRatio));
+//        buff->setPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(24,24,Qt::KeepAspectRatio));
 //        buff->setOGPix(buff->pixmap());
         buff->setText(QString::number(i));
         buff->setBuffDuration(qrand() % 1000);

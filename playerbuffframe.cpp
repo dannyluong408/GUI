@@ -12,7 +12,7 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
     setFrameShadow(QFrame::Raised);
     resize(420,42);
     buffLayout = new QGridLayout(this);
-    buffLayout->setSpacing(3);
+    buffLayout->setSpacing(1);
     buffLayout->setMargin(0);
     buffLayout->setOriginCorner(Qt::TopRightCorner);
     setStyleSheet("border: none");
@@ -38,20 +38,27 @@ void PlayerBuffFrame::resizeMe(QSize newSize) {
     const double minSize = 900.0;
     const double iconSize = 42.0 / minSize;
     const double scale_factor = 15.0 / minSize;
-    const double padding = 15.0 / 1200.0;
-
+    const double padding = 20.0 / 1200.0;
+    const double spacing = 44.0 / minSize;
     if (!isDebuff){
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+newSize.width()*padding)),
+        setGeometry(newSize.width()-((newSize.height()*spacing*10+newSize.width()*padding)),
                     newSize.height()*scale_factor,
-                    newSize.height()*iconSize*10,
+                    newSize.height()*iconSize*10+10,
                     newSize.height()*iconSize);
     }
     else{
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+newSize.width()*padding)),
-                    newSize.height()*scale_factor+newSize.height()*iconSize,
-                    newSize.height()*iconSize*10,
+        setGeometry(newSize.width()-((newSize.height()*spacing*10+newSize.width()*padding)),
+                    newSize.height()*scale_factor+newSize.height()*spacing,
+                    newSize.height()*iconSize*10+10,
                     newSize.height()*iconSize);
     }
+
+    BuffIcon **temp = buffs.data();
+    for(int i = 0; i< buffs.size(); i++){
+        temp[i]->resizeMe(newSize);
+    }
+    temp = nullptr;
+    free(temp);
     return;
 }
 
@@ -60,13 +67,14 @@ void PlayerBuffFrame::sort(){
 
     delete(buffLayout);
     buffLayout = new QGridLayout(this);
-    buffLayout->setSpacing(3);
-    buffLayout->setMargin(0);
+    buffLayout->setSpacing(1);
+    buffLayout->setMargin(1);
 
     BuffIcon **temp = buffs.data();
     for(int i = 0; i< buffs.size(); i++){
         buffLayout->addWidget(temp[i],i/10,i%10);
     }
+
 }
 
 void PlayerBuffFrame::test(){
@@ -90,7 +98,7 @@ void PlayerBuffFrame::test(){
                 buff->setStyleSheet("border: 1px solid yellow");
                 break;
         }
-        buff->setPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(42,42,Qt::KeepAspectRatio));
+//        buff->setOGPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(42,42,Qt::KeepAspectRatio));
 //        buff->setOGPix(buff->pixmap());
         buff->setText(QString::number(i));
         buff->setBuffDuration(qrand() % 1000);

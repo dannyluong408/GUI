@@ -753,8 +753,27 @@ void MainWindow::initDefaultKeybinds(){
 }
 
 
+void MainWindow::saveKeybinds(){
+    qDebug() << "Saving Keybinds to File";
+    QString path = QCoreApplication::applicationDirPath() + "/keybinds.txt";
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly)){
+          qDebug() << file.errorString();
+          return;
+    }
+
+    QDataStream out(&file);
+    for (int i = 0; i < KEYBINDCOUNT; i++){
+        //qDebug() << "Saving shortcut" << i << shortcut[i]->key().toString();
+        out << shortcut[i]->key().toString();
+    }
+
+    file.close();
+}
+
 void MainWindow::initKeybinds(){
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/keybinds.txt");
+    QString path = QCoreApplication::applicationDirPath() + "/keybinds.txt";
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
           initDefaultKeybinds();
@@ -790,7 +809,8 @@ void MainWindow::initKeybinds(){
 
 void MainWindow::saveActionBars(){
     qDebug() << "Saving Action Bars to File";
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/actionbars.txt");
+    QString path = QCoreApplication::applicationDirPath() + "/actionbars.txt";
+    QFile file(path);
     if (!file.open(QIODevice::WriteOnly)){
           qDebug() << file.errorString();
           return;
@@ -811,9 +831,11 @@ void MainWindow::saveActionBars(){
 
 void MainWindow::loadActionBars(){
     qDebug() << "Loading Action Bars";
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/actionbars.txt");
+    QString path = QCoreApplication::applicationDirPath() + "/actionbars.txt";
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
+          initDefaultActionbars();
           return;
     }
 
@@ -842,28 +864,11 @@ void MainWindow::loadActionBars(){
 
  void MainWindow::initDefaultActionbars(){ //change this later lol
      for(int i = 1; i < 11; i++){
-         actionBar[0]->setButtonSpell(qrand()%3,i);
-         actionBar[1]->setButtonSpell(qrand()%3,i);
+         actionBar[0]->setButtonSpell(qrand()%4,i);
+         actionBar[1]->setButtonSpell(qrand()%4,i);
      }
- }
-
-void MainWindow::saveKeybinds(){
-    qDebug() << "Saving Keybinds to File";
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/keybinds.txt");
-    if (!file.open(QIODevice::WriteOnly)){
-          qDebug() << file.errorString();
-          return;
-    }
-
-    QDataStream out(&file);
-    for (int i = 0; i < KEYBINDCOUNT; i++){
-        //qDebug() << "Saving shortcut" << i << shortcut[i]->key().toString();
-        out << shortcut[i]->key().toString();
-    }
-
-    file.close();
+     saveActionBars();
 }
-
 
 void MainWindow::update(){
 
