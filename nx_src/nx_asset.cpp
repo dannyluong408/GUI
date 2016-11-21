@@ -716,7 +716,7 @@ static int nx_load_png(struct nx_asset_img *output, const char *filename, FILE *
 }
 */
 
-void nx_load_asset(void *input) {
+void *nx_load_asset(void *input) {
 	assert(input);
 	struct nx_asset *asset = (struct nx_asset*)input;
 	pthread_mutex_lock(&asset->mtx);
@@ -729,7 +729,7 @@ void nx_load_asset(void *input) {
                 if (img.isNull()) {
                     asset->status = NX_ASSET_FAILED_INVALID_FILE;
                     pthread_mutex_unlock(&asset->mtx);
-                    return;
+                    return NULL;
                 }
                 QImage *ptr;
                 if (img.hasAlphaChannel()) {
@@ -740,7 +740,7 @@ void nx_load_asset(void *input) {
                 if (!ptr || ptr->isNull()) {
                     asset->status = NX_ASSET_FAILED_INVALID_FILE;
                     pthread_mutex_unlock(&asset->mtx);
-                    return;
+                    return NULL;
                 }
                 asset->data = (void*)ptr;
                 asset->length = sizeof(QImage);
@@ -788,7 +788,7 @@ void nx_load_asset(void *input) {
 			if (!text_file || !len) {
 				asset->status = NX_ASSET_FAILED_INVALID_FILE;
 				pthread_mutex_unlock(&asset->mtx);
-				return;
+                return NULL;
 			}
 			asset->data = (void*)text_file;
 			asset->length = len;
@@ -802,7 +802,7 @@ void nx_load_asset(void *input) {
 			if (nx_load_model(&model, asset, asset->file)) {
 				asset->status = NX_ASSET_FAILED_INVALID_DATA;
 				pthread_mutex_unlock(&asset->mtx);
-				return;
+                return NULL;
 			}
 			asset->data = malloc(sizeof(model));
 			memcpy(asset->data, (void*)&model, sizeof(model));
@@ -814,6 +814,7 @@ void nx_load_asset(void *input) {
 		#endif // ASSET_USE_GL
 	}
 	pthread_mutex_unlock(&asset->mtx);
+    return (void*)asset;
 }
 
 void nx_asset_wait_change(struct nx_asset *asset) {

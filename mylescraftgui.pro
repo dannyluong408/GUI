@@ -16,7 +16,7 @@ TARGET = Slider
 TEMPLATE = app
 
 
-DEFINES += NX_USE_ASSETS ASSET_USE_GL DEBUG
+DEFINES += NX_USE_ASSETS ASSET_USE_GL DEBUG USING_QT
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -27,12 +27,17 @@ SOURCES += main.cpp\
     unitframe.cpp \
     progressbar.cpp \
     menubar.cpp \
+	\
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
+	modules/util.cpp \
+	\
     nx_src/nx_asset.cpp \
     nx_src/nx_error.c \
     nx_src/nx_profiling.c \
     nx_src/nx_timing.c \
+	nx_src/nx_deferred_processing.cpp \
+	\
     gamemenu.cpp \
     spellbook.cpp \
     guildframe.cpp \

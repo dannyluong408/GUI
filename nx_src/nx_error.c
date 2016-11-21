@@ -44,8 +44,8 @@ int nx_log_init(const char *log_path) {
 				} // otherwise ignore
 			}
 		}
-		fprintf(NX_DEFAULT_OUTPUT,"Output log set to %s. Warn level is <%u.\n",log_path,internal.suppress_level);
 		setup = 1;
+        nx_log_msg("Output log set to %s. Warn level is <%u.\n",6,log_path,internal.suppress_level);
 	} else {
 		if (internal.log_file) {
 			nx_log_msg("Log file '%s' already opened. Ignoring nx_log_init(%s).",2,internal.filename,log_path);
@@ -136,13 +136,15 @@ void nx_display_popup_msg(const char *title, const char *errmsg, ...) {
 	vsnprintf(buffer, sizeof(buffer)-1, errmsg, args);
 	va_end(args);
 	#ifdef __WIN32
-	MessageBox(NULL, buffer, title, MB_OK | MB_TASKMODAL);
+        #ifndef USING_QT
+            MessageBox(NULL, buffer, title, MB_OK | MB_TASKMODAL);
+        #endif
 	#else
 		#ifndef NX_ERROR_USING_CLI
 			#warning "no supported message dialog, using default output stream"
 		#endif
-	fputs(buffer, NX_DEFAULT_OUTPUT);
 	#endif
+    fputs(buffer, NX_DEFAULT_OUTPUT);
 }
 
 #ifdef __cplusplus

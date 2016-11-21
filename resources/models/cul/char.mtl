@@ -1,0 +1,101 @@
+# Blender MTL File: 'None'
+# Material Count: 9
+
+newmtl m_00
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd .
+map_d .
+
+newmtl m_01
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.000000 0.000000
+Ks 0.050000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd .
+map_d .
+
+newmtl m_02
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.776000 0.776000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd resources/models/cul/CULKarada00100.png
+map_d resources/models/cul/CULKarada00100.png
+
+newmtl m_03
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd resources/models/cul/CULKarada00100.png
+map_d resources/models/cul/CULKarada00100.png
+
+newmtl m_04
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd resources/models/cul/CULBikini00101.png
+map_d resources/models/cul/CULBikini00101.png
+
+newmtl m_05
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.080000 0.080000 0.080000
+Ks 0.012500 0.012500 0.012500
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd .
+map_d .
+
+newmtl m_06
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.800000 0.800000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 0.800000
+illum 2
+map_Kd .
+map_d .
+
+newmtl m_07
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.776000 0.776000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd resources/models/cul/CULKao00100.png
+map_d resources/models/cul/CULKao00100.png
+
+newmtl m_08
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.050000 0.050000 0.050000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd resources/models/cul/CULKami00100.png
+map_d resources/models/cul/CULKami00100.png
