@@ -44,7 +44,9 @@ public:
     void loadImage(const QString &path);
     void resizeEvent(QResizeEvent *event);
     void initDefaultKeybinds();
+    void initDefaultActionbars();
     void initKeybinds();
+    void loadActionBars();
 
     //keybind functions
     void movePlayer(int direction);
@@ -59,13 +61,13 @@ public:
 
 
 public slots:
-    void test(QString name);
-    void test2();
+    void openOption(QString name);
     void disableShortcuts();
     void enableShortcuts();
     void newBindRecv(QKeySequence newKeybind, int num);
     void saveKeybinds();
     void defaultKeybinds();
+    void saveActionBars();
 
 private slots:
     void castSpell(int buttonPos);

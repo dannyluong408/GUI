@@ -108,6 +108,14 @@ SpellBook::SpellBook(QWidget *parent)
     setVisible(false);
 }
 
+void SpellBook::setSlotSpell(int slot, uint32_t spellId){
+    if((slot <0 || slot > 59) || spellId > 1500){
+        qDebug() << "Error";
+        return;
+    }
+    spellSlot[slot]->setSpellId(spellId);
+}
+
 void SpellBook::hide(){
     setVisible(false);
 }

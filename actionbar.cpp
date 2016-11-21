@@ -50,10 +50,18 @@ void ActionBar::resizeMe(QSize newSize){
 }
 
 void ActionBar::setButtonSpell(uint32_t spellid, uint32_t buttonNum){
+    if(buttonNum < 1 || buttonNum > 10){
+        qDebug() << "Invalid Input";
+        return;
+    }
     buttonSet[buttonNum-1]->setSpellId(spellid);
 }
 
 uint32_t ActionBar::getButtonSpell(uint32_t buttonNum){
+    if(buttonNum < 1 || buttonNum > 10){
+        qDebug() << "Invalid Input";
+        return 0;
+    }
     return buttonSet[buttonNum-1]->getSpellId();
 }
 

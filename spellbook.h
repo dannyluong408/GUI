@@ -13,6 +13,7 @@ class SpellBook : public QFrame
     Q_OBJECT
     public:
         SpellBook(QWidget *parent);
+        void setSlotSpell(int slot, uint32_t spellId);
 
     public slots:
         void resizeMe(QSize newSize);

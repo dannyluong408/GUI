@@ -19,17 +19,17 @@ MainWindow::MainWindow(QWidget *parent) :
     actionBar[0]->move(350,800);
     actionBar[1]->move(350,850);
 
-    //test stuff for action bars -- remove later
-    actionBar[0]->setButtonSpell(1,1);
-    actionBar[0]->setButtonSpell(2,2);
-    actionBar[0]->setButtonSpell(3,3);
-    actionBar[0]->setButtonSpell(1,4);
-    actionBar[0]->setButtonSpell(2,5);
-    actionBar[0]->setButtonSpell(3,6);
-    actionBar[0]->setButtonSpell(1,7);
-    actionBar[0]->setButtonSpell(2,8);
-    actionBar[0]->setButtonSpell(3,9);
-    actionBar[0]->setButtonSpell(1,10);
+//    //test stuff for action bars -- remove later
+//    actionBar[0]->setButtonSpell(1,1);
+//    actionBar[0]->setButtonSpell(2,2);
+//    actionBar[0]->setButtonSpell(3,3);
+//    actionBar[0]->setButtonSpell(1,4);
+//    actionBar[0]->setButtonSpell(2,5);
+//    actionBar[0]->setButtonSpell(3,6);
+//    actionBar[0]->setButtonSpell(1,7);
+//    actionBar[0]->setButtonSpell(2,8);
+//    actionBar[0]->setButtonSpell(3,9);
+//    actionBar[0]->setButtonSpell(1,10);
 
     //player+target frames
     playerFrame = new UnitFrame(ui->gameScreen);
@@ -90,6 +90,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //game menu keybind popup
     //KeybindMenu *keybindMenu = new KeybindMenu(ui->gameScreen);
 
+    //spellbook test stuff delete later
+    spellBook->setSlotSpell(0,1);
+    spellBook->setSlotSpell(1,2);
+    spellBook->setSlotSpell(2,3);
 
     //connect signals for custom resize
     connect(this, SIGNAL(newSize(QSize)),playerBuff,SLOT(resizeMe(QSize)));
@@ -103,7 +107,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(newSize(QSize)),menuBar,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),chatFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),spellBook,SLOT(resizeMe(QSize)));
-    connect(gameMenu,SIGNAL(openThis(QString)),this,SLOT(test(QString)));
+    connect(gameMenu,SIGNAL(openThis(QString)),this,SLOT(openOption(QString)));
     connect(this,SIGNAL(newSize(QSize)),partyFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),guildFrame,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),honorFrame,SLOT(resizeMe(QSize)));
@@ -156,6 +160,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     qDebug() << "Initializing Keybinds";
     initKeybinds();
+    loadActionBars();
     qDebug() << "Keybinds Complete";
     //connect(optionsMenu,SIGNAL()
 
@@ -749,7 +754,7 @@ void MainWindow::initDefaultKeybinds(){
 
 
 void MainWindow::initKeybinds(){
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/keybinds.txt");
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
           initDefaultKeybinds();
@@ -783,9 +788,68 @@ void MainWindow::initKeybinds(){
     file.close();
 }
 
+void MainWindow::saveActionBars(){
+    qDebug() << "Saving Action Bars to File";
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/actionbars.txt");
+    if (!file.open(QIODevice::WriteOnly)){
+          qDebug() << file.errorString();
+          return;
+    }
+
+    QDataStream out(&file);
+    quint32 spellId;
+    int i;
+    for(i = 1; i < 11; i++){
+        spellId = (quint32)actionBar[0]->getButtonSpell(i);
+        out << spellId;
+        spellId = (quint32)actionBar[1]->getButtonSpell(i);
+        out << spellId;
+    }
+
+    file.close();
+}
+
+void MainWindow::loadActionBars(){
+    qDebug() << "Loading Action Bars";
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/actionbars.txt");
+    if (!file.open(QIODevice::ReadOnly)){
+          qDebug() << file.errorString();
+          return;
+    }
+
+    QDataStream in(&file);
+    quint32 spellId;
+    int i =0;
+    for(i = 1; i < 11; i++){
+        in >> spellId;
+        if (spellId > 1300){
+            qDebug() << "Bad File... Initializing Defaults";
+            initDefaultActionbars();
+            return;
+        }
+        actionBar[0]->setButtonSpell((uint32_t)spellId,i);
+        in >> spellId;
+        if (spellId > 1300){
+            qDebug() << "Bad File... Initializing Defaults";
+            initDefaultActionbars();
+            return;
+        }
+        actionBar[1]->setButtonSpell((uint32_t)spellId,i);
+    }
+
+    file.close();
+}
+
+ void MainWindow::initDefaultActionbars(){ //change this later lol
+     for(int i = 1; i < 11; i++){
+         actionBar[0]->setButtonSpell(qrand()%3,i);
+         actionBar[1]->setButtonSpell(qrand()%3,i);
+     }
+ }
+
 void MainWindow::saveKeybinds(){
     qDebug() << "Saving Keybinds to File";
-    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/keybinds/keybinds.txt");
+    QFile file("C:/Users/Danny/Desktop/Github Repos/GUI/userdata/keybinds.txt");
     if (!file.open(QIODevice::WriteOnly)){
           qDebug() << file.errorString();
           return;
@@ -805,12 +869,10 @@ void MainWindow::update(){
 
 }
 
-void MainWindow::test2(){
-    qDebug() << "Test2";
-}
-
 MainWindow::~MainWindow()
 {
+    saveKeybinds();
+    saveActionBars();
     for(int i = 0; i<KEYBINDCOUNT; i++){
         delete shortcut[i];
     }
@@ -819,29 +881,26 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::test(QString name){
+void MainWindow::openOption(QString name){
     if(name == "Help"){
-
+        gameMenu->setVisible(false);
     }
     else if (name == "Options"){
-        OptionsFrame *options = findChild<OptionsFrame*>("optionsFrame");
-        findChild<GameMenu*>("gameMenu")->setVisible(false);
-        options->show();
-    }
-    else if (name == "Interface"){
-
-    }
-    else if (name == "Key Bindings"){
-
+        gameMenu->setVisible(false);
+        optionsMenu->show();
     }
     else if (name == "Macros"){
-
+        gameMenu->setVisible(false);
     }
     else if (name == "Logout"){
-
+        gameMenu->setVisible(false);
     }
     else if (name == "Exit Game"){
-
+        gameMenu->setVisible(false);
+    }
+    else{
+        qDebug() << "Error Invalid Input";
+        return;
     }
 }
 
