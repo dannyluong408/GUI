@@ -1,0 +1,29 @@
+// format "name path", no spaces other than the separator can be used.
+// separate entries by newline
+
+flag resources/models/flag/american-flag.obj
+square_monster resources/models/SquareMonster.obj
+cstone_pillar resources/models/pillar/Pillar.obj
+crate resources/models/Crate/Crate1.obj
+
+aug_map resources/models/aug_2016/map_tree_test.obj
+aug_map_scaled resources/models/aug_2016/map_tree_test_scaled.obj
+
+//test_map_terrain resources/maps/test/map_test.obj
+//test_map_terrain resources/maps/test/base.obj
+//test_map_terrain resources/maps/test/incline2.obj
+//test_map_terrain resources/maps/test/arena.obj
+//test_map_terrain resources/models/terrain_test/terrain_test3.obj
+//test_map_terrain resources/models/terrain_test/terrain_try2.obj
+test_map_terrain resources/models/terrain_test/world.obj
+world2016 resources/models/world2016/world.obj
+
+//test_map_terrain resources/maps/test/new_arena_map.obj
+
+sqm resources/models/square_monster/SquareMonster.obj
+cul resources/models/cul/char.obj
+flat_platform resources/models/flatland_test/flatland.obj
+
+highpoly_tree1 resources/models/highpolytree1/ahorn.obj
+snowman resources/models/mesh_snowman/snowman.obj
+box resources/models/box.obj

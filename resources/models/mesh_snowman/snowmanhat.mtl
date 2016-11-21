@@ -1,0 +1,16 @@
+# Wavefront MTL file
+# Creator: Ultimate Unwrap3D Pro v3.47
+# URL: http://www.unwrap3d.com
+# Time: Wed Oct 09 11:13:42 2013
+# num_materials: 1
+
+newmtl snowmanhatmat
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+illum 2
+Ns 0.000000
+map_Kd snowmanhat_tex.png
+
+# num_materials: 1
