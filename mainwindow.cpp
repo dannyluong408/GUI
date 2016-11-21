@@ -755,7 +755,11 @@ void MainWindow::initDefaultKeybinds(){
 
 void MainWindow::saveKeybinds(){
     qDebug() << "Saving Keybinds to File";
-    QString path = QCoreApplication::applicationDirPath() + "/keybinds.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/userdata/keybinds.txt";
+    QDir dir;
+    if(!dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
+        qDebug() << "Doesnt Exist Creating Userdata Folder";
+    }
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)){
           qDebug() << file.errorString();
@@ -772,7 +776,7 @@ void MainWindow::saveKeybinds(){
 }
 
 void MainWindow::initKeybinds(){
-    QString path = QCoreApplication::applicationDirPath() + "/keybinds.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/userdata/keybinds.txt";
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
@@ -809,7 +813,11 @@ void MainWindow::initKeybinds(){
 
 void MainWindow::saveActionBars(){
     qDebug() << "Saving Action Bars to File";
-    QString path = QCoreApplication::applicationDirPath() + "/actionbars.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/userdata/actionbars.txt";
+    QDir dir;
+    if(!dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
+        qDebug() << "Doesnt Exist Creating Userdata Folder";
+    }
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)){
           qDebug() << file.errorString();
@@ -831,7 +839,7 @@ void MainWindow::saveActionBars(){
 
 void MainWindow::loadActionBars(){
     qDebug() << "Loading Action Bars";
-    QString path = QCoreApplication::applicationDirPath() + "/actionbars.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/userdata/actionbars.txt";
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
