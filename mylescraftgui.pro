@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     chatframe.cpp \
     textedit.cpp \
     keybindmenu.cpp \
-    keybinddialog.cpp
+    keybinddialog.cpp \
+    guildframe2.cpp
 
 HEADERS  += mainwindow.h \
     dragwidget.h \
@@ -73,7 +74,8 @@ HEADERS  += mainwindow.h \
     keybindmenu.hpp \
     miscenum.hpp \
     keybindialog.hpp \
-    gamemenu.hpp
+    gamemenu.hpp \
+    guildframe2.hpp
 
 FORMS    += mainwindow.ui
 

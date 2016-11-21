@@ -21,6 +21,7 @@
 #include "spellbook.h"
 #include "gamemenu.hpp"
 #include "guildframe.hpp"
+#include "guildframe2.hpp"
 #include "honorframe.hpp"
 #include "partyframe.hpp"
 #include "keybindmenu.hpp"
@@ -102,7 +103,7 @@ private:
     ChatFrame *chatFrame;
     Menubar *menuBar;
     SpellBook *spellBook;
-    GuildFrame *guildFrame;
+    GuildFrame2 *guildFrame;
     HonorFrame *honorFrame;
     GameMenu *gameMenu; //pops up when u hit esc
     OptionsFrame *optionsMenu; //pops up after u click options

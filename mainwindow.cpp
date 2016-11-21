@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) :
     spellBook = new SpellBook(ui->gameScreen);
 
     //guild menu
-    guildFrame = new GuildFrame(ui->gameScreen);
+    guildFrame = new GuildFrame2(ui->gameScreen);
 
     //honor menu
     honorFrame = new HonorFrame(ui->gameScreen);
@@ -1010,7 +1010,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
                      event->size().height()*scale_factor_y);
 
 
-    scale_factor_y = (double)144.5 / (double) 900;
+    scale_factor_y = (double)143.5 / (double) 900;
 
     targetDebuff->move(event->size().width()*scale_factor_x,
                        event->size().height()*scale_factor_y);
