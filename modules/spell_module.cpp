@@ -9,7 +9,7 @@ struct ext_spell_internal {
 	struct spell_entry_t *ptr;
 	void **data;
 	uint32_t n_data_entries;
-	std::map<uint16_t, struct spell_entry_t*> internal_map;
+    std::map<uint16_t, struct spell_entry_t*> internal_map;
 };
 
 static struct ext_spell_internal SPELL_INTERNAL;
@@ -109,8 +109,7 @@ void ext_init_spells() {
 	ext_insert_spell(spell);
 	
 	zero_spell_entry(&spell, SPELL_MOUNT);
-	// we need a mount icon.
-	set_path(&spell, "resources/classes/all/icons/freedom.png");
+    set_path(&spell, "resources/classes/all/icons/mount_default.png");
 	spell.cooldown = 3000;
 	spell.cast_time = 2000;
 	spell.class_id = CLASS_NONE;

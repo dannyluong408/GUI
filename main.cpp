@@ -4,12 +4,10 @@
 #include "dragwidget.h"
 #include <qglobal.h>
 #include <QTime>
+#include "modules/util.h"
 
-int main(int argc, char *argv[])
-{
-
-    QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+int main(int argc, char *argv[]) {
+    if (mc_util_init(argc, argv)) return -1;
 
     QApplication a(argc, argv);
     a.setStyle("fusion");
@@ -20,7 +18,7 @@ int main(int argc, char *argv[])
     //w.showMaximized();
 
     w.show();
-
-
-    return a.exec();
+    a.exec();
+    mc_util_exit();
+    return 0;
 }

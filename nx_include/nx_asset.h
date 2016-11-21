@@ -147,7 +147,7 @@ struct nx_asset {
 
 struct nx_asset *nx_new_asset(const char *filename, const uint32_t type, const uint8_t priority);
 // pthread friendly asset loading
-void nx_load_asset(void *input);
+void *nx_load_asset(void *input);
 // NYI
 //void nx_delete_asset(struct nx_asset *asset);
 

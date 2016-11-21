@@ -3,12 +3,8 @@
 #include <nx_include/nx_asset.h>
 #include <nx_include/nx_deferred_processing.hpp>
 
-struct map {
-	nx_asset *data;
-	char hash[32];
-};
-
-void queue_assets();
-void build_maps();
+int mc_util_init(int argc, char **argv);
+void mc_util_exit();
+void queue_assets_nxt();
 
 #endif // __MODULES_UTIL_H

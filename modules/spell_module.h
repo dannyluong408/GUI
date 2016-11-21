@@ -24,7 +24,7 @@ struct spell_rogue_specific {
 };
 
 struct spell_entry_t {
-	char path[200];
+    char path[255];
 	#ifdef NX_USE_ASSETS
 	struct nx_asset *asset;
 	#endif

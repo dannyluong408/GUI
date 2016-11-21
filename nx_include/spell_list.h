@@ -52,6 +52,8 @@ enum spell_tree {
 	TREE_ARCANE = 6
 };
 
+#define ROGUE_SPELL_START 1000
+
 enum spell_id {
 	// all
 	SPELL_NONE = 0, // placeholder for no spell/not casting
@@ -84,7 +86,7 @@ enum spell_id {
 	RSPELL_SNEAK_ATTACK = 1022,
 	RSPELL_CRIPPLING_THROW = 1023,
 	RSPELL_SHIV = 1024,
-	ROGUE_SPELLS_LIMIT = 1025,
+    ROGUE_SPELLS_END = 1025,
 	
 	RBUFF_STEALTH = 1100,
 	RBUFF_SLICE_AND_DICE = 1101,
