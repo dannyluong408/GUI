@@ -54,6 +54,7 @@ SpellBook::SpellBook(QWidget *parent)
             spellSlotFrameLayout[index2] = new QHBoxLayout(spellSlotFrame[index2]);
             spellSlot[index2] = new PushButton(spellSlotFrame[index2]);
             spellSlot[index2]->setIcon(icon);
+            spellSlot[index2]->setAcceptDrops(false);
             spellSlotDesc[index2] = new QLabel(spellSlotFrame[index2]);
             spellSlotDesc[index2]->setWordWrap(true);
             QString name = QString("Spell %1").arg(index2);
@@ -76,6 +77,7 @@ SpellBook::SpellBook(QWidget *parent)
                     spellSlotFrameLayout[index3] = new QHBoxLayout(spellSlotFrame[index3]);
                     spellSlot[index3] = new PushButton(spellSlotFrame[index3]);
                     spellSlot[index3]->setIcon(icon);
+                    spellSlot[index3]->setAcceptDrops(false);
                     spellSlotDesc[index3] = new QLabel(spellSlotFrame[index3]);
                     spellSlotDesc[index3]->setWordWrap(true);
                     QString name= QString("Spell %1").arg(index3);

@@ -14,6 +14,7 @@ ActionBar::ActionBar(QWidget *parent)
     for (int i = 0 ; i < NUMBUTTONS; i++){
         buttonSet[i] = new PushButton(this);
         buttonSet[i]->move(50*i,0);
+        buttonSet[i]->setSpellbookBool(false);
         QIcon icon;
         icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
         buttonSet[i]->setIcon(icon);

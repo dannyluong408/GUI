@@ -20,7 +20,7 @@ public:
     uint32_t getSpellId();
     QIcon getIcon();
     void resizeMe(QSize newSize);
-
+    void setSpellbookBool(bool value);
 
 public slots:
     void doThisClicked();
@@ -41,6 +41,7 @@ private:
     QPoint dragStartPosition;
     uint32_t spell_id;
     QPixmap origIcon;
+    bool spellbookIcon;
 };
 
 #endif // DRAGPUSHBUTTON_H

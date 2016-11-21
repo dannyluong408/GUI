@@ -19,8 +19,13 @@ PushButton::PushButton(QWidget *parent)
     connect(this,SIGNAL(valueChanged(bool)),this,SLOT(updateIcon(bool))); 
     origIcon = icon.pixmap(48,48);
     spell_id = 0;
+    spellbookIcon = true;
     setStyleSheet("border: 1px solid black"); //temp change it dynamically later
     show();
+}
+
+void PushButton::setSpellbookBool(bool value){
+    spellbookIcon = value;
 }
 
 void PushButton::resizeMe(QSize newSize){
@@ -218,7 +223,9 @@ void PushButton::mouseMoveEvent(QMouseEvent *event)
             printf("DPB Inside4\n");
             fflush(stdout);
         } else {
-             child->setSpellId(0);
+             if(!spellbookIcon){
+                 child->setSpellId(0);
+             }
              printf("DPB Outside4\n");
              fflush(stdout);
         }
