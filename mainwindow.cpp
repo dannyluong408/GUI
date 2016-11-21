@@ -112,23 +112,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->openGLWidget->hide();
     //hide screen + login screen
-//    ui->gameScreen->hide();
+    ui->gameScreen->hide();
 
-//    loginScreen = new QWidget(this);
-//    loginScreen->setGeometry(0,0,1200,900);
-//    loginScreen->show();
-//    loginScreen->setStyleSheet("background-color: pink;"
-//                               "background-image: url(:/ui/images/anime.jpg);");
+    loginScreen = new QWidget(this);
+    loginScreen->setGeometry(0,0,1200,900);
+    loginScreen->show();
+    loginScreen->setStyleSheet("background-color: pink;"
+                               "background-image: url(:/ui/images/anime.jpg);");
 
 
-//    qDebug() << "Looking for IP of login.sniperdad.com ...";
-//    QHostInfo::lookupHost("login.sniperdad.com",this,SLOT(lookedUp(QHostInfo)));
+    qDebug() << "Looking for IP of login.sniperdad.com ...";
+    QHostInfo::lookupHost("login.sniperdad.com",this,SLOT(lookedUp(QHostInfo)));
 
-//    loginButton = new QPushButton(loginScreen);
-//    loginButton->setGeometry(550,400,100,100);
-//    loginButton->setIconSize(QSize(100,100));
-//    loginButton->setIcon(QIcon(":/ui/images/oldguy.ico"));
+    loginButton = new QPushButton(loginScreen);
+    loginButton->setGeometry(550,400,100,100);
+    loginButton->setIconSize(QSize(100,100));
+    loginButton->setIcon(QIcon(":/ui/images/oldguy.ico"));
 
+    //temp for now to ignore login screen
+    login();
 
     //our "constantly calling update function stuff"
 //    connect(loginButton,SIGNAL(clicked(bool)),this,SLOT(login()));
@@ -812,24 +814,7 @@ MainWindow::~MainWindow()
     for(int i = 0; i<KEYBINDCOUNT; i++){
         delete shortcut[i];
     }
-    delete actionBar[0];
-    delete actionBar[1];
-    delete playerFrame;
-    delete targetFrame;
-    delete partyFrame;
-    delete playerBuff;
-    delete playerDebuff;
-    delete targetBuff;
-    delete targetDebuff;
-    delete chatFrame;
-    delete menuBar;
-    delete spellBook;
-    delete guildFrame;
-    delete honorFrame;
-    delete optionsMenu;
-    delete gameMenu;
     delete keybindMapper;
-    delete loginButton;
     delete loginScreen;
     delete ui;
 }
@@ -976,6 +961,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     //resize openglwidget too ? need to resize other stuff inside this when init'd
     ui->openGLWidget->resize(event->size());
 
+    qDebug() << event->size();
     emit newSize(event->size());
 }
 

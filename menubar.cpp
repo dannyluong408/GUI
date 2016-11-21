@@ -7,6 +7,7 @@ Menubar:: Menubar(QWidget *parent)
     setFrameStyle(QFrame::Box);
     setObjectName("menuBar");
     setGeometry(950,800,240,48);
+    setOriginCorner(Qt::BottomRightCorner);
 
     QPalette* palette = new QPalette();
     palette->setColor(QPalette::Foreground,Qt::red);
