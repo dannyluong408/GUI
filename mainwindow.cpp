@@ -757,7 +757,7 @@ void MainWindow::saveKeybinds(){
     qDebug() << "Saving Keybinds to File";
     QString path = QCoreApplication::applicationDirPath() + "/userdata/keybinds.txt";
     QDir dir;
-    if(!dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
         qDebug() << "Doesnt Exist Creating Userdata Folder";
     }
     QFile file(path);
@@ -815,7 +815,7 @@ void MainWindow::saveActionBars(){
     qDebug() << "Saving Action Bars to File";
     QString path = QCoreApplication::applicationDirPath() + "/userdata/actionbars.txt";
     QDir dir;
-    if(!dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
         qDebug() << "Doesnt Exist Creating Userdata Folder";
     }
     QFile file(path);
