@@ -39,7 +39,7 @@ void TargetBuffFrame::resizeMe(QSize newSize) {
     const double spacing = 27.00 / 900.0;
 
     resize(newSize.height()*spacing*10,
-           newSize.height()*iconSize);
+           newSize.height()*spacing);
 
     BuffIcon **temp = buffs.data();
     for(int i = 0; i< buffs.size(); i++){

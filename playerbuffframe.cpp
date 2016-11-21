@@ -40,17 +40,19 @@ void PlayerBuffFrame::resizeMe(QSize newSize) {
     const double scale_factor = 15.0 / minSize;
     const double padding = 20.0 / 1200.0;
     const double spacing = 44.0 / minSize;
+    const double offset = 43.0 / minSize;
+
     if (!isDebuff){
         setGeometry(newSize.width()-((newSize.height()*spacing*10+newSize.width()*padding)),
                     newSize.height()*scale_factor,
                     newSize.height()*iconSize*10+10,
-                    newSize.height()*iconSize);
+                    newSize.height()*spacing);
     }
     else{
         setGeometry(newSize.width()-((newSize.height()*spacing*10+newSize.width()*padding)),
-                    newSize.height()*scale_factor+newSize.height()*spacing,
+                    newSize.height()*scale_factor+newSize.height()*offset,
                     newSize.height()*iconSize*10+10,
-                    newSize.height()*iconSize);
+                    newSize.height()*spacing);
     }
 
     BuffIcon **temp = buffs.data();
