@@ -422,12 +422,14 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrameCheckbox[0]->setStyleSheet("border: none;");
     secondFrameVLayout[0]->addWidget(secondFrameCheckbox[0]);
 
+
     secondFrameCheckbox[1] = new QCheckBox(this);
     secondFrameCheckbox[1]->setObjectName("Character Specific");
     secondFrameCheckbox[1]->setText("Character Specific");
     secondFrameCheckbox[1]->setGeometry(10,55,115,25);
     secondFrameCheckbox[1]->setStyleSheet("border: none;");
     secondFrameVLayout[0]->addWidget(secondFrameCheckbox[1]);
+
 
 
     secondFrameButtons[0] = new QPushButton(this);
@@ -458,6 +460,13 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrameButtons[3]->setText("Cancel");
     secondFrameButtons[3]->setGeometry(365,30,70,40);
     secondFrameVLayout[4]->addWidget(secondFrameButtons[3]);
+
+    secondFrameV[0]->setMinimumWidth(115);
+    secondLayout->setStretch(0,2);
+    secondLayout->setStretch(1,1);
+    secondLayout->setStretch(2,1);
+    secondLayout->setStretch(3,1);
+    secondLayout->setStretch(4,1);
 
 
     //turn it all into a scroll area

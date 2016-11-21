@@ -900,12 +900,6 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     guildFrame->move(event->size().width()*scale_factor_x,
                                                     event->size().height()*scale_factor_y);
 
-    scale_factor_x = 950.0 / 1200.0;
-    scale_factor_y = 800.0 / 900.0;
-
-    menuBar->move(event->size().width()*scale_factor_x,
-                                                    event->size().height()*scale_factor_y);
-
 
     scale_factor_x = 12.5 / 1200.0;
     scale_factor_y = 12.5 / 900.0;

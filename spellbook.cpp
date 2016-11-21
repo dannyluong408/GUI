@@ -10,25 +10,26 @@ SpellBook::SpellBook(QWidget *parent)
     setFrameStyle(QFrame::Box);
     setGeometry(800,200,300,400);
     setObjectName("spellBook");
-
-    QPalette* palette = new QPalette();
-    palette->setColor(QPalette::Foreground,Qt::red);
-    setPalette(*palette);
-
+    setStyleSheet("#spellBook{"
+                  "border: 1px solid black;}");
 
     mainLayout = new QVBoxLayout(this);
     frameTitle = new QLabel(this);
     frameTabWidget = new QTabWidget(this);
     mainLayout->addWidget(frameTitle);
     mainLayout->addWidget(frameTabWidget);
+    mainLayout->setSpacing(1);
+    mainLayout->setMargin(1);
 
     frameTitle = new QLabel(this);
-    frameTitle->resize(size().width(),frameTitle->height());
+    frameTitle->resize(size().width(),20);
     frameTitle->setAlignment(Qt::AlignCenter);
     frameTitle->setText(QString("Spellbook"));
     frameTitle->setStyleSheet("border: 1px solid black;"
                               "background-color: cyan;"
                               "font-weight: bold;");
+    QIcon icon;
+    icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
 
     x = new QPushButton(this);
     x->setText("X");
@@ -44,7 +45,6 @@ SpellBook::SpellBook(QWidget *parent)
         frameStack[index1]->addWidget(frameTabs[index1]);
         frameGrid[index1] = new QGridLayout(frameTabs[index1]);
         frameTabWidget->addTab(frameStack[index1],QString("Tab %1").arg(i));
-        frameTabs[index1]->setPalette(*palette);
         frameTabs[index1]->setStyleSheet("background-color: green;");
         connect(frameStack[index1],SIGNAL(currentChanged(int)),this,SLOT(greyButtons(int)));
 
@@ -53,6 +53,7 @@ SpellBook::SpellBook(QWidget *parent)
             spellSlotFrame[index2] = new QFrame(frameTabs[index1]);
             spellSlotFrameLayout[index2] = new QHBoxLayout(spellSlotFrame[index2]);
             spellSlot[index2] = new PushButton(spellSlotFrame[index2]);
+            spellSlot[index2]->setIcon(icon);
             spellSlotDesc[index2] = new QLabel(spellSlotFrame[index2]);
             spellSlotDesc[index2]->setWordWrap(true);
             QString name = QString("Spell %1").arg(index2);
@@ -68,13 +69,13 @@ SpellBook::SpellBook(QWidget *parent)
                 frameTabs[k-1] = new QWidget(frameStack[index1]);
                 frameStack[index1]->addWidget(frameTabs[k-1]);
                 frameGrid[k-1] = new QGridLayout(frameTabs[k-1]);
-                frameTabs[k-1]->setPalette(*palette);
                 frameTabs[k-1]->setStyleSheet("background-color: green;");
                 for (int l = 1; l <= 10; l++){
                     int index3 = ((k-1)*10)+(l-1);
                     spellSlotFrame[index3] = new QFrame(frameTabs[k-1]);
                     spellSlotFrameLayout[index3] = new QHBoxLayout(spellSlotFrame[index3]);
                     spellSlot[index3] = new PushButton(spellSlotFrame[index3]);
+                    spellSlot[index3]->setIcon(icon);
                     spellSlotDesc[index3] = new QLabel(spellSlotFrame[index3]);
                     spellSlotDesc[index3]->setWordWrap(true);
                     QString name= QString("Spell %1").arg(index3);
@@ -89,13 +90,13 @@ SpellBook::SpellBook(QWidget *parent)
     }
 
 
-    pageL = new QPushButton(frameTabWidget);
+    pageL = new QPushButton(this);
     pageL->setObjectName("pageL");
-    pageR = new QPushButton(frameTabWidget);
+    pageR = new QPushButton(this);
     pageR->setObjectName(("pageR"));
 
-    pageL->setGeometry(195,340,40,18);
-    pageR->setGeometry(235,340,40,18);
+    pageL->setGeometry(200,380,40,18);
+    pageR->setGeometry(240,380,40,18);
     pageL->setText("Left");
     pageR->setText("Right");
 
@@ -190,9 +191,27 @@ void SpellBook::resizeMe(QSize newSize){
     scale_factor_w = 15.0 / 1200.0;
     scale_factor_h = 15.0 / 900.0;
     x->setGeometry(newSize.width()*scale_factor_x,
-                  newSize.height()*scale_factor_y,
+                   newSize.height()*scale_factor_y,
                   newSize.width()*scale_factor_w,
                   newSize.height()*scale_factor_h);
+
+
+    scale_factor_x = 300.0 / 1200.0;
+    scale_factor_y = 400.0 / 900.0;
+    double scale_factor_x_off = 100.0 / 1200.0;
+    double scale_factor_y_off = 20.0 / 900.0;
+    scale_factor_w = 40.0 / 1200.0;
+    scale_factor_h = 18.0 / 900.0;
+    pageL->setGeometry(newSize.width()*scale_factor_x-newSize.width()*scale_factor_x_off,
+                       newSize.height()*scale_factor_y-newSize.height()*scale_factor_y_off,
+                       newSize.width()*scale_factor_w,
+                       newSize.height()*scale_factor_h);
+
+    scale_factor_x_off = 60.0 / 1200.0;
+    pageR->setGeometry(newSize.width()*scale_factor_x-newSize.width()*scale_factor_x_off,
+                       newSize.height()*scale_factor_y-newSize.height()*scale_factor_y_off,
+                       newSize.width()*scale_factor_w,
+                       newSize.height()*scale_factor_h);
     return;
 }
 

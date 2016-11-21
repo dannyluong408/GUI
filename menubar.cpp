@@ -73,8 +73,6 @@ void Menubar::resizeMe(QSize newSize){ //lol what a mess fix for 1080p resolutio
 
     resize(newSize.height()*scale_factor_icon*5,
            newSize.height()*scale_factor_icon);
-    move(newSize.width()*scale_factor_x,
-         newSize.height()*scale_factor_y);
 
     for(int i = 0; i<5; i++){
         menuButton[i]->move(i*newSize.height()*scale_factor_icon,
@@ -98,5 +96,8 @@ void Menubar::resizeMe(QSize newSize){ //lol what a mess fix for 1080p resolutio
     menuButton[4]->setIcon(QPixmap(":/ui/images/setting.png").scaled(newSize.height()*scale_factor_icon,
                                                                      newSize.height()*scale_factor_icon,
                                                                      Qt::KeepAspectRatio));
+
+    move(newSize.width()-this->size().width()-10,
+         newSize.height()*scale_factor_y);
     return;
 }
