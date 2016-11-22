@@ -1,2 +1,2 @@
 # GUI
-abc
+GUI made in Qt
