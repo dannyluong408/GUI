@@ -295,31 +295,31 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
     switch(id){
         //move functions
         case 0:{
-            movePlayer(FORWARD);
+            movePlayer(Keybinds::FORWARD);
             break;
         }
         case 1:{
-            movePlayer(BACKWARD);
+            movePlayer(Keybinds::BACKWARD);
              break;
         }
         case 2:{
-            movePlayer(TURN_LEFT);
+            movePlayer(Keybinds::TURN_LEFT);
             break;
         }
         case 3:{
-            movePlayer(TURN_RIGHT);
+            movePlayer(Keybinds::TURN_RIGHT);
             break;
         }
         case 4:{
-            movePlayer(MOVE_LEFT);
+            movePlayer(Keybinds::MOVE_LEFT);
             break;
         }
         case 5:{
-            movePlayer(MOVE_RIGHT);
+            movePlayer(Keybinds::MOVE_RIGHT);
             break;
         }
         case 6:{
-            movePlayer(JUMP);
+            movePlayer(Keybinds::JUMP);
             break;
         }
         case 7:{
@@ -327,135 +327,135 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             break;
         }
         case 8:{ //targeting 0
-            targetingBind(TARGET_NEAREST_ENEMY);
+            targetingBind(Keybinds::TARGET_NEAREST_ENEMY);
             break;
         }
         case 9:{
-            targetingBind(TARGET_PREVIOUS_ENEMY);
+            targetingBind(Keybinds::TARGET_PREVIOUS_ENEMY);
             break;
         }
         case 10:{
-            targetingBind(TARGET_NEAREST_ENEMY_PLAYER);
+            targetingBind(Keybinds::TARGET_NEAREST_ENEMY_PLAYER);
             break;
         }
         case 11:{
-            targetingBind(TARGET_PREVIOUS_ENEMY_PLAYER);
+            targetingBind(Keybinds::TARGET_PREVIOUS_ENEMY_PLAYER);
             break;
         }
         case 12:{
-            targetingBind(TARGET_NEAREST_FRIENDLY_PLAYER);
+            targetingBind(Keybinds::TARGET_NEAREST_FRIENDLY_PLAYER);
             break;
         }
         case 13:{//5
-            targetingBind(TARGET_PREVIOUS_ENEMY_PLAYER);
+            targetingBind(Keybinds::TARGET_PREVIOUS_ENEMY_PLAYER);
             break;
         }
         case 14:{
-            targetingBind(TARGET_SELF);
+            targetingBind(Keybinds::TARGET_SELF);
             break;
         }
         case 15:{
-            targetingBind(TARGET_PARTY_MEMBER_1);
+            targetingBind(Keybinds::TARGET_PARTY_MEMBER_1);
             break;
         }
         case 16:{
-            targetingBind(TARGET_PARTY_MEMBER_2);
+            targetingBind(Keybinds::TARGET_PARTY_MEMBER_2);
             break;
         }
         case 17:{
-            targetingBind(TARGET_PARTY_MEMBER_3);
+            targetingBind(Keybinds::TARGET_PARTY_MEMBER_3);
             break;
         }
         case 18:{//10
-            targetingBind(TARGET_PARTY_MEMBER_4);
+            targetingBind(Keybinds::TARGET_PARTY_MEMBER_4);
             break;
         }
         case 19:{
-            targetingBind(TARGET_PET);
+            targetingBind(Keybinds::TARGET_PET);
             break;
         }
         case 20:{
-            targetingBind(TARGET_PARTY_PET_1);
+            targetingBind(Keybinds::TARGET_PARTY_PET_1);
             break;
         }
         case 21:{
-            targetingBind(TARGET_PARTY_PET_2);
+            targetingBind(Keybinds::TARGET_PARTY_PET_2);
             break;
         }
         case 22:{
-            targetingBind(TARGET_PARTY_PET_3);
+            targetingBind(Keybinds::TARGET_PARTY_PET_3);
             break;
         }
         case 23:{
-            targetingBind(TARGET_PARTY_PET_4);
+            targetingBind(Keybinds::TARGET_PARTY_PET_4);
             break;
         }
         case 24:{
-            targetingBind(ASSIST_TARGET);
+            targetingBind(Keybinds::ASSIST_TARGET);
             break;
         }
         case 25:{
-            targetingBind(TOGGLE_NAMEPLATES);
+            targetingBind(Keybinds::TOGGLE_NAMEPLATES);
             break;
         }
         case 26:{
-            targetingBind(TOGGLE_FRIENDLY_NAMEPLATES);
+            targetingBind(Keybinds::TOGGLE_FRIENDLY_NAMEPLATES);
             break;
         }
         case 27:{
-            targetingBind(SET_FOCUS);
+            targetingBind(Keybinds::SET_FOCUS);
             break;
         }
         case 28:{//20
-            targetingBind(FOCUS_ARENA_1);
+            targetingBind(Keybinds::FOCUS_ARENA_1);
             break;
         }
         case 29:{
-            targetingBind(FOCUS_ARENA_2);
+            targetingBind(Keybinds::FOCUS_ARENA_2);
             break;
         }
         case 30:{
-            targetingBind(FOCUS_ARENA_3);
+            targetingBind(Keybinds::FOCUS_ARENA_3);
             break;
         }
         case 31:{
-            targetingBind(FOCUS_ARENA_4);
+            targetingBind(Keybinds::FOCUS_ARENA_4);
             break;
         }
         case 32:{
-            targetingBind(FOCUS_ARENA_5);
+            targetingBind(Keybinds::FOCUS_ARENA_5);
             break;
         }
         case 33:{
-            targetingBind(TARGET_ARENA_1);
+            targetingBind(Keybinds::TARGET_ARENA_1);
             break;
         }
         case 34:{
-            targetingBind(TARGET_ARENA_2);
+            targetingBind(Keybinds::TARGET_ARENA_2);
             break;
         }
         case 35:{
-            targetingBind(TARGET_ARENA_3);
+            targetingBind(Keybinds::TARGET_ARENA_3);
             break;
         }
         case 36:{
-            targetingBind(TARGET_ARENA_4);
+            targetingBind(Keybinds::TARGET_ARENA_4);
             break;
         }
         case 37:{
-            targetingBind(TARGET_ARENA_5);
+            targetingBind(Keybinds::TARGET_ARENA_5);
             break;
         }
         case 38:{   //camera keybinds 38 39 40
-            cameraBind(CAMERA_ZOOM_IN);
+            cameraBind(Keybinds::CAMERA_ZOOM_IN);
             break;
         }
         case 39:{
-            cameraBind(CAMERA_ZOOM_IN);
+            cameraBind(Keybinds::CAMERA_ZOOM_IN);
             break;
         }
         case 40:{
-            cameraBind(CAMERA_REVERSE);
+            cameraBind(Keybinds::CAMERA_REVERSE);
             break;
         }
         case 41:{
@@ -539,35 +539,35 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             break;
         }
         case 61:{ //interface 0
-            togglePane(SPELLBOOK);
+            togglePane(Keybinds::SPELLBOOK);
             break;
         }
         case 62:{
-            togglePane(CLAN);
+            togglePane(Keybinds::CLAN);
             break;
         }
         case 63:{
-            togglePane(HONOR);
+            togglePane(Keybinds::HONOR);
             break;
         }
         case 64:{
-            togglePane(MAINMENU);
+            togglePane(Keybinds::MAINMENU);
             break;
         }
         case 65:{
-            togglePane(CHARACTER);
+            togglePane(Keybinds::CHARACTER);
             break;
         }
         case 66:{
-            togglePane(MACRO);
+            togglePane(Keybinds::MACRO);
             break;
         }
         case 67:{
-            togglePane(SOCIAL);
+            togglePane(Keybinds::SOCIAL);
             break;
         }
         case 68:{ //interface 7
-            togglePane(MAP);
+            togglePane(Keybinds::MAP);
             break;
         }
         case 69:{
@@ -575,11 +575,11 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             break;
         }
         case 70:{//Reply Whisper
-            whisper(REPLY_WHISPER);
+            whisper(Keybinds::REPLY_WHISPER);
             break;
         }
         case 71:{//Re-Whisper
-            whisper(RE_WHISPER);
+            whisper(Keybinds::RE_WHISPER);
             break;
         }
         case 72:{

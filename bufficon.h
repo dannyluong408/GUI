@@ -17,6 +17,7 @@ class BuffIcon : public QLabel
         uint64_t getBuffDuration() const;
         void setIsPlayer(bool player);
         bool getIsPlayer();
+        QSize sizeHint() const;
 
     public slots:
         void resizeMe(QSize newSize);

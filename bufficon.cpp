@@ -4,11 +4,20 @@
 BuffIcon::BuffIcon(QWidget *parent)
     : QLabel(parent)
 {
+    setBaseSize(25,25);
     resize(25,25);
     buffID = 0;
     isPlayer = false;
 }
 
+QSize BuffIcon::sizeHint() const{
+    if (!isPlayer){ //target size
+        return QSize(25,25);
+    }
+    else{ //player size
+        return QSize(41,41);
+    }
+}
 void BuffIcon::resizeMe(QSize newSize){
     const double minSize = 900.0;
     double square_icon;
