@@ -190,6 +190,7 @@ void MainWindow::enableShortcuts(){
 }
 
 void MainWindow::togglePane(int pane){
+    using namespace Keybinds;
     switch(pane){
         case SPELLBOOK:{
             spellBook->isVisible()? spellBook->setVisible(false):spellBook->show();
@@ -269,6 +270,7 @@ void MainWindow::screenshot(){
 }
 
 void MainWindow::movePlayer(int direction){
+        using namespace Keybinds;
     switch(direction){
         case FORWARD:
             break;
