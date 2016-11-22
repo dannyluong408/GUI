@@ -3,11 +3,13 @@
 #include "actionbar.h"
 
 ActionBar::ActionBar(QWidget *parent)
-    : QWidget(parent)
+    : QFrame(parent)
 {
     setAcceptDrops(true);
+    setObjectName("actionBar");
     resize(50*NUMBUTTONS,50);
-    setStyleSheet("border-color:black;");
+    setStyleSheet("#actionBar{"
+                  "border: 1px solid black;}");
 
     buttonGroup = new QButtonGroup;
 
@@ -23,9 +25,16 @@ ActionBar::ActionBar(QWidget *parent)
         buttonGroup->addButton(buttonSet[i]);
         buttonGroup->setId(buttonSet[i], i+1);
     }
+    index = -1;
 }
 
+void ActionBar::setIndex(int i){
+    index = i;
+}
 
+int ActionBar::getIndex(){
+    return index;
+}
 
 void ActionBar::callSlotSpell(int i){
     buttonSet[i]->doThisClicked();
@@ -33,7 +42,7 @@ void ActionBar::callSlotSpell(int i){
 
 void ActionBar::resizeMe(QSize newSize){
     const double minSize = 900.0;
-    const double scale_factor_y = 48.0/minSize;
+    double scale_factor_y = 48.0/minSize;
 
     for (int i = 0; i < NUMBUTTONS; i++){
          buttonSet[i]->move(50*i,0);
@@ -44,11 +53,22 @@ void ActionBar::resizeMe(QSize newSize){
                                    newSize.height()*scale_factor_y);
     }
 
-    const double scale_factor_x = 50.0/minSize;
-    resize(newSize.width()*scale_factor_x*NUMBUTTONS,
+    double scale_factor_x = 50.0/900.0;
+    qDebug() << buttonSet[0]->size().width()*NUMBUTTONS;
+    this->resize(buttonSet[0]->size().width()*NUMBUTTONS,
            newSize.height()*scale_factor_x);
+
+    scale_factor_y = 800.0 / 900.0;
+    const double scale_height = 50.0 / 900.0;
+
+    qDebug() << newSize.width() << this->size().width();
+    this->move(newSize.width() /2 -  this->size().width()/2,
+               newSize.height()*scale_factor_y + newSize.height()*scale_height*index);
     return;
 }
+
+//1200 = 350, 600 - 250  , 656 frame actual 454 wtf?
+//900 =     , 450 - ?
 
 void ActionBar::setButtonSpell(uint32_t spellid, uint32_t buttonNum){
     if(buttonNum < 1 || buttonNum > 10){

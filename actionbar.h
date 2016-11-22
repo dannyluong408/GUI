@@ -11,7 +11,7 @@
 class QDragEnterEvent;
 class QDropEvent;
 
-class ActionBar : public QWidget
+class ActionBar : public QFrame
 {
     Q_OBJECT
 public:
@@ -20,6 +20,8 @@ public:
     void setButtonSpell(uint32_t spellid, uint32_t buttonNum);
     uint32_t getButtonSpell(uint32_t buttonNum);
     void callSlotSpell(int i);
+    void setIndex(int i);
+    int getIndex();
 
 public slots:
     void resizeMe(QSize newSize);
@@ -33,6 +35,7 @@ protected:
 private:
     QButtonGroup *buttonGroup;
     PushButton *buttonSet[NUMBUTTONS];
+    int index;
 };
 
 

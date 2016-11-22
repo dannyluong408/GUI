@@ -8,6 +8,7 @@ HonorFrame::HonorFrame(QWidget *parent)
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
     setGeometry(500,200,300,400);
+    setMinimumWidth(200);
     setStyleSheet("border: 1px solid black;"
                   "background-color: white;");
 

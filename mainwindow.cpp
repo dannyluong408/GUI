@@ -15,9 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //action bars
     numBars = 2;
     actionBar[0] = new ActionBar(ui->gameScreen);
-    actionBar[1] = new ActionBar(ui->gameScreen);
     actionBar[0]->move(350,800);
+    actionBar[0]->setIndex(0);
+    actionBar[1] = new ActionBar(ui->gameScreen);
     actionBar[1]->move(350,850);
+    actionBar[1]->setIndex(1);
 
 //    //test stuff for action bars -- remove later
 //    actionBar[0]->setButtonSpell(1,1);
@@ -940,39 +942,34 @@ void MainWindow::resizeEvent(QResizeEvent *event){
         return;
     }
 
-
-    //temporarily keep action bar repositions here cause noob
-    double scale_factor_x = (double)350 / (double)1200;
-    double scale_factor_y = (double)800 / (double)900;
-    const double scale_height = (double)50 / (double)900;
-
-    for (int i=0; i< numBars; i++){
-        actionBar[i]->move(event->size().width()*scale_factor_x,
-                           event->size().height()*scale_factor_y +
-                          (event->size().height()*scale_height*i));
-    }
-
-    scale_factor_x = 550.0 / 1200.0;
-    scale_factor_y = 350.0 / 900.0;
+    double scale_factor_x = 550.0 / 1200.0;
+    double scale_factor_y = 350.0 / 900.0;
 
     gameMenu->move(event->size().width()*scale_factor_x,
                   event->size().height()*scale_factor_y);
 
 
-    scale_factor_x = 500.0 / 1200.0;
-    scale_factor_y = 200.0 / 900.0;
+    if(event->size().width()>900){
+        scale_factor_x = 500.0 / 1200.0;
+        scale_factor_y = 200.0 / 900.0;
 
-    honorFrame->move(event->size().width()*scale_factor_x,
-                     event->size().height()*scale_factor_y);
-
-
-    scale_factor_x = 200.0 / 1200.0;
-    scale_factor_y = 200.0 / 900.0;
-
-    guildFrame->move(event->size().width()*scale_factor_x,
-                                                    event->size().height()*scale_factor_y);
+        honorFrame->move(event->size().width()*scale_factor_x,
+                         event->size().height()*scale_factor_y);
 
 
+        scale_factor_x = 200.0 / 1200.0;
+        scale_factor_y = 200.0 / 900.0;
+
+        guildFrame->move(event->size().width()*scale_factor_x,
+                         event->size().height()*scale_factor_y);
+
+
+        scale_factor_x = 800.0 / 1200.0;
+        scale_factor_y = 200.0 / 900.0;
+
+        spellBook->move(event->size().width()*scale_factor_x,
+                        event->size().height()*scale_factor_y);
+    }
     scale_factor_x = 12.5 / 1200.0;
     scale_factor_y = 12.5 / 900.0;
 

@@ -9,6 +9,7 @@ SpellBook::SpellBook(QWidget *parent)
 {
     setFrameStyle(QFrame::Box);
     setGeometry(800,200,300,400);
+    setMinimumWidth(200);
     setObjectName("spellBook");
     setStyleSheet("#spellBook{"
                   "border: 1px solid black;}");
@@ -170,7 +171,7 @@ void SpellBook::resizeMe(QSize newSize){
     double scale_factor_y = (double)200 / (double)900;
     double scale_factor_w = (double)300 / (double)1200;
     double scale_factor_h = (double)400 / (double)900;
-    move(newSize.width()*scale_factor_x,newSize.height()*scale_factor_y);
+
     resize(newSize.width()*scale_factor_w,newSize.height()*scale_factor_h);
     frameTitle->resize(size().width(),frameTitle->height());
 
