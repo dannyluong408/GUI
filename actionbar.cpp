@@ -54,14 +54,12 @@ void ActionBar::resizeMe(QSize newSize){
     }
 
     double scale_factor_x = 50.0/900.0;
-    qDebug() << buttonSet[0]->size().width()*NUMBUTTONS;
     this->resize(buttonSet[0]->size().width()*NUMBUTTONS,
            newSize.height()*scale_factor_x);
 
     scale_factor_y = 800.0 / 900.0;
     const double scale_height = 50.0 / 900.0;
 
-    qDebug() << newSize.width() << this->size().width();
     this->move(newSize.width() /2 -  this->size().width()/2,
                newSize.height()*scale_factor_y + newSize.height()*scale_height*index);
     return;

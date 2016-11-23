@@ -42,7 +42,6 @@ void PushButton::resizeMe(QSize newSize){
                    newSize.height()*square_icon,
                    Qt::KeepAspectRatio);
     setIcon(QIcon(newIcon));
-    qDebug() << this->size();
 }
 
 
