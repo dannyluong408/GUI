@@ -19,7 +19,6 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
     isDebuff = false;
     test();
     sort();
-    resizeMe(QSize(1200,900));
 }
 
 void PlayerBuffFrame::shiftMe(bool shift){
@@ -44,13 +43,13 @@ void PlayerBuffFrame::resizeMe(QSize newSize) {
     const double offset = 43.0 / minSize;
 
     if (!isDebuff){
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+10+newSize.width()*padding)),
+        setGeometry(newSize.width()-((newSize.height()*iconSize*10+8+newSize.width()*padding)),
                     newSize.height()*scale_factor,
                     newSize.height()*iconSize*10+10,
                     newSize.height()*spacing);
     }
     else{
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+10+newSize.width()*padding)),
+        setGeometry(newSize.width()-((newSize.height()*iconSize*10+8+newSize.width()*padding)),
                     newSize.height()*scale_factor+newSize.height()*offset,
                     newSize.height()*iconSize*10+10,
                     newSize.height()*spacing);

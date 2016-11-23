@@ -50,12 +50,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //player buff/debuff frame
     playerBuff = new PlayerBuffFrame(ui->gameScreen);
     playerBuff->setObjectName("playerBuff");
-    playerBuff->move(767.5,12.5);
+    playerBuff->resizeMe(QSize(1200,900));
 
     playerDebuff = new PlayerBuffFrame(ui->gameScreen);
     playerDebuff->setObjectName("playerDebuff");
     playerDebuff->setAsDebuff(true);
-    playerDebuff->move(767.5,56.5);
+    playerDebuff->resizeMe(QSize(1200,900));
 
 
     //target buff/debuff frame
