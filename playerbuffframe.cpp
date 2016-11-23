@@ -19,6 +19,7 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
     isDebuff = false;
     test();
     sort();
+    resizeMe(QSize(1200,900));
 }
 
 void PlayerBuffFrame::shiftMe(bool shift){
