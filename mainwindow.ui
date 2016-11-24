@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>640</width>
-    <height>480</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>99999</width>
-    <height>99999</height>
+    <width>1920</width>
+    <height>1080</height>
    </size>
   </property>
   <property name="cursor">
@@ -46,14 +46,14 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>900</width>
+     <height>600</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>16777215</width>
-     <height>16777215</height>
+     <width>1920</width>
+     <height>1080</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -70,6 +70,18 @@
       <width>1200</width>
       <height>900</height>
      </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>900</width>
+      <height>600</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1920</width>
+      <height>1080</height>
+     </size>
     </property>
    </widget>
   </widget>

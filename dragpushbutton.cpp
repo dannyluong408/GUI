@@ -37,11 +37,9 @@ void PushButton::resizeMe(QSize newSize){
     //qDebug() << "Resizing Spell Buttons " << newSize;
     this->setIconSize(QSize(newSize.height()*square_icon,
                       newSize.height()*square_icon));
-    QPixmap newIcon = origIcon;
-    newIcon.scaled(newSize.height()*square_icon,
-                   newSize.height()*square_icon,
-                   Qt::KeepAspectRatio);
-    setIcon(QIcon(newIcon));
+    setIcon(QIcon(origIcon.scaled(newSize.height()*square_icon,
+                                  newSize.height()*square_icon,
+                                  Qt::KeepAspectRatio)));
 }
 
 
@@ -53,6 +51,7 @@ void PushButton::doThisClicked(){
 
 void PushButton::setSpellId(uint32_t spellid){
     spell_id = spellid;
+    //find the corresponding icon for the spellid and add to origIcon;
     emit valueChanged(true);
 }
 
@@ -61,7 +60,7 @@ void PushButton::updateIcon(bool changed){
         return;
     }
     //ghetto map here for now to test
-
+    //updat later with real id to icon map
     QIcon newIcon;
     switch(spell_id){
         case 1:

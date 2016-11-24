@@ -484,7 +484,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
 //}
 
 void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
-    //qDebug() << newKeybind.toString() << num;
+    qDebug() << "Detected" << newKeybind.toString() << num;
     if(num < 0){
         qDebug() << "Error";
     }
@@ -497,7 +497,7 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
         qDebug() << "Setup Combat";
     }
     else if(num < 38){
-        targetingKeybind[num-7]->setText(newKeybind.toString());
+        targetingKeybind[num-8]->setText(newKeybind.toString());
         qDebug() << "Setup Targeting";
     }
     else if(num < 41){

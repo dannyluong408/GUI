@@ -21,6 +21,7 @@ public:
     QIcon getIcon();
     void resizeMe(QSize newSize);
     void setSpellbookBool(bool value);
+    void saveIcon(QPixmap origIcon);
 
 public slots:
     void doThisClicked();

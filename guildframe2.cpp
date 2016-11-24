@@ -7,7 +7,6 @@ GuildFrame2::GuildFrame2(QWidget *parent)
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
     setGeometry(200,200,300,400);
-    setMinimumWidth(200);
 
     mainLayout = new QVBoxLayout(this);
     mainLayout->setSpacing(0);

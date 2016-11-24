@@ -9,7 +9,6 @@ SpellBook::SpellBook(QWidget *parent)
 {
     setFrameStyle(QFrame::Box);
     setGeometry(800,200,300,400);
-    setMinimumWidth(200);
     setObjectName("spellBook");
     setStyleSheet("#spellBook{"
                   "border: 1px solid black;}");
@@ -48,7 +47,8 @@ SpellBook::SpellBook(QWidget *parent)
         frameTabWidget->addTab(frameStack[index1],QString("Tab %1").arg(i));
         frameTabs[index1]->setStyleSheet("background-color: green;");
         connect(frameStack[index1],SIGNAL(currentChanged(int)),this,SLOT(greyButtons(int)));
-
+        frameGrid[index1]->setSpacing(1);
+        frameGrid[index1]->setMargin(1);
         for (int j = 1; j <= 10; j++){
             int index2 = (index1*10)+(j-1);
             spellSlotFrame[index2] = new QFrame(frameTabs[index1]);
@@ -72,6 +72,8 @@ SpellBook::SpellBook(QWidget *parent)
                 frameStack[index1]->addWidget(frameTabs[k-1]);
                 frameGrid[k-1] = new QGridLayout(frameTabs[k-1]);
                 frameTabs[k-1]->setStyleSheet("background-color: green;");
+                frameGrid[k-1]->setSpacing(1);
+                frameGrid[k-1]->setMargin(1);
                 for (int l = 1; l <= 10; l++){
                     int index3 = ((k-1)*10)+(l-1);
                     spellSlotFrame[index3] = new QFrame(frameTabs[k-1]);
@@ -91,6 +93,7 @@ SpellBook::SpellBook(QWidget *parent)
             }
         }
     }
+
 
 
     pageL = new QPushButton(this);

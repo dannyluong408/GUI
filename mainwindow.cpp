@@ -951,7 +951,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
                   event->size().height()*scale_factor_y);
 
 
-    if(event->size().width()>900){
+    if(event->size().width()>800){
         scale_factor_x = 500.0 / 1200.0;
         scale_factor_y = 200.0 / 900.0;
 
@@ -1026,6 +1026,7 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     //resize openglwidget too ? need to resize other stuff inside this when init'd
     ui->openGLWidget->resize(event->size());
 
+    qDebug() << event->size().width();
     emit newSize(event->size());
 }
 
