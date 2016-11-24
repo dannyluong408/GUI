@@ -484,7 +484,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
 //}
 
 void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
-    qDebug() << "Detected" << newKeybind.toString() << num;
+//    qDebug() << "Detected" << newKeybind.toString() << num;
     if(num < 0){
         qDebug() << "Error";
     }

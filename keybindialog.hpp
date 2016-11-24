@@ -14,6 +14,7 @@ class KeybindDialog: public QFrame
         void keyReleaseEvent(QKeyEvent *event);
         void keyPressEvent(QKeyEvent *event);
         void reject();
+        void parseKey(QString key);
         int num;
 
     signals:
@@ -22,7 +23,7 @@ class KeybindDialog: public QFrame
     private:
         QLabel *info;
         QString keyPress;
-
+        int count;
 };
 
 
