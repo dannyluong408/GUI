@@ -19,75 +19,27 @@ KeybindDialog::KeybindDialog(QWidget *parent)
 }
 
 //possibly use QKeySequenceEdit in the future but probably not
-void KeybindDialog::keyReleaseEvent(QKeyEvent *event){
-    if(event->modifiers() & Qt::ControlModifier){
-        qDebug() << "MCtrl";
-        keyPress.append("Ctrl+");
+void KeybindDialog::keyPressEvent(QKeyEvent *event){
+    if (event->key() == Qt::Key_Control || event->key() == Qt::Key_Control || event->key() == Qt::Key_Shift || event->key() == Qt::Key_Alt || event->key() == Qt::Key_unknown) {
+        event->ignore();
+        //qDebug() << "L:SKDFJK:SDF";
     }
-    if(event->modifiers() & Qt::ShiftModifier){
-        qDebug() << "MShift";
-        keyPress.append("Shift+");
-    }
-    if(event->modifiers() & Qt::AltModifier){
-        qDebug() << "MAlt";
-        keyPress.append("Alt+");
-    }
-
-    switch (event->key()){
-        case Qt::Key_unknown:{
-            qDebug() << "Unknown Key";
-            event->ignore();
-            break;
-        }
-        case Qt::Key_Escape:{
-            qDebug() << "Cannot bind escape!";
-            event->ignore();
-            delete(this);
-            break;
-        }
-        case Qt::Key_Control:{
-            qDebug() << "KCtrl";
-            keyPress.append("Ctrl+");
-            break;
-        }
-        case Qt::Key_Shift:{
-            qDebug() << "KShift";
-            keyPress.append("Shift+");
-            break;
-        }
-        case Qt::Key_Alt:{
-            qDebug() << "KAlt";
-            keyPress.append("Alt+");
-            break;
-        }
-        default:{
-            qDebug() << "Just a Key Detected:" << QKeySequence(event->key()).toString();
-            parseKey(keyPress + QKeySequence(event->key()).toString());
-            return;
-        }
-    }
-    info->setText(keyPress);
-    return;
-}
-
-void KeybindDialog::parseKey(QString key){
-    int size;
-    //qDebug() << "Before Split:" << key;
-    QStringList query = key.split('+');
-    //qDebug() << "After Split:" << query;
-    size = query.size();
-    query.removeDuplicates();
-    if (size != query.size()){
-        qDebug() << "Bad Combo!";
-        info->setText("Bad Key Combo! Try Again. Press (ESC) to cancel!");
-        keyPress = "";
+    else if (event->key() == Qt::Key_Escape) {
+        delete(this);
         return;
     }
-    else{
-        //qDebug() << key;
-        emit newBind(QKeySequence(key),num);
+    else {
+        quint32 mod = event->modifiers();
+        if (mod & Qt::ControlModifier ) keyPress.append("Ctrl+");
+        if (mod & Qt::ShiftModifier ) keyPress.append("Shift+");
+        if (mod & Qt::AltModifier ) keyPress.append("Alt+");
+        keyPress.append(QKeySequence(event->key()).toString());
+        qDebug() << keyPress;
+        emit newBind(QKeySequence(keyPress), num);
         delete(this);
         return;
     }
 }
+
+
 

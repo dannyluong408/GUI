@@ -11,8 +11,8 @@ class KeybindDialog: public QFrame
     Q_OBJECT
     public:
         KeybindDialog(QWidget *parent);
-        void keyReleaseEvent(QKeyEvent *event);
-        //void keyPressEvent(QKeyEvent *event);
+        //void keyReleaseEvent(QKeyEvent *event);
+        void keyPressEvent(QKeyEvent *event);
         void parseKey(QString key);
         int num;
 
