@@ -14,32 +14,69 @@ KeybindDialog::KeybindDialog(QWidget *parent)
     info->setWordWrap(true);
     num = -1;
     count = 0;
+    setFocus();
     grabKeyboard();
+    grabMouse();
     show();
 }
 
 //possibly use QKeySequenceEdit in the future but probably not
 void KeybindDialog::keyPressEvent(QKeyEvent *event){
-    if (event->key() == Qt::Key_Control || event->key() == Qt::Key_Control || event->key() == Qt::Key_Shift || event->key() == Qt::Key_Alt || event->key() == Qt::Key_unknown) {
+    if (event->key() == Qt::Key_Control || event->key() == Qt::Key_Shift || event->key() == Qt::Key_Alt || event->key() == Qt::Key_unknown) {
         event->ignore();
-        //qDebug() << "L:SKDFJK:SDF";
     }
     else if (event->key() == Qt::Key_Escape) {
         delete(this);
         return;
     }
     else {
-        quint32 mod = event->modifiers();
-        if (mod & Qt::ControlModifier ) keyPress.append("Ctrl+");
-        if (mod & Qt::ShiftModifier ) keyPress.append("Shift+");
-        if (mod & Qt::AltModifier ) keyPress.append("Alt+");
-        keyPress.append(QKeySequence(event->key()).toString());
-        qDebug() << keyPress;
-        emit newBind(QKeySequence(keyPress), num);
+        mod = event->modifiers();
+        if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
+        if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
+        if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
+        buttonPress.append(QKeySequence(event->key()).toString());
+        emit newBind(QKeySequence(buttonPress), num);
+        qDebug() << QKeySequence(buttonPress).toString();
+        delete(this);
+        return;
+    }
+}
+void KeybindDialog::mousePressEvent(QMouseEvent *mevent){
+    qDebug() << "a";
+    if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
+        mod = mevent->modifiers();
+        if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
+        if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
+        if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
+        if (mevent->button() == Qt::MidButton) buttonPress.append("F33");
+        if (mevent->button() == Qt::BackButton) buttonPress.append("F34");
+        if (mevent->button() == Qt::ForwardButton) buttonPress.append("F35");
+
+        qDebug() << QKeySequence(buttonPress).toString();
+        qDebug() << "a";
+        qDebug() << mevent->button();
+        qDebug() << buttonPress;
+        //add if statement to only emit if cursor is in correct place
+        emit newBind(QKeySequence(buttonPress), num);
         delete(this);
         return;
     }
 }
 
+void KeybindDialog::wheelEvent(QWheelEvent *wevent){
+    mod = wevent->modifiers();
+    if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
+    if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
+    if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
+    if (wevent->angleDelta().y() > 0) buttonPress.append("F31");
+    else buttonPress.append("F32");
 
+    qDebug() << QKeySequence(buttonPress).toString();
+    qDebug() << wevent->angleDelta().x() << " + " << wevent->angleDelta().y();
+    qDebug() << buttonPress;
+    //add if statement to only emit if cursor is in correct place
+    emit newBind(QKeySequence(buttonPress), num);
+    delete(this);
+    return;
 
+}
