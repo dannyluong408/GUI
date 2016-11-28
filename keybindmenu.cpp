@@ -488,39 +488,39 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
     if(num < 0){
         qDebug() << "Error";
     }
-    else if(num < 7){
+    else if(num < MOVE_BINDS_RANGE){
         moveKeybind[num]->setText(newKeybind.toString());
         qDebug() << "Setup Move";
     }
-    else if(num == 7){
+    else if(num < COMBAT_BINDS_RANGE){
         combatKeybind->setText(newKeybind.toString());
         qDebug() << "Setup Combat";
     }
-    else if(num < 38){
+    else if(num < TARGET_BINDS_RANGE){
         targetingKeybind[num-8]->setText(newKeybind.toString());
         qDebug() << "Setup Targeting";
     }
-    else if(num < 41){
+    else if(num < CAMERA_BINDS_RANGE){
         cameraKeybind[num-38]->setText(newKeybind.toString());
         qDebug() << "Setup Camera";
     }
-    else if(num < 51){
+    else if(num < ACTION_PRIMARY_BINDS_RANGE){
         actionPrimaryButtonKeybind[num-41]->setText(newKeybind.toString());
         qDebug() << "Setup Action Primary";
     }
-    else if(num < 61){
+    else if(num < ACTION_SECONDARY_BINDS_RANGE){
         actionSecondaryButtonKeybind[num-51]->setText(newKeybind.toString());
         qDebug() << "Setup Action Secondary";
     }
-    else if(num < 69){
+    else if(num < INTERFACE_BINDS_RANGE){
         interfaceKeybind[num-61]->setText(newKeybind.toString());
         qDebug() << "Setup Interface";
     }
-    else if(num < 72){
+    else if(num < CHAT_BINDS_RANGE){
         chatKeybind[num-69]->setText(newKeybind.toString());
         qDebug() << "Setup Chat";
     }
-    else if(num == 72){
+    else if(num < MISC_BINDS_RANGE){
         miscKeybind->setText(newKeybind.toString());
         qDebug() << "Setup Misc";
     }
@@ -686,31 +686,31 @@ void KeybindMenu::setBindBackup(int num){
     if(num < 0){
         qDebug() << "Error";
     }
-    else if(num < 7){
+    else if(num < MOVE_BINDS_RANGE){
         qDebug() << "Setup Move Backup";
     }
-    else if(num == 7){
+    else if(num < COMBAT_BINDS_RANGE){
         qDebug() << "Setup Combat Backup";
     }
-    else if(num < 38){
+    else if(num < TARGET_BINDS_RANGE){
         qDebug() << "Setup Targeting Backup";
     }
-    else if(num < 41){
+    else if(num < CAMERA_BINDS_RANGE){
         qDebug() << "Setup Camera Backup";
     }
-    else if(num < 51){
+    else if(num < ACTION_PRIMARY_BINDS_RANGE){
         qDebug() << "Setup Action Primary Backup";
     }
-    else if(num < 61){
+    else if(num < ACTION_SECONDARY_BINDS_RANGE){
         qDebug() << "Setup Action Secondary Backup";
     }
-    else if(num < 69){
+    else if(num < INTERFACE_BINDS_RANGE){
         qDebug() << "Setup Interface Backup";
     }
-    else if(num < 72){
+    else if(num < CHAT_BINDS_RANGE){
         qDebug() << "Setup Chat Backup";
     }
-    else if(num == 72){
+    else if(num > MISC_BINDS_RANGE){
         qDebug() << "Setup Misc Backup";
     }
 }

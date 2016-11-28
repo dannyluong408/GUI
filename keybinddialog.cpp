@@ -14,6 +14,7 @@ KeybindDialog::KeybindDialog(QWidget *parent)
     info->setWordWrap(true);
     num = -1;
     count = 0;
+    section = "";
     setFocus();
     grabKeyboard();
     grabMouse();

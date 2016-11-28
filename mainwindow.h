@@ -60,6 +60,8 @@ public:
     void whisper(int type);
     void screenshot();
 
+    //void mousePressEvent(QMouseEvent *mevent);
+    void wheelEvent(QWheelEvent *wevent);
 
 public slots:
     void openOption(QString name);

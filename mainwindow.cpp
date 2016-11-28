@@ -1,10 +1,5 @@
 #include "mainwindow.h"
 
-
-
-
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -148,6 +143,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(keybindMapper,SIGNAL(mapped(int)),this,SLOT(keybindSlot(int)));
     for(int i=0; i<KEYBINDCOUNT; i++){
         shortcut[i] = new QShortcut(this);
+        shortcut[i]->setAutoRepeat(false);
         connect(shortcut[i],SIGNAL(activated()),keybindMapper,SLOT(map()));
         keybindMapper->setMapping(shortcut[i],i);
     }
@@ -167,6 +163,52 @@ MainWindow::MainWindow(QWidget *parent) :
     //connect(optionsMenu,SIGNAL()
 
 }
+
+
+
+//void MainWindow::mousePressEvent(QMouseEvent *mevent){
+//    qDebug() << "a";
+//    if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
+//        mod = mevent->modifiers();
+//        if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
+//        if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
+//        if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
+//        if (mevent->button() == Qt::MidButton) buttonPress.append("F33");
+//        if (mevent->button() == Qt::BackButton) buttonPress.append("F34");
+//        if (mevent->button() == Qt::ForwardButton) buttonPress.append("F35");
+
+//        qDebug() << QKeySequence(buttonPress).toString();
+//        qDebug() << "a";
+//        qDebug() << mevent->button();
+//        qDebug() << buttonPress;
+//        //add if statement to only emit if cursor is in correct place
+//        emit newBind(QKeySequence(buttonPress), num);
+//        return;
+//    }
+//}
+
+void MainWindow::wheelEvent(QWheelEvent *wevent){
+//    mod = wevent->modifiers();
+//    if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
+//    if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
+//    if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
+
+    qDebug() << shortcut[62]->key();
+    qDebug() << shortcut[63]->key();
+
+    if (wevent->angleDelta().y() > 0){
+        qDebug() << "Up Emitted";
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress,Qt::Key_F31,Qt::NoModifier,"F31");
+        QApplication::sendEvent(this,event);
+    }
+    else{
+        qDebug() << "Down Emitted";
+        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress,Qt::Key_F32,Qt::NoModifier,"F32");
+        QApplication::sendEvent(this,event);
+    }
+    return;
+}
+
 
 void MainWindow::defaultKeybinds(){
     initDefaultKeybinds();

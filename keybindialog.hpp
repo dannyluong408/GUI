@@ -15,6 +15,7 @@ class KeybindDialog: public QFrame
         void mousePressEvent(QMouseEvent *mevent);
         void wheelEvent(QWheelEvent *wevent);
         int num;
+        QString section;
 
     signals:
         void newBind(QKeySequence newBind, int num);
@@ -22,8 +23,10 @@ class KeybindDialog: public QFrame
 
     private:
         QLabel *info;
+
         QString buttonPress;
         quint32 mod;
+
         int count;
 };
 
