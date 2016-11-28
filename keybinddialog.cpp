@@ -66,11 +66,21 @@ void KeybindDialog::mousePressEvent(QMouseEvent *mevent){
 
 void KeybindDialog::wheelEvent(QWheelEvent *wevent){
     mod = wevent->modifiers();
-    if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
-    if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
-    if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
-    if (wevent->angleDelta().y() > 0) buttonPress.append("F31");
-    else buttonPress.append("F32");
+    if (mod & Qt::ControlModifier ){
+        buttonPress.append("Ctrl+");
+    }
+    if (mod & Qt::ShiftModifier ){
+        buttonPress.append("Shift+");
+    }
+    if (mod & Qt::AltModifier ){
+        buttonPress.append("Alt+");
+    }
+    if (wevent->angleDelta().y() > 0 || wevent->angleDelta().x() > 0){
+        buttonPress.append("F31");
+    }
+    else {
+        buttonPress.append("F32");
+    }
 
     qDebug() << QKeySequence(buttonPress).toString();
     qDebug() << wevent->angleDelta().x() << " + " << wevent->angleDelta().y();

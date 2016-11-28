@@ -187,28 +187,81 @@ MainWindow::MainWindow(QWidget *parent) :
 //    }
 //}
 
+void MainWindow::keyPressEvent(QKeyEvent *event){
+    QString keyCombo = "";
+    quint32 mod = event->modifiers();
+    if (mod & Qt::ControlModifier ) keyCombo.append("Ctrl+");
+    if (mod & Qt::ShiftModifier ) keyCombo.append("Shift+");
+    if (mod & Qt::AltModifier ) keyCombo.append("Alt+");
+
+    if (event->key() == Qt::Key_F31 || event->key() == Qt::Key_F32 ||
+        event->key() == Qt::Key_F33 || event->key() == Qt::Key_F34 ||
+        event->key() == Qt::Key_F35){
+        keyCombo.append(QKeySequence(event->key()).toString());
+        qDebug() << "Debug" << keyCombo;
+        for(int i = 0; i <KEYBINDCOUNT; i++){
+            if (shortcut[i]->key().toString() == keyCombo){
+                emit shortcut[i]->activated();
+            }
+        }
+    }
+}
+
 void MainWindow::wheelEvent(QWheelEvent *wevent){
-//    mod = wevent->modifiers();
-//    if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
-//    if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
-//    if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
-
-    qDebug() << shortcut[62]->key();
-    qDebug() << shortcut[63]->key();
-
-    if (wevent->angleDelta().y() > 0){
-        qDebug() << "Up Emitted";
-        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress,Qt::Key_F31,Qt::NoModifier,"F31");
-        QApplication::sendEvent(this,event);
+    QString keyCombo = "";
+    quint32 mod = wevent->modifiers();
+    int combo = Qt::NoModifier;
+    if (mod & Qt::ControlModifier ){
+        combo |= Qt::ControlModifier;
+    }
+    if (mod & Qt::ShiftModifier ){
+        combo |= Qt::ShiftModifier;
+    }
+    if (mod & Qt::AltModifier ){
+        combo |= Qt::AltModifier;
+    }
+    qDebug() << wevent->angleDelta();
+    if (wevent->angleDelta().y() > 0 || wevent->angleDelta().x() > 0){
+        qDebug() << "Mouse Wheel Up Emitted";
+        QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F31,(Qt::KeyboardModifier)combo,"F31");
+        QApplication::sendEvent(this,&event);
     }
     else{
-        qDebug() << "Down Emitted";
-        QKeyEvent *event = new QKeyEvent(QEvent::KeyPress,Qt::Key_F32,Qt::NoModifier,"F32");
-        QApplication::sendEvent(this,event);
+        qDebug() << "Mouse Wheel Down Emitted";
+        QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F32,(Qt::KeyboardModifier)combo,"F32");
+        QApplication::sendEvent(this,&event);
     }
     return;
 }
 
+void MainWindow::mousePressEvent(QMouseEvent *mevent){
+    if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
+        QString keyCombo = "";
+        quint32 mod = mevent->modifiers();
+        int combo = Qt::NoModifier;
+        if (mod & Qt::ControlModifier ){
+            combo |= Qt::ControlModifier;
+        }
+        if (mod & Qt::ShiftModifier ){
+            combo |= Qt::ShiftModifier;
+        }
+        if (mod & Qt::AltModifier ){
+            combo |= Qt::AltModifier;
+        }
+        if (mevent->button() == Qt::MidButton){
+            QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F33,(Qt::KeyboardModifier)combo,"F33");
+            QApplication::sendEvent(this,&event);
+        }
+        else if (mevent->button() == Qt::BackButton){
+            QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F34,(Qt::KeyboardModifier)combo,"F33");
+            QApplication::sendEvent(this,&event);
+        }
+        else if (mevent->button() == Qt::ForwardButton){
+            QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F35,(Qt::KeyboardModifier)combo,"F33");
+            QApplication::sendEvent(this,&event);
+        }
+    }
+}
 
 void MainWindow::defaultKeybinds(){
     initDefaultKeybinds();

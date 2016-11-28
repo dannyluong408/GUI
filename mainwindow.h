@@ -28,6 +28,7 @@
 #include "menubar.h"
 #include "options.hpp"
 #include "miscenum.hpp"
+#include <QFlags>
 
 #define KEYBINDCOUNT 73
 
@@ -49,6 +50,8 @@ public:
     void initKeybinds();
     void loadActionBars();
 
+    void keyPressEvent(QKeyEvent *event);
+
     //keybind functions
     void movePlayer(int direction);
     void togglePane(int pane);
@@ -62,6 +65,7 @@ public:
 
     //void mousePressEvent(QMouseEvent *mevent);
     void wheelEvent(QWheelEvent *wevent);
+    void mousePressEvent(QMouseEvent *mevent);
 
 public slots:
     void openOption(QString name);
