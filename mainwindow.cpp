@@ -159,6 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "Initializing Keybinds";
     initKeybinds();
     loadActionBars();
+    optionsMenu->copyShortcut(shortcut);
     qDebug() << "Keybinds Complete";
     //connect(optionsMenu,SIGNAL()
 
@@ -198,7 +199,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
         event->key() == Qt::Key_F33 || event->key() == Qt::Key_F34 ||
         event->key() == Qt::Key_F35){
         keyCombo.append(QKeySequence(event->key()).toString());
-        qDebug() << "Debug" << keyCombo;
         for(int i = 0; i <KEYBINDCOUNT; i++){
             if (shortcut[i]->key().toString() == keyCombo){
                 emit shortcut[i]->activated();
@@ -222,12 +222,12 @@ void MainWindow::wheelEvent(QWheelEvent *wevent){
     }
     qDebug() << wevent->angleDelta();
     if (wevent->angleDelta().y() > 0 || wevent->angleDelta().x() > 0){
-        qDebug() << "Mouse Wheel Up Emitted";
+        //qDebug() << "Mouse Wheel Up Emitted";
         QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F31,(Qt::KeyboardModifier)combo,"F31");
         QApplication::sendEvent(this,&event);
     }
     else{
-        qDebug() << "Mouse Wheel Down Emitted";
+        //qDebug() << "Mouse Wheel Down Emitted";
         QKeyEvent event = QKeyEvent(QEvent::KeyPress,Qt::Key_F32,(Qt::KeyboardModifier)combo,"F32");
         QApplication::sendEvent(this,&event);
     }

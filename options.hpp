@@ -11,6 +11,7 @@ class OptionsFrame : public QFrame
     Q_OBJECT
     public:
         OptionsFrame(QWidget *parent);
+        void copyShortcut(QShortcut *shortcut[]);
 
     public slots:
         void currentOption();

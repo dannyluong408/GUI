@@ -1,5 +1,33 @@
 #include "keybindmenu.hpp"
 
+
+const QString moveKeybindDescName[7] = {"Move Forward",
+                                  "Move Backward",
+                                  "Turn Left",
+                                  "Turn Right",
+                                  "Move Left",
+                                  "Move Right",
+                                  "Jump"},
+        combatKeybindDescName = "Toggle Attack",
+        targetingKeybindDescName[30] = {"Target Nearest Enemy","Target Previous Enemy",
+                                        "Target Nearest Enemy Player","Target Previous Enemy Player",
+                                        "Target Nearest Friendly Player","Target Previous Friendly Player",
+                                        "Target Self","Target Party Member 1","Target Party Member 2","Target Party Member 3","Target Party Member 4",
+                                        "Target Pet","Target Party Pet 1","Target Party Pet 2","Target Party Pet 3","Target Party Pet 4",
+                                        "Assist Target","Toggle Nameplates","Toggle Friendly Nameplates","Set Focus",
+                                        "Focus Arena 1","Focus Arena 2","Focus Arena 3","Focus Arena 4","Focus Arena 5",
+                                        "Target Arena 1","Target Arena 2","Target Arena 3","Target Arena 4","Target Arena 5"},
+        cameraKeybindDescName[3] = {"Camera Zoom In","Camera Zoom Out","Camera Reverse"},
+        actionPrimaryButtonKeybindDescName[10] = {"Main Button 0","Main Button 1","Main Button 2","Main Button 3","Main Button 4",
+                                           "Main Button 5","Main Button 6","Main Button 7","Main Button 8","Main Button 9"},
+        actionSecondaryButtonKeybindDescName[10] = {"Secondary Button 0","Secondary Button 1","Secondary Button 2","Secondary Button 3","Secondary Button 4",
+                                           "Secondary Button 5","Secondary Button 6","Secondary Button 7","Secondary Button 8","Secondary Button 9"},
+        interfaceKeybindDescName[8] = {"Toggle Spellbook","Toggle Clan","Toggle Honor","Open Main Menu",
+                                       "Toggle Char Menu","Toggle Macro","Toggle Social","Toggle Map"},
+        chatKeybindDescName[3] = {"Open Chat","Reply Whisper","Re-Whisper"},
+        miscKeybindDescName = "Take Screenshot";
+
+
 KeybindMenu::KeybindMenu(QWidget *parent)
     : QFrame(parent)
 {
@@ -9,6 +37,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     setStyleSheet("#keybindMenu{"
                   "border: 2px solid black;"
                   "border-left: none}");
+
 
     scrollArea = new QScrollArea(this);
 
@@ -68,31 +97,31 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<7; i++){
-        moveKeybindDesc[i] = new QLabel(this);
-        moveKeybindDesc[i]->setText(moveKeybindDescName[i]);
-        moveKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        moveKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<MOVE_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(moveKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        moveKeybind[i] = new QPushButton(this);
-        moveKeybind[i]->setFixedHeight(25);
-        moveKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "moveKeybind" + i;
-        moveKeybind[i]->setObjectName(objectName);
-        connect(moveKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(moveKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("moveKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        moveKeybindBackup[i] = new QPushButton(this);
-        moveKeybindBackup[i]->setFixedHeight(25);
-        moveKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "moveKeybindBackup" + i;
-        moveKeybindBackup[i]->setObjectName(objectName);
-        connect(moveKeybindBackup[i],SIGNAL(clicked()),keybindMapperBackup,SLOT(map()));
-        keybindMapperBackup->setMapping(moveKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("moveKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperBackup,SLOT(map()));
+        keybindMapperBackup->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(moveKeybindDesc[i],index,0);
-        gridLayout->addWidget(moveKeybind[i],index,1);
-        gridLayout->addWidget(moveKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -107,31 +136,31 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    combatKeybindDesc = new QLabel(this);
-    combatKeybindDesc->setText(combatKeybindDescName);
-    combatKeybindDesc->setAlignment(Qt::AlignCenter);
-    combatKeybindDesc->setFixedHeight(25);
+    keybindDesc[buttonNum] = new QLabel(this);
+    keybindDesc[buttonNum]->setText(combatKeybindDescName);
+    keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+    keybindDesc[buttonNum]->setFixedHeight(25);
 
-    combatKeybind = new QPushButton(this);
-    combatKeybind->setFixedHeight(25);
-    combatKeybind->setStyleSheet("border: 2px solid black;");
-    objectName = "combatKeybind";
-    combatKeybind->setObjectName(objectName);
-    connect(combatKeybind,SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-    keybindMapperMain->setMapping(combatKeybind,buttonNum);
+    keybind[buttonNum] = new QPushButton(this);
+    keybind[buttonNum]->setFixedHeight(25);
+    keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+    objectName = QString("combatKeybind%1").arg(i);
+    keybind[buttonNum]->setObjectName(objectName);
+    connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+    keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-    combatKeybindBackup = new QPushButton(this);
-    combatKeybindBackup->setFixedHeight(25);
-    combatKeybindBackup->setStyleSheet("border: 2px solid black;");
-    objectName = "combatKeybindBackup";
-    combatKeybindBackup->setObjectName(objectName);
-    connect(combatKeybindBackup,SIGNAL(clicked()),keybindMapperBackup,SLOT(map()));
-    keybindMapperBackup->setMapping(combatKeybindBackup,buttonNum);
+    keybindBackup[buttonNum] = new QPushButton(this);
+    keybindBackup[buttonNum]->setFixedHeight(25);
+    keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+    objectName = QString("combatKeybindBackup%1").arg(i);
+    keybindBackup[buttonNum]->setObjectName(objectName);
+    connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperBackup,SLOT(map()));
+    keybindMapperBackup->setMapping(keybindBackup[buttonNum],buttonNum);
 
 
-    gridLayout->addWidget(combatKeybindDesc,index,0);
-    gridLayout->addWidget(combatKeybind,index,1);
-    gridLayout->addWidget(combatKeybindBackup,index,2);
+    gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+    gridLayout->addWidget(keybind[buttonNum],index,1);
+    gridLayout->addWidget(keybindBackup[buttonNum],index,2);
     index++;
     buttonNum++;
 
@@ -146,31 +175,31 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<30; i++){
-        targetingKeybindDesc[i] = new QLabel(this);
-        targetingKeybindDesc[i]->setText(targetingKeybindDescName[i]);
-        targetingKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        targetingKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<TARGET_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(targetingKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        targetingKeybind[i] = new QPushButton(this);
-        targetingKeybind[i]->setFixedHeight(25);
-        targetingKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "targetingKeybind";
-        targetingKeybind[i]->setObjectName(objectName);
-        connect(targetingKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(targetingKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("targetingKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        targetingKeybindBackup[i] = new QPushButton(this);
-        targetingKeybindBackup[i]->setFixedHeight(25);
-        targetingKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "targetingKeybindBackup";
-        targetingKeybindBackup[i]->setObjectName(objectName);
-        connect(targetingKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(targetingKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("targetingKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(targetingKeybindDesc[i],index,0);
-        gridLayout->addWidget(targetingKeybind[i],index,1);
-        gridLayout->addWidget(targetingKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -185,31 +214,31 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<3; i++){
-        cameraKeybindDesc[i] = new QLabel(this);
-        cameraKeybindDesc[i]->setText(cameraKeybindDescName[i]);
-        cameraKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        cameraKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<CAMERA_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(cameraKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        cameraKeybind[i] = new QPushButton(this);
-        cameraKeybind[i]->setFixedHeight(25);
-        cameraKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "cameraKeybind"+i;
-        cameraKeybind[i]->setObjectName(objectName);
-        connect(cameraKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(cameraKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("cameraKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        cameraKeybindBackup[i] = new QPushButton(this);
-        cameraKeybindBackup[i]->setFixedHeight(25);
-        cameraKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "cameraKeybindBackup";
-        cameraKeybindBackup[i]->setObjectName(objectName);
-        connect(cameraKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(cameraKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("cameraKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(cameraKeybindDesc[i],index,0);
-        gridLayout->addWidget(cameraKeybind[i],index,1);
-        gridLayout->addWidget(cameraKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -224,60 +253,60 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<10; i++){
-        actionPrimaryButtonKeybindDesc[i] = new QLabel(this);
-        actionPrimaryButtonKeybindDesc[i]->setText(actionPrimaryButtonKeybindDescName[i]);
-        actionPrimaryButtonKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        actionPrimaryButtonKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<ACTION_PRIMARY_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(actionPrimaryButtonKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        actionPrimaryButtonKeybind[i] = new QPushButton(this);
-        actionPrimaryButtonKeybind[i]->setFixedHeight(25);
-        actionPrimaryButtonKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "actionPrimaryButtonKeybind"+i;
-        actionPrimaryButtonKeybind[i]->setObjectName(objectName);
-        connect(actionPrimaryButtonKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(actionPrimaryButtonKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("actionPrimaryButtonKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        actionPrimaryButtonKeybindBackup[i] = new QPushButton(this);
-        actionPrimaryButtonKeybindBackup[i]->setFixedHeight(25);
-        actionPrimaryButtonKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "actionPrimaryButtonKeybindBackup"+i;
-        actionPrimaryButtonKeybindBackup[i]->setObjectName(objectName);
-        connect(actionPrimaryButtonKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(actionPrimaryButtonKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("actionPrimaryButtonKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(actionPrimaryButtonKeybindDesc[i],index,0);
-        gridLayout->addWidget(actionPrimaryButtonKeybind[i],index,1);
-        gridLayout->addWidget(actionPrimaryButtonKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
 
-    for (i = 0; i<10; i++){
-        actionSecondaryButtonKeybindDesc[i] = new QLabel(this);
-        actionSecondaryButtonKeybindDesc[i]->setText(actionSecondaryButtonKeybindDescName[i]);
-        actionSecondaryButtonKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        actionSecondaryButtonKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<ACTION_SECONDARY_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(actionSecondaryButtonKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        actionSecondaryButtonKeybind[i] = new QPushButton(this);
-        actionSecondaryButtonKeybind[i]->setFixedHeight(25);
-        actionSecondaryButtonKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "actionSecondaryButtonKeybind"+i;
-        actionSecondaryButtonKeybind[i]->setObjectName(objectName);
-        connect(actionSecondaryButtonKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(actionSecondaryButtonKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("actionSecondaryButtonKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        actionSecondaryButtonKeybindBackup[i] = new QPushButton(this);
-        actionSecondaryButtonKeybindBackup[i]->setFixedHeight(25);
-        actionSecondaryButtonKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "actionSecondaryButtonKeybindBackup"+i;
-        actionSecondaryButtonKeybindBackup[i]->setObjectName(objectName);
-        connect(actionSecondaryButtonKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(actionSecondaryButtonKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("actionSecondaryButtonKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(actionSecondaryButtonKeybindDesc[i],index,0);
-        gridLayout->addWidget(actionSecondaryButtonKeybind[i],index,1);
-        gridLayout->addWidget(actionSecondaryButtonKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -292,31 +321,31 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<8; i++){
-        interfaceKeybindDesc[i] = new QLabel(this);
-        interfaceKeybindDesc[i]->setText(interfaceKeybindDescName[i]);
-        interfaceKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        interfaceKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<INTERFACE_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(interfaceKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        interfaceKeybind[i] = new QPushButton(this);
-        interfaceKeybind[i]->setFixedHeight(25);
-        interfaceKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "interfaceKeybind"+i;
-        interfaceKeybind[i]->setObjectName(objectName);
-        connect(interfaceKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(interfaceKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("interfaceKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        interfaceKeybindBackup[i] = new QPushButton(this);
-        interfaceKeybindBackup[i]->setFixedHeight(25);
-        interfaceKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "interfaceKeybindBackup"+i;
-        interfaceKeybindBackup[i]->setObjectName(objectName);
-        connect(interfaceKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(interfaceKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("interfaceKeybindBackup%1").arg(i);
+        keybindBackup[buttonNum]->setObjectName(objectName);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(interfaceKeybindDesc[i],index,0);
-        gridLayout->addWidget(interfaceKeybind[i],index,1);
-        gridLayout->addWidget(interfaceKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -331,31 +360,30 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    for (i = 0; i<3; i++){
-        chatKeybindDesc[i] = new QLabel(this);
-        chatKeybindDesc[i]->setText(chatKeybindDescName[i]);
-        chatKeybindDesc[i]->setAlignment(Qt::AlignCenter);
-        chatKeybindDesc[i]->setFixedHeight(25);
+    for (i = 0; i<CHAT_BINDS; i++){
+        keybindDesc[buttonNum] = new QLabel(this);
+        keybindDesc[buttonNum]->setText(chatKeybindDescName[i]);
+        keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+        keybindDesc[buttonNum]->setFixedHeight(25);
 
-        chatKeybind[i] = new QPushButton(this);
-        chatKeybind[i]->setFixedHeight(25);
-        chatKeybind[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "chatKeybind"+i;
-        chatKeybind[i]->setObjectName(objectName);
-        connect(chatKeybind[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(chatKeybind[i],buttonNum);
+        keybind[buttonNum] = new QPushButton(this);
+        keybind[buttonNum]->setFixedHeight(25);
+        keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("chatKeybind%1").arg(i);
+        keybind[buttonNum]->setObjectName(objectName);
+        connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-        chatKeybindBackup[i] = new QPushButton(this);
-        chatKeybindBackup[i]->setFixedHeight(25);
-        chatKeybindBackup[i]->setStyleSheet("border: 2px solid black;");
-        objectName = "chatKeybindBackup"+i;
-        chatKeybindBackup[i]->setObjectName(objectName);
-        connect(chatKeybindBackup[i],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-        keybindMapperMain->setMapping(chatKeybindBackup[i],buttonNum);
+        keybindBackup[buttonNum] = new QPushButton(this);
+        keybindBackup[buttonNum]->setFixedHeight(25);
+        keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+        objectName = QString("chatKeybindBackup%1").arg(i);
+        connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+        keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-        gridLayout->addWidget(chatKeybindDesc[i],index,0);
-        gridLayout->addWidget(chatKeybind[i],index,1);
-        gridLayout->addWidget(chatKeybindBackup[i],index,2);
+        gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+        gridLayout->addWidget(keybind[buttonNum],index,1);
+        gridLayout->addWidget(keybindBackup[buttonNum],index,2);
         index++;
         buttonNum++;
     }
@@ -370,30 +398,30 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     index++;
     sectionIndex++;
 
-    miscKeybindDesc = new QLabel(this);
-    miscKeybindDesc->setText(miscKeybindDescName);
-    miscKeybindDesc->setAlignment(Qt::AlignCenter);
-    miscKeybindDesc->setFixedHeight(25);
+    keybindDesc[buttonNum] = new QLabel(this);
+    keybindDesc[buttonNum]->setText(miscKeybindDescName);
+    keybindDesc[buttonNum]->setAlignment(Qt::AlignCenter);
+    keybindDesc[buttonNum]->setFixedHeight(25);
 
-    miscKeybind = new QPushButton(this);
-    miscKeybind->setFixedHeight(25);
-    miscKeybind->setStyleSheet("border: 2px solid black;");
-    objectName = "miscKeybind"+i;
-    miscKeybind->setObjectName(objectName);
-    connect(miscKeybind,SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-    keybindMapperMain->setMapping(miscKeybind,buttonNum);
+    keybind[buttonNum] = new QPushButton(this);
+    keybind[buttonNum]->setFixedHeight(25);
+    keybind[buttonNum]->setStyleSheet("border: 2px solid black;");
+    objectName = QString("miscKeybind%1").arg(i);
+    keybind[buttonNum]->setObjectName(objectName);
+    connect(keybind[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+    keybindMapperMain->setMapping(keybind[buttonNum],buttonNum);
 
-    miscKeybindBackup = new QPushButton(this);
-    miscKeybindBackup->setFixedHeight(25);
-    miscKeybindBackup->setStyleSheet("border: 2px solid black;");
-    objectName = "miscKeybindBackup"+i;
-    miscKeybindBackup->setObjectName(objectName);
-    connect(miscKeybindBackup,SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
-    keybindMapperMain->setMapping(miscKeybindBackup,buttonNum);
+    keybindBackup[buttonNum] = new QPushButton(this);
+    keybindBackup[buttonNum]->setFixedHeight(25);
+    keybindBackup[buttonNum]->setStyleSheet("border: 2px solid black;");
+     objectName = QString("miscKeybindBackup%1").arg(i);
+    keybindBackup[buttonNum]->setObjectName(objectName);
+    connect(keybindBackup[buttonNum],SIGNAL(clicked()),keybindMapperMain,SLOT(map()));
+    keybindMapperMain->setMapping(keybindBackup[buttonNum],buttonNum);
 
-    gridLayout->addWidget(miscKeybindDesc,index,0);
-    gridLayout->addWidget(miscKeybind,index,1);
-    gridLayout->addWidget(miscKeybindBackup,index,2);
+    gridLayout->addWidget(keybindDesc[buttonNum],index,0);
+    gridLayout->addWidget(keybind[buttonNum],index,1);
+    gridLayout->addWidget(keybindBackup[buttonNum],index,2);
     index++;
     buttonNum++;
 
@@ -484,7 +512,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
 //}
 
 void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
-//    qDebug() << "Detected" << newKeybind.toString() << num;
+    qDebug() << "Detected" << newKeybind.toString() << num;
     QString keyText = newKeybind.toString();
     keyText.replace(QString("F31"),"Mouse-Up");
     keyText.replace(QString("F32"),"Mouse-Down");
@@ -492,180 +520,80 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
     keyText.replace(QString("F34"),"Mouse-Back");
     keyText.replace(QString("F35"),"Mouse-Forward");
     qDebug() << keyText;
-    if(num < 0){
-        qDebug() << "Error";
-    }
-    else if(num < MOVE_BINDS_RANGE){
-        moveKeybind[num]->setText(keyText);
+
+    assert(num >= 0);
+    if(num < MOVE_BINDS_RANGE){
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Move";
     }
     else if(num < COMBAT_BINDS_RANGE){
-        combatKeybind->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Combat";
     }
     else if(num < TARGET_BINDS_RANGE){
-        targetingKeybind[num-8]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Targeting";
     }
     else if(num < CAMERA_BINDS_RANGE){
-        cameraKeybind[num-38]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Camera";
     }
     else if(num < ACTION_PRIMARY_BINDS_RANGE){
-        actionPrimaryButtonKeybind[num-41]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Action Primary";
     }
     else if(num < ACTION_SECONDARY_BINDS_RANGE){
-        actionSecondaryButtonKeybind[num-51]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Action Secondary";
     }
     else if(num < INTERFACE_BINDS_RANGE){
-        interfaceKeybind[num-61]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Interface";
     }
     else if(num < CHAT_BINDS_RANGE){
-        chatKeybind[num-69]->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Chat";
     }
     else if(num < MISC_BINDS_RANGE){
-        miscKeybind->setText(keyText);
+        keybind[num]->setText(keyText);
         qDebug() << "Setup Misc";
     }
 
     //check if overwriting other binds by assigning this keyseq
-    int i,index = 0;
+    int i;
 
-    for(i=0; i<7; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(moveKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                moveKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
+    for(i = 0; i< KEYBINDCOUNT; i++){
+        if(i != num){
+            if(shortcuts[i]->key() == newKeybind){
+                qDebug() << "Dupe found at:" << i;
+                updateText(i);
             }
-            index++;
         }
     }
+}
 
+void KeybindMenu::updateText(int num){
+    assert(num >= 0);
 
-    if (index == num){
-        index++;
-    }
-    else{
-        if(combatKeybind->text() == keyText){
-            qDebug() << "Same Bind" << index << num;
-            combatKeybind->setText("");
-            //emit signal here to update shortkey
-            emit newBindSend(QKeySequence(),index);
-        }
-        index++;
-    }
+    qDebug() << "Updating at:" << num;
 
-    for(i=0; i<30; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(targetingKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                targetingKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-    for(i=0; i<3; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(cameraKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                cameraKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-    for(i=0; i<10; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(actionPrimaryButtonKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                actionPrimaryButtonKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-    for(i=0; i<10; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(actionSecondaryButtonKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                actionSecondaryButtonKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-    for(i=0; i<8; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(interfaceKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                interfaceKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-    for(i=0; i<3; i++){
-        if (index == num){
-            index++;
-        }
-        else{
-            if(chatKeybind[i]->text() == keyText){
-                qDebug() << "Same Bind" << index << num;
-                chatKeybind[i]->setText("");
-                //emit signal here to update shortkey
-                emit newBindSend(QKeySequence(),index);
-            }
-            index++;
-        }
-    }
-
-    if (index == num){
-        index++;
-    }
-    else{
-        if(miscKeybind->text() == keyText){
-            qDebug() << "Same Bind" << index << num;
-            miscKeybind->setText("");
-            //emit signal here to update shortkey
-            emit newBindSend(QKeySequence(),index);
-        }
-    }
+    keybind[num]->setText("");
+    emit newBindSend(QKeySequence(),num);
 }
 
 void KeybindMenu::newBindRecv(QKeySequence newKeybind, int num){
     updateBind(newKeybind,num);
     emit newBindSend(newKeybind,num);
 }
+
+void KeybindMenu::copyShortcuts(QShortcut *copyshort[]){
+    shortcuts = copyshort;
+}
+
+//void KeybindMenu::updateShortcut(){
+
+//}
+
 
 void KeybindMenu::setBindMain(int num){
     /* design
@@ -684,6 +612,11 @@ void KeybindMenu::setBindMain(int num){
         return;
     }
     emit disableShortcuts();
+
+//    for(int i = 0; i < 73; i++){
+//        qDebug() << shortcuts[i]->key();
+//    }
+
     KeybindDialog *keybindPrompt = new KeybindDialog(this);
     keybindPrompt->num = num;
     connect(keybindPrompt,SIGNAL(newBind(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
@@ -727,52 +660,20 @@ void KeybindMenu::setBindBackup(int num){
 }
 
 void KeybindMenu::updateKeybinds(QString *shortcut){
-    int i,index = 0;
+    int i;
 
     for(i=0 ; i<KEYBINDCOUNT; i++){
-        shortcut[index].replace(QString("F31"),"Mouse-Up");
-        shortcut[index].replace(QString("F32"),"Mouse-Down");
-        shortcut[index].replace(QString("F33"),"Mouse-Mid");
-        shortcut[index].replace(QString("F34"),"Mouse-Back");
-        shortcut[index].replace(QString("F35"),"Mouse-Forward");
-        index++;
+        shortcut[i].replace(QString("F31"),"Mouse-Up");
+        shortcut[i].replace(QString("F32"),"Mouse-Down");
+        shortcut[i].replace(QString("F33"),"Mouse-Mid");
+        shortcut[i].replace(QString("F34"),"Mouse-Back");
+        shortcut[i].replace(QString("F35"),"Mouse-Forward");
+    }  
+
+    for(i=0; i<KEYBINDCOUNT; i++){
+        keybind[i]->setText(shortcut[i]);
     }
 
-    index = 0;
-    for(i=0; i<7; i++){
-        moveKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-
-    combatKeybind->setText(shortcut[index]);
-    index++;
-
-    for(i=0; i<30; i++){
-        targetingKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-    for(i=0; i<3; i++){
-        cameraKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-    for(i=0; i<10; i++){
-        actionPrimaryButtonKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-    for(i=0; i<10; i++){
-        actionSecondaryButtonKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-    for(i=0; i<8; i++){
-        interfaceKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-    for(i=0; i<3; i++){
-        chatKeybind[i]->setText(shortcut[index]);
-        index++;
-    }
-
-    miscKeybind->setText(shortcut[index]);
 }
 
 void KeybindMenu::resizeMe(QSize newSize){
@@ -787,3 +688,4 @@ void KeybindMenu::resizeMe(QSize newSize){
     }
     return;
 }
+

@@ -29,6 +29,7 @@
 #include "options.hpp"
 #include "miscenum.hpp"
 #include <QFlags>
+#include <cassert>
 
 #define KEYBINDCOUNT 73
 

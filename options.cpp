@@ -12,6 +12,8 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     move(600 - this->width()/2, 450 - this->height()/2);
     hide();
 
+
+
     mainLayout = new QHBoxLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
@@ -150,6 +152,11 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     }
 
 }
+
+void OptionsFrame::copyShortcut(QShortcut *shortcut[]){
+    keybindMenu->copyShortcuts(shortcut);
+}
+
 void OptionsFrame::resizeMe(QSize newSize){
     if (newSize == this->size()){
         qDebug() << "returned";

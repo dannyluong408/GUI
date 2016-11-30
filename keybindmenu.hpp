@@ -5,6 +5,7 @@
 
 #include <QtWidgets>
 #include "keybindialog.hpp"
+#include <cassert>
 
 #define KEYBINDCOUNT 73
 
@@ -18,15 +19,15 @@
 #define CHAT_BINDS 3
 #define MISC_BINDS 1
 
-#define MOVE_BINDS_RANGE 7
-#define COMBAT_BINDS_RANGE MOVE_BINDS_RANGE+1
-#define TARGET_BINDS_RANGE COMBAT_BINDS_RANGE+30
-#define CAMERA_BINDS_RANGE TARGET_BINDS_RANGE+3
-#define ACTION_PRIMARY_BINDS_RANGE CAMERA_BINDS_RANGE+10
-#define ACTION_SECONDARY_BINDS_RANGE ACTION_PRIMARY_BINDS_RANGE+10
-#define INTERFACE_BINDS_RANGE ACTION_SECONDARY_BINDS_RANGE+8
-#define CHAT_BINDS_RANGE INTERFACE_BINDS_RANGE+3
-#define MISC_BINDS_RANGE CHAT_BINDS+1
+#define MOVE_BINDS_RANGE MOVE_BINDS
+#define COMBAT_BINDS_RANGE MOVE_BINDS_RANGE+MOVE_BINDS
+#define TARGET_BINDS_RANGE COMBAT_BINDS_RANGE+TARGET_BINDS
+#define CAMERA_BINDS_RANGE TARGET_BINDS_RANGE+CAMERA_BINDS
+#define ACTION_PRIMARY_BINDS_RANGE CAMERA_BINDS_RANGE+ACTION_PRIMARY_BINDS
+#define ACTION_SECONDARY_BINDS_RANGE ACTION_PRIMARY_BINDS_RANGE+ACTION_SECONDARY_BINDS
+#define INTERFACE_BINDS_RANGE ACTION_SECONDARY_BINDS_RANGE+INTERFACE_BINDS
+#define CHAT_BINDS_RANGE INTERFACE_BINDS_RANGE+CHAT_BINDS
+#define MISC_BINDS_RANGE CHAT_BINDS_RANGE+MISC_BINDS
 
 
 class KeybindMenu: public QFrame
@@ -35,6 +36,9 @@ class KeybindMenu: public QFrame
     public:
         KeybindMenu(QWidget *parent);
         void updateBind(QKeySequence newKeybind, int num);
+        void copyShortcuts(QShortcut *copyshort[]);
+        //void updateShortcut(QKeySequence keyseq);
+        void updateText(int num);
 
     public slots:
         void updateKeybinds(QString *shortcuts);
@@ -60,55 +64,14 @@ class KeybindMenu: public QFrame
         QCheckBox *secondFrameCheckbox[2];
         QPushButton *secondFrameButtons[3];
 
-        QPushButton *moveKeybind[7],*moveKeybindBackup[7],
-                    *combatKeybind,*combatKeybindBackup,
-                    *targetingKeybind[30],*targetingKeybindBackup[30],
-                    *cameraKeybind[3],*cameraKeybindBackup[3],
-                    *actionPrimaryButtonKeybind[10],*actionPrimaryButtonKeybindBackup[10],
-                    *actionSecondaryButtonKeybind[10],*actionSecondaryButtonKeybindBackup[10],
-                    *interfaceKeybind[8],*interfaceKeybindBackup[8],
-                    *chatKeybind[3],*chatKeybindBackup[3],
-                    *miscKeybind,*miscKeybindBackup;
+        QPushButton *keybind[KEYBINDCOUNT], *keybindBackup[KEYBINDCOUNT];
 
-        QLabel *sectionHeader[8], *header[3],
-               *moveKeybindDesc[7],
-               *combatKeybindDesc,
-               *targetingKeybindDesc[30],
-               *cameraKeybindDesc[3],
-               *actionPrimaryButtonKeybindDesc[10],
-               *actionSecondaryButtonKeybindDesc[10],
-               *interfaceKeybindDesc[8],
-               *chatKeybindDesc[3],
-               *miscKeybindDesc;
-
-        const QString moveKeybindDescName[7] = {"Move Forward",
-                                          "Move Backward",
-                                          "Turn Left",
-                                          "Turn Right",
-                                          "Move Left",
-                                          "Move Right",
-                                          "Jump"},
-                combatKeybindDescName = "Toggle Attack",
-                targetingKeybindDescName[30] = {"Target Nearest Enemy","Target Previous Enemy",
-                                                "Target Nearest Enemy Player","Target Previous Enemy Player",
-                                                "Target Nearest Friendly Player","Target Previous Friendly Player",
-                                                "Target Self","Target Party Member 1","Target Party Member 2","Target Party Member 3","Target Party Member 4",
-                                                "Target Pet","Target Party Pet 1","Target Party Pet 2","Target Party Pet 3","Target Party Pet 4",
-                                                "Assist Target","Toggle Nameplates","Toggle Friendly Nameplates","Set Focus",
-                                                "Focus Arena 1","Focus Arena 2","Focus Arena 3","Focus Arena 4","Focus Arena 5",
-                                                "Target Arena 1","Target Arena 2","Target Arena 3","Target Arena 4","Target Arena 5"},
-                cameraKeybindDescName[3] = {"Camera Zoom In","Camera Zoom Out","Camera Reverse"},
-                actionPrimaryButtonKeybindDescName[10] = {"Main Button 0","Main Button 1","Main Button 2","Main Button 3","Main Button 4",
-                                                   "Main Button 5","Main Button 6","Main Button 7","Main Button 8","Main Button 9"},
-                actionSecondaryButtonKeybindDescName[10] = {"Secondary Button 0","Secondary Button 1","Secondary Button 2","Secondary Button 3","Secondary Button 4",
-                                                   "Secondary Button 5","Secondary Button 6","Secondary Button 7","Secondary Button 8","Secondary Button 9"},
-                interfaceKeybindDescName[8] = {"Toggle Spellbook","Toggle Clan","Toggle Honor","Open Main Menu",
-                                               "Toggle Char Menu","Toggle Macro","Toggle Social","Toggle Map"},
-                chatKeybindDescName[3] = {"Open Chat","Reply Whisper","Re-Whisper"},
-                miscKeybindDescName = "Take Screenshot";
+        QLabel *keybindDesc[KEYBINDCOUNT];
+        QLabel *sectionHeader[8], *header[3];
 
         QScrollArea *scrollArea;
         QSignalMapper *keybindMapperMain, *keybindMapperBackup;
+        QShortcut **shortcuts;
 
         /*total rows
         1 + 0  = 1  header
