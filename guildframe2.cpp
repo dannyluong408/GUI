@@ -212,22 +212,16 @@ GuildFrame2::GuildFrame2(QWidget *parent)
 }
 
 void GuildFrame2::resizeMe(QSize newSize){
-    double scale_x = 300.0/1200.0;
-    double scale_y = 400.0/1080.0;
-    double scale;
-    double new_w = newSize.width();
+    double scale_x = 300.0/900.0;
+    double scale_y = 400.0/900.0;
+    double scale = 40.0/900.0;
     double new_h = newSize.height();
 
     //parent frame
-    resize(new_w*scale_x,
+    resize(new_h*scale_x,
            new_h*scale_y);
 
-    if (new_w < new_h){
-        scale = 40.0/1200.0;
-    }
-    else{
-        scale = 40.0/1080.0;
-    }
+
     Icon->setFixedSize(new_h*scale,
                          new_h*scale);
     Icon->resize(new_h*scale,
@@ -236,12 +230,7 @@ void GuildFrame2::resizeMe(QSize newSize){
     //Resize Fonts
     QFont font = Title->font();
 
-    if (new_w < 800.0){
-            font.setPointSize(7);
-    }
-    else{
-            font.setPointSize(8);
-    }
+    font.setPointSize(8);
     Title->setFont(font);
     information->setFont(font);
     settings->setFont(font);

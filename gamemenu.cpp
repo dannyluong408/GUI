@@ -55,22 +55,22 @@ void GameMenu::resizeMe(QSize newSize){
     }
 
     double scale_factor_w = 100.0/1200.0;
-    double scale_factor_h = 145.0/1080.0;
+    double scale_factor_h = 145.0/900.0;
 
     this->resize(newSize.width()*scale_factor_w,
            newSize.height()*scale_factor_h);
     return;
 
     //not needed they auto resize (thanks layouts!!)
-//    scale_factor_h = 25.0/1080.0.0;
+//    scale_factor_h = 25.0/900.0.0;
 //    for(int i=0; i<5; i++){
 //        options[i]->resize(newSize.width()*scale_factor_w,
 //                           newSize.height()*scale_factor_h);
 //    }
-//    scale_factor_h = 22.0/1080.0.0;
+//    scale_factor_h = 22.0/900.0.0;
 //    frameLabel->resize(newSize.width()*scale_factor_w,
 //                   newSize.height()*scale_factor_h);
-//    scale_factor_h = 125.0/1080.0.0;
+//    scale_factor_h = 125.0/900.0.0;
 //    buttonFrame->resize(newSize.width()*scale_factor_w,
 //                          newSize.height()*scale_factor_h);
 //    return;

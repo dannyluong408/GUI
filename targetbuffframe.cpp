@@ -10,7 +10,7 @@ TargetBuffFrame::TargetBuffFrame(QWidget *parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
-    resize(270,25);
+    resize(260.0,25.0);
     buffLayout = new QGridLayout(this);
     buffLayout->setSpacing(1);
     buffLayout->setMargin(1);
@@ -34,9 +34,8 @@ void TargetBuffFrame::setAsDebuff(bool state){
 }
 
 void TargetBuffFrame::resizeMe(QSize newSize) {
-    const double minSize = 1080.0;
-    const double iconSize = 25.0 / minSize;
-    const double spacing = 27.00 / 1080.0;
+    const double minSize = 900.0;
+    const double spacing = 26.0 / minSize;
 
     resize(newSize.height()*spacing*10,
            newSize.height()*spacing);
@@ -47,6 +46,7 @@ void TargetBuffFrame::resizeMe(QSize newSize) {
     }
     temp = nullptr;
     free(temp);
+
     return;
 }
 
@@ -69,6 +69,7 @@ void TargetBuffFrame::sort(){
 void TargetBuffFrame::test(){
     for(int i = buffs.size(); i < 10; i++){
         BuffIcon *buff = new BuffIcon(this);
+        buff->resizeMe(QSize(1200,900));
         switch(i%4){
             case 0:
                 buff->setStyleSheet(".BuffIcon{"

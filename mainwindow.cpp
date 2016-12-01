@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+QSize testSize = QSize(1200.0,900.0);
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -10,10 +12,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //action bars
     numBars = 2;
     actionBar[0] = new ActionBar(ui->gameScreen);
-    actionBar[0]->move(710,980);
+    actionBar[0]->move(350,800);
     actionBar[0]->setIndex(0);
     actionBar[1] = new ActionBar(ui->gameScreen);
-    actionBar[1]->move(710,1030);
+    actionBar[1]->move(350,850);
     actionBar[1]->setIndex(1);
 
 //    //test stuff for action bars -- remove later
@@ -35,33 +37,33 @@ MainWindow::MainWindow(QWidget *parent) :
 
     targetFrame = new UnitFrame(ui->gameScreen);
     targetFrame->setObjectName("targetFrame");
-    targetFrame->move(287.5,12.5);
+    targetFrame->move(285.5,12.5);
 
     //party frame
     partyFrame = new PartyFrame(ui->gameScreen);
     partyFrame->setObjectName("partyFrame");
-    partyFrame->move(12.5,137.5);
+    partyFrame->move(12.5,125.0);
 
     //player buff/debuff frame
     playerBuff = new PlayerBuffFrame(ui->gameScreen);
     playerBuff->setObjectName("playerBuff");
-    playerBuff->resizeMe(QSize(1920.0,1080.0));
+    playerBuff->move(747.5,12.5);
 
     playerDebuff = new PlayerBuffFrame(ui->gameScreen);
     playerDebuff->setObjectName("playerDebuff");
     playerDebuff->setAsDebuff(true);
-    playerDebuff->resizeMe(QSize(1920.0,1080.0));
+    playerDebuff->move(747.5,57.5);
 
 
     //target buff/debuff frame
     targetBuff = new TargetBuffFrame(ui->gameScreen);
     targetBuff->setObjectName("targetBuff");
-    targetBuff->move(287.5,117.5);
+    targetBuff->move(285.0,113.5);
 
     targetDebuff = new TargetBuffFrame(ui->gameScreen);
     targetDebuff->setObjectName("targetDebuff");
     targetDebuff->setAsDebuff(true);
-    targetDebuff->move(287.5,144.5);
+    targetDebuff->move(285.0,139.5);
 
     //chatbox
     chatFrame = new ChatFrame(ui->gameScreen);
@@ -116,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->gameScreen->hide();
 
     loginScreen = new QWidget(this);
-    loginScreen->setGeometry(0,0,1920.0,1080.0);
+    loginScreen->setGeometry(0,0,1920.0,900.0);
     loginScreen->show();
     loginScreen->setStyleSheet("background-color: pink;"
                                "background-image: url(:/ui/images/anime.jpg);");
@@ -1039,76 +1041,77 @@ void MainWindow::resizeEvent(QResizeEvent *event){
 
     qDebug() << event->size();
 
-    double scale_factor_x = 550.0 / 1080.0;
-    double scale_factor_y = 1030.0 / 1080.0;
+    double scale_factor_x = 550.0 / 900.0;
+    double scale_factor_y = 1030.0 / 900.0;
 
     gameMenu->move(event->size().height()*scale_factor_x,
                    event->size().height()*scale_factor_y);
 
-    scale_factor_x = 500.0 / 1080.0;
-    scale_factor_y = 200.0 / 1080.0;
+
+    scale_factor_x = 500.0 / 900.0;
+    scale_factor_y = 200.0 / 900.0;
 
     honorFrame->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
 
-    scale_factor_x = 200.0 / 1080.0;
-    scale_factor_y = 200.0 / 1080.0;
+    scale_factor_x = 200.0 / 900.0;
+    scale_factor_y = 200.0 / 900.0;
 
     guildFrame->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
 
-    scale_factor_x = 800.0 / 1080.0;
-    scale_factor_y = 200.0 / 1080.0;
+    scale_factor_x = 800.0 / 900.0;
+    scale_factor_y = 200.0 / 900.0;
 
     spellBook->move(event->size().height()*scale_factor_x,
                     event->size().height()*scale_factor_y);
 
-    scale_factor_x = 12.5 / 1080.0;
-    scale_factor_y = 12.5 / 1080.0;
+    scale_factor_x = 12.5 / 900.0;
+    scale_factor_y = 12.5 / 900.0;
 
     playerFrame->move(event->size().height()*scale_factor_x,
                       event->size().height()*scale_factor_y);
 
-    scale_factor_x = 271 /  1080.0;
+    scale_factor_x = 285.0 / 900.0;
 
     targetFrame->move(event->size().height()*scale_factor_x,
                       event->size().height()*scale_factor_y);
 
 
-    scale_factor_x = 12.5 /  1080.0;
-    scale_factor_y = 137.5 /  1080.0;
+    scale_factor_x = 12.5 /  900.0;
+    scale_factor_y = 125.0 /  900.0;
 
     partyFrame->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
-    scale_factor_x = 1512.5 /  1080.0;
-    scale_factor_y = 12.5 /  1080.0;
+    scale_factor_x = 747.5 /  900.0;
+    scale_factor_y = 12.5 /  900.0;
 
     playerBuff->move(event->size().height()*scale_factor_x,
                    event->size().height()*scale_factor_y);
 
 
-    scale_factor_y = 56.5 /  1080.0;
+    scale_factor_y = 57.5 /  900.0;
 
     playerDebuff->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
-    scale_factor_x = 271 /  1080.0;
-    scale_factor_y = 117.5 /  1080.0;
+
+    scale_factor_x = 285.0 /  900.0;
+    scale_factor_y = 113.5 /  900.0;
 
     targetBuff->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
 
-
-    scale_factor_y = 143.5 /  1080.0;
+    scale_factor_y = 139.5 /  900.0;
 
     targetDebuff->move(event->size().height()*scale_factor_x,
                        event->size().height()*scale_factor_y);
 
-    scale_factor_x = (600 - 527/2) /  1080.0;
-    scale_factor_y = (450 - 452/2) /  1080.0;
+    scale_factor_x = (600 - 527/2) /  900.0;
+    scale_factor_y = (450 - 452/2) /  900.0;
 
     optionsMenu->move(event->size().height()*scale_factor_x,
                       event->size().height()*scale_factor_y);

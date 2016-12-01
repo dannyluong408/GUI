@@ -11,10 +11,10 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
-    resize(420,42);
+    resize(440,42);
     buffLayout = new QGridLayout(this);
     buffLayout->setSpacing(1);
-    buffLayout->setMargin(0);
+    buffLayout->setMargin(1);
     buffLayout->setOriginCorner(Qt::TopRightCorner);
     setStyleSheet("border: none");
     isDebuff = false;
@@ -36,32 +36,33 @@ void PlayerBuffFrame::setAsDebuff(bool state){
 }
 
 void PlayerBuffFrame::resizeMe(QSize newSize) {
-    const double minSize = 1080.0;
+    const double minSize = 900.0;
     const double iconSize = 42.0 / minSize;
     const double margin = 12.5 / minSize;
     const double spacing = 44.0 / minSize;
     const double offset = 43.0 / minSize;
 
     if (!isDebuff){
-        setGeometry(newSize.width() - newSize.height()*iconSize*10 - newSize.height()*margin,
+        setGeometry(newSize.width() - newSize.height()*spacing*10 - newSize.height()*margin,
                     newSize.height()*margin,
-                    newSize.height()*iconSize*10,
+                    newSize.height()*spacing*10,
                     newSize.height()*spacing);
     }
     else{
-        setGeometry(newSize.width() - newSize.height()*iconSize*10 - newSize.height()*margin,
+        setGeometry(newSize.width() - newSize.height()*spacing*10 - newSize.height()*margin,
                     newSize.height()*margin+newSize.height()*offset,
-                    newSize.height()*iconSize*10,
+                    newSize.height()*spacing*10,
                     newSize.height()*spacing);
     }
 
-    qDebug() << this->size();
+
     BuffIcon **temp = buffs.data();
     for(int i = 0; i< buffs.size(); i++){
         temp[i]->resizeMe(newSize);
     }
     temp = nullptr;
     free(temp);
+
     return;
 }
 
@@ -84,6 +85,7 @@ void PlayerBuffFrame::test(){
     for(int i = buffs.size(); i < 10; i++){
         BuffIcon *buff = new BuffIcon(this);
         buff->setIsPlayer(true);
+        buff->resizeMe(QSize(1200,900));
         switch(i%4){
             case 0:
                 buff->setStyleSheet(".BuffIcon{"

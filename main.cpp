@@ -21,6 +21,7 @@ int main(int argc, char *argv[]) {
     //w.showMaximized();
 
     w.show();
+
     a.exec();
     mc_util_exit();
     return 0;

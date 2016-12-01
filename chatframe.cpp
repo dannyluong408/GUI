@@ -6,7 +6,7 @@
 ChatFrame::ChatFrame(QWidget *parent)
     : QFrame(parent)
 {
-    setGeometry(0,830,FRAME_WIDTH,FRAME_HEIGHT);
+    setGeometry(0,900-FRAME_HEIGHT,FRAME_WIDTH,FRAME_HEIGHT);
     setObjectName("chatFrame");
     setStyleSheet("border: 1px solid black;");
 
@@ -97,39 +97,31 @@ void ChatFrame::handleSend(){
 }
 
 void ChatFrame::resizeMe(QSize size){ //fix this too for 1080p
-    double scale_factor_y = 830.0/1080.0;
-    double scale_factor_w = 250.0/1080.0;
-    double scale_factor_h = 250.0/1080.0;
+    double scale_factor_y = 650.0/900.0;
+    double scale_factor_w = 250.0/900.0;
+    double scale_factor_h = 250.0/900.0;
 
     move(0,size.height()*scale_factor_y);
-    resize(size.width()*scale_factor_w,
+    resize(size.height()*scale_factor_w,
            size.height()*scale_factor_h);
 
-    scale_factor_y = 220.0/1080.0;
-    scale_factor_w = 250.0/1080.0;
-    scale_factor_h = 30.0/1080.0;
+    scale_factor_y = 220.0/900.0;
+    scale_factor_w = 250.0/900.0;
+    scale_factor_h = 30.0/900.0;
 
     chatInput->setGeometry(0,
                            size.height()*scale_factor_y,
-                           size.width()*scale_factor_w,
+                           size.height()*scale_factor_w,
                            size.height()*scale_factor_h);
 
-    scale_factor_h = 220.0/1080.0;
+    scale_factor_h = 220.0/900.0;
     chatTabs->setGeometry(0,0,
-                           size.width()*scale_factor_w,
+                           size.height()*scale_factor_w,
                            size.height()*scale_factor_h);
 
-
-    //Mess with Tab Bar Resizing
-//    scale_factor_h = 25.0/1080.0;
-
-//    chatTabs->tabBar()->resize(size.width()*scale_factor_w,
-//                               size.height()*scale_factor_h);
-
-
-    scale_factor_h = 200.0/1080.0;
+    scale_factor_h = 200.0/900.0;
     for(int i =0; i < chatTabFrames.count();i++){
-        chatTabFrames[i]->resize(size.width()*scale_factor_w,
+        chatTabFrames[i]->resize(size.height()*scale_factor_w,
                                         size.height()*scale_factor_h);
         chatBrowsers[i]->resize(chatTabFrames[i]->size());
     }

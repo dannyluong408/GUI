@@ -162,10 +162,10 @@ void OptionsFrame::resizeMe(QSize newSize){
         qDebug() << "returned";
         return;
     }
-    double scale_factor_w = 527.0/1920.0;
-    double scale_factor_h = 452.0/1080.0;
+    double scale_factor_w = 527.0/900.0;
+    double scale_factor_h = 452.0/900.0;
 
-    this->resize(newSize.width()*scale_factor_w,
+    this->resize(newSize.height()*scale_factor_w,
            newSize.height()*scale_factor_h);
 
     emit resizeChildren(newSize);

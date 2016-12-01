@@ -68,9 +68,9 @@ void Menubar::toggleThis(){
 }
 
 void Menubar::resizeMe(QSize newSize){ //lol what a mess fix for 1080p resolution later
-    const double scale_factor_x = 250.0 / 1080.0;
-    const double scale_factor_y = 1030.0 / 1080.0;
-    const double scale_factor_icon= 48.0/1080.0;
+    const double scale_factor_x = 250.0 / 900.0;
+    const double scale_factor_y = 1030.0 / 900.0;
+    const double scale_factor_icon= 48.0/900.0;
 
     resize(newSize.height()*scale_factor_icon*5,
            newSize.height()*scale_factor_icon);
