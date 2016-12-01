@@ -33,7 +33,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QButtonGroup *buttonGroup;
+    QGridLayout *actionBarGrid;
     PushButton *buttonSet[NUMBUTTONS];
     int index;
 };

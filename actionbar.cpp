@@ -11,19 +11,18 @@ ActionBar::ActionBar(QWidget *parent)
     setStyleSheet("#actionBar{"
                   "border: 1px solid black;}");
 
-    buttonGroup = new QButtonGroup;
+    actionBarGrid = new QGridLayout(this);
+    actionBarGrid->setSpacing(1);
+    actionBarGrid->setMargin(1);
 
     for (int i = 0 ; i < NUMBUTTONS; i++){
         buttonSet[i] = new PushButton(this);
-        buttonSet[i]->move(50*i,0);
         buttonSet[i]->setSpellbookBool(false);
         QIcon icon;
         icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
         buttonSet[i]->setIcon(icon);
         buttonSet[i]->setIconSize(QSize(48, 48));
-
-        buttonGroup->addButton(buttonSet[i]);
-        buttonGroup->setId(buttonSet[i], i+1);
+        actionBarGrid->addWidget(buttonSet[i],0,i);
     }
     index = -1;
 }
@@ -54,8 +53,9 @@ void ActionBar::resizeMe(QSize newSize){
     }
 
     double scale_factor_x = 50.0/900.0;
+
     this->resize(buttonSet[0]->size().width()*NUMBUTTONS,
-           newSize.height()*scale_factor_x);
+            newSize.height()*scale_factor_x);
 
     scale_factor_y = 800.0 / 900.0;
     const double scale_height = 50.0 / 900.0;

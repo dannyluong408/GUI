@@ -14,7 +14,10 @@ int main(int argc, char *argv[]) {
     a.setOverrideCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
 
     MainWindow w;
-    //w.setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
+    w.setWindowFlags(Qt::CustomizeWindowHint |
+                     Qt::WindowMinimizeButtonHint |
+                     Qt::WindowMaximizeButtonHint |
+                     Qt::WindowCloseButtonHint);
     //w.showMaximized();
 
     w.show();

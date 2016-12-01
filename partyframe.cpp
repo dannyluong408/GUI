@@ -19,16 +19,17 @@ PartyFrame::PartyFrame(QWidget *parent)
         player[i]->setScale(scale);
         player[i]->resizeMe(QSize(1200,900));
     }
-    resize(251.0*scale,210.0*scale);
+    resizeMe(QSize(1200,900));
 }
 
 
 
 void PartyFrame::resizeMe(QSize newSize){
-    const double scale_factor_w = (double)251*scale / (double) 1200;
-    const double scale_factor_h = (double)210*scale / (double) 900;
+    const double scale_factor_w = 271.0*scale / 900.0;
+    const double scale_factor_h = 210.0*scale / 900.0;
 
-    this->resize(newSize.width()*scale_factor_w,newSize.height()*scale_factor_h);
+    this->resize(newSize.height()*scale_factor_w,
+                 newSize.height()*scale_factor_h);
 
     for(int i = 0; i<2; i++){
         player[i]->resizeMe(newSize);

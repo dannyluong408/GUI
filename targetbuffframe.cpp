@@ -10,7 +10,7 @@ TargetBuffFrame::TargetBuffFrame(QWidget *parent)
 {
     setFrameShape(QFrame::StyledPanel);
     setFrameShadow(QFrame::Raised);
-    resize(250,25);
+    resize(270,25);
     buffLayout = new QGridLayout(this);
     buffLayout->setSpacing(1);
     buffLayout->setMargin(1);
@@ -71,19 +71,29 @@ void TargetBuffFrame::test(){
         BuffIcon *buff = new BuffIcon(this);
         switch(i%4){
             case 0:
-                buff->setStyleSheet("border: 1px solid black");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid black;"
+                                    "color: white;}");
                 break;
             case 1:
-                buff->setStyleSheet("border: 1px solid green");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid green;"
+                                    "color: white;}");
                 break;
             case 2:
-                buff->setStyleSheet("border: 1px solid blue");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid blue;"
+                                    "color: white;}");
                 break;
             case 3:
-                buff->setStyleSheet("border: 1px solid red");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid red;"
+                                    "color: white;}");
                 break;
             default:
-                buff->setStyleSheet("border: 1px solid yellow");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid yellow;"
+                                    "color: white;}");
                 break;
         }
 //        buff->setPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(24,24,Qt::KeepAspectRatio));

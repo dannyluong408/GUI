@@ -3,21 +3,21 @@
 UnitFrame::UnitFrame(QWidget *parent)
     : QFrame(parent)
 {
-    resize(250,100);
+    resize(270,100);
     unitIcon = new QLabel(this);
     health = new QProgressBar(this);
     mana = new QProgressBar(this);
     name = new QLabel(this);
     setStyleSheet("border: 1px solid black;");
 
-    name->setGeometry(100,0,150,20);
+    name->setGeometry(100,0,170,20);
     unitName = "Gamer";
     name->setText(unitName);
     name->setAlignment(Qt::AlignCenter);
 
     unitIcon->setGeometry(0,0,100,100);
-    health->setGeometry(100,20,150,40);
-    mana->setGeometry(100,60,150,40);
+    health->setGeometry(100,20,170,40);
+    mana->setGeometry(100,60,170,40);
 
 
 
@@ -68,76 +68,79 @@ void UnitFrame::resizeMe(QSize newSize){ //todo
     double scale_factor_mana_y;
     double sf_frame_w;
     double sf_frame_h;
+    const double spacing = 27.00 / 900.0;
 
 
     if(!isParty){
-        scale_factor_icon_w = (double)100 / (double)1200;
-        scale_factor_icon_h = (double)100 / (double)900;
-        scale_factor_h = (double)40 / (double)900;
-        scale_factor_name_h = (double)20 / (double)900;
-        scale_factor_w = (double)150 / (double)1200;
-        scale_factor_mana_y = (double)60 / (double)900;
-        sf_frame_w = (double)250 / (double)1200;
-        sf_frame_h = (double)100 / (double)900;
+        scale_factor_icon_w = 108.0 / 900.0;
+        scale_factor_icon_h = 108.0 / 900.0;
+        scale_factor_h = 40.0 / 900.0;
+        scale_factor_name_h = 20.0 / 900.0;
+        scale_factor_w = 162.0 / 900.0;
+        scale_factor_mana_y = 60.0 / 900.0;
+        sf_frame_w = 270.0 / 900.0;
+        sf_frame_h = 100.0 / 900.0;
+
+
 
         //todo fix icon scaling too
-        unitIcon->setPixmap(avatar.scaled(newSize.width()*scale_factor_icon_w,
+        unitIcon->setPixmap(avatar.scaled(newSize.height()*scale_factor_icon_w,
                                           newSize.height()*scale_factor_icon_h,
                                           Qt::IgnoreAspectRatio));
 
-        name->setGeometry(newSize.width()*scale_factor_icon_w,
+        name->setGeometry(newSize.height()*scale_factor_icon_w,
                           0,
-                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_w,
                           newSize.height()*scale_factor_name_h);
 
         unitIcon->setGeometry(0,0,
-                              newSize.width()*scale_factor_icon_w,
+                              newSize.height()*scale_factor_icon_w,
                               newSize.height()*scale_factor_icon_h);
-        health->setGeometry(newSize.width()*scale_factor_icon_w,
+        health->setGeometry(newSize.height()*scale_factor_icon_w,
                             newSize.height()*scale_factor_name_h,
-                            newSize.width()*scale_factor_w,
+                            newSize.height()*scale_factor_w,
                             newSize.height()*scale_factor_h);
-        mana->setGeometry(newSize.width()*scale_factor_icon_w,
+        mana->setGeometry(newSize.height()*scale_factor_icon_w,
                           newSize.height()*scale_factor_mana_y,
-                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_w,
                           newSize.height()*scale_factor_h);
 
-        resize(newSize.width()*sf_frame_w,
+        resize(newSize.height()*spacing*10,
               newSize.height()*sf_frame_h);
     }
     else{
-        scale_factor_icon_w = ((double)100 * partyScale)/ (double)1200;
-        scale_factor_icon_h = ((double)100 * partyScale)/ (double)900;
-        scale_factor_h = ((double)40 * partyScale)/ (double)900;
-        scale_factor_name_h = ((double)20* partyScale) / (double)900;
-        scale_factor_w = ((double)150* partyScale) / (double)1200;
-        scale_factor_mana_y = ((double)60* partyScale) / (double)900;
-        sf_frame_w = ((double)250 * partyScale) / (double)1200;
-        sf_frame_h = ((double)100 * partyScale)/ (double)900;
+        scale_factor_icon_w = (108.0 * partyScale)/ 900.0;
+        scale_factor_icon_h = (108.0* partyScale)/ 900.0;
+        scale_factor_h = (40.0 * partyScale)/ 900.0;
+        scale_factor_name_h = (20.0* partyScale) / 900.0;
+        scale_factor_w = (162.0* partyScale) / 900.0;
+        scale_factor_mana_y = (60.0* partyScale) / 900.0;
+        sf_frame_w = (270.0 * partyScale) / 900.0;
+        sf_frame_h = (100.0 * partyScale)/ 900.0;
 
         //todo fix icon scaling too
-        unitIcon->setPixmap(avatar.scaled(newSize.width()*scale_factor_icon_w,
+        unitIcon->setPixmap(avatar.scaled(newSize.height()*scale_factor_icon_w,
                                           newSize.height()*scale_factor_icon_h,
                                           Qt::IgnoreAspectRatio));
 
-        name->setGeometry(newSize.width()*scale_factor_icon_w,
+        name->setGeometry(newSize.height()*scale_factor_icon_w,
                           0,
-                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_w,
                           newSize.height()*scale_factor_name_h);
 
         unitIcon->setGeometry(0,0,
-                              newSize.width()*scale_factor_icon_w,
+                              newSize.height()*scale_factor_icon_w,
                               newSize.height()*scale_factor_icon_h);
-        health->setGeometry(newSize.width()*scale_factor_icon_w,
+        health->setGeometry(newSize.height()*scale_factor_icon_w,
                             newSize.height()*scale_factor_name_h,
-                            newSize.width()*scale_factor_w,
+                            newSize.height()*scale_factor_w,
                             newSize.height()*scale_factor_h);
-        mana->setGeometry(newSize.width()*scale_factor_icon_w,
+        mana->setGeometry(newSize.height()*scale_factor_icon_w,
                           newSize.height()*scale_factor_mana_y,
-                          newSize.width()*scale_factor_w,
+                          newSize.height()*scale_factor_w,
                           newSize.height()*scale_factor_h);
 
-        resize(newSize.width()*sf_frame_w,
+        resize(newSize.height()*spacing*10,
               newSize.height()*sf_frame_h);
     }
     return;

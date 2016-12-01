@@ -85,19 +85,29 @@ void PlayerBuffFrame::test(){
         buff->setIsPlayer(true);
         switch(i%4){
             case 0:
-                buff->setStyleSheet("border: 1px solid black");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid black;"
+                                    "color: white;}");
                 break;
             case 1:
-                buff->setStyleSheet("border: 1px solid green");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid green;"
+                                    "color: white;}");
                 break;
             case 2:
-                buff->setStyleSheet("border: 1px solid blue");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid blue;"
+                                    "color: white;}");
                 break;
             case 3:
-                buff->setStyleSheet("border: 1px solid red");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid red;"
+                                    "color: white;}");
                 break;
             default:
-                buff->setStyleSheet("border: 1px solid yellow");
+                buff->setStyleSheet(".BuffIcon{"
+                                    "border: 1px solid yellow;"
+                                    "color: white;}");
                 break;
         }
 //        buff->setOGPixmap(QPixmap(":/ui/images/oldguy.ico").scaled(42,42,Qt::KeepAspectRatio));
