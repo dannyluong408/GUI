@@ -1,6 +1,7 @@
 #include "playerBuffFrame.hpp"
 #include <QtGlobal>
 
+
 static bool lessThan(const BuffIcon* e1, const BuffIcon* e2){
     return e1->getBuffDuration() < e2->getBuffDuration();
 }
@@ -35,26 +36,26 @@ void PlayerBuffFrame::setAsDebuff(bool state){
 }
 
 void PlayerBuffFrame::resizeMe(QSize newSize) {
-    const double minSize = 900.0;
+    const double minSize = 1080.0;
     const double iconSize = 42.0 / minSize;
-    const double scale_factor = 15.0 / minSize;
-    const double padding = 15.0 / 1200.0;
+    const double margin = 12.5 / minSize;
     const double spacing = 44.0 / minSize;
     const double offset = 43.0 / minSize;
 
     if (!isDebuff){
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+8+newSize.width()*padding)),
-                    newSize.height()*scale_factor,
-                    newSize.height()*iconSize*10+10,
+        setGeometry(newSize.width() - newSize.height()*iconSize*10 - newSize.height()*margin,
+                    newSize.height()*margin,
+                    newSize.height()*iconSize*10,
                     newSize.height()*spacing);
     }
     else{
-        setGeometry(newSize.width()-((newSize.height()*iconSize*10+8+newSize.width()*padding)),
-                    newSize.height()*scale_factor+newSize.height()*offset,
-                    newSize.height()*iconSize*10+10,
+        setGeometry(newSize.width() - newSize.height()*iconSize*10 - newSize.height()*margin,
+                    newSize.height()*margin+newSize.height()*offset,
+                    newSize.height()*iconSize*10,
                     newSize.height()*spacing);
     }
 
+    qDebug() << this->size();
     BuffIcon **temp = buffs.data();
     for(int i = 0; i< buffs.size(); i++){
         temp[i]->resizeMe(newSize);

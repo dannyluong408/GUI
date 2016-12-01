@@ -40,7 +40,7 @@ void ActionBar::callSlotSpell(int i){
 }
 
 void ActionBar::resizeMe(QSize newSize){
-    const double minSize = 900.0;
+    const double minSize = 1080.0;
     double scale_factor_y = 48.0/minSize;
 
     for (int i = 0; i < NUMBUTTONS; i++){
@@ -52,13 +52,13 @@ void ActionBar::resizeMe(QSize newSize){
                                    newSize.height()*scale_factor_y);
     }
 
-    double scale_factor_x = 50.0/900.0;
+    double scale_factor_x = 50.0/1080.0;
 
     this->resize(buttonSet[0]->size().width()*NUMBUTTONS,
             newSize.height()*scale_factor_x);
 
-    scale_factor_y = 800.0 / 900.0;
-    const double scale_height = 50.0 / 900.0;
+    scale_factor_y = 980.0 / 1080.0;
+    const double scale_height = 50.0 / 1080.0;
 
     this->move(newSize.width() /2 -  this->size().width()/2,
                newSize.height()*scale_factor_y + newSize.height()*scale_height*index);
@@ -66,7 +66,7 @@ void ActionBar::resizeMe(QSize newSize){
 }
 
 //1200 = 350, 600 - 250  , 656 frame actual 454 wtf?
-//900 =     , 450 - ?
+//1080.0 =     , 450 - ?
 
 void ActionBar::setButtonSpell(uint32_t spellid, uint32_t buttonNum){
     if(buttonNum < 1 || buttonNum > 10){

@@ -171,18 +171,18 @@ void SpellBook::pageTurn(){
 
 void SpellBook::resizeMe(QSize newSize){
     double scale_factor_x = (double)800 / (double)1200;
-    double scale_factor_y = (double)200 / (double)900;
+    double scale_factor_y = (double)200 / (double)1080.0;
     double scale_factor_w = (double)300 / (double)1200;
-    double scale_factor_h = (double)400 / (double)900;
+    double scale_factor_h = (double)400 / (double)1080.0;
 
     resize(newSize.width()*scale_factor_w,newSize.height()*scale_factor_h);
     frameTitle->resize(size().width(),frameTitle->height());
 
 
     scale_factor_x = (double)195 / (double)1200;
-    scale_factor_y = (double)340 / (double)900;
+    scale_factor_y = (double)340 / (double)1080.0;
     scale_factor_w = (double)40/ (double)1200;
-    scale_factor_h = (double)18 / (double)900;
+    scale_factor_h = (double)18 / (double)1080.0;
     const double scale_factor_offset = (double) 40 / (double)1200;
 
     if (frameTabWidget->findChild<QPushButton *>("pageL") &&
@@ -201,9 +201,9 @@ void SpellBook::resizeMe(QSize newSize){
     }
 
     scale_factor_x = 284.0 / 1200.0;
-    scale_factor_y = 1.0 / 900.0;
+    scale_factor_y = 1.0 / 1080.0;
     scale_factor_w = 15.0 / 1200.0;
-    scale_factor_h = 15.0 / 900.0;
+    scale_factor_h = 15.0 / 1080.0;
     x->setGeometry(newSize.width()*scale_factor_x,
                    newSize.height()*scale_factor_y,
                   newSize.width()*scale_factor_w,
@@ -211,11 +211,11 @@ void SpellBook::resizeMe(QSize newSize){
 
 
     scale_factor_x = 300.0 / 1200.0;
-    scale_factor_y = 400.0 / 900.0;
+    scale_factor_y = 400.0 / 1080.0;
     double scale_factor_x_off = 100.0 / 1200.0;
-    double scale_factor_y_off = 20.0 / 900.0;
+    double scale_factor_y_off = 20.0 / 1080.0;
     scale_factor_w = 40.0 / 1200.0;
-    scale_factor_h = 18.0 / 900.0;
+    scale_factor_h = 18.0 / 1080.0;
     pageL->setGeometry(newSize.width()*scale_factor_x-newSize.width()*scale_factor_x_off,
                        newSize.height()*scale_factor_y-newSize.height()*scale_factor_y_off,
                        newSize.width()*scale_factor_w,

@@ -68,18 +68,18 @@ void UnitFrame::resizeMe(QSize newSize){ //todo
     double scale_factor_mana_y;
     double sf_frame_w;
     double sf_frame_h;
-    const double spacing = 27.00 / 900.0;
+    const double spacing = 27.00 / 1080.0;
 
 
     if(!isParty){
-        scale_factor_icon_w = 108.0 / 900.0;
-        scale_factor_icon_h = 108.0 / 900.0;
-        scale_factor_h = 40.0 / 900.0;
-        scale_factor_name_h = 20.0 / 900.0;
-        scale_factor_w = 162.0 / 900.0;
-        scale_factor_mana_y = 60.0 / 900.0;
-        sf_frame_w = 270.0 / 900.0;
-        sf_frame_h = 100.0 / 900.0;
+        scale_factor_icon_w = 108.0 / 1080.0;
+        scale_factor_icon_h = 108.0 / 1080.0;
+        scale_factor_h = 40.0 / 1080.0;
+        scale_factor_name_h = 20.0 / 1080.0;
+        scale_factor_w = 162.0 / 1080.0;
+        scale_factor_mana_y = 60.0 / 1080.0;
+        sf_frame_w = 270.0 / 1080.0;
+        sf_frame_h = 100.0 / 1080.0;
 
 
 
@@ -109,14 +109,14 @@ void UnitFrame::resizeMe(QSize newSize){ //todo
               newSize.height()*sf_frame_h);
     }
     else{
-        scale_factor_icon_w = (108.0 * partyScale)/ 900.0;
-        scale_factor_icon_h = (108.0* partyScale)/ 900.0;
-        scale_factor_h = (40.0 * partyScale)/ 900.0;
-        scale_factor_name_h = (20.0* partyScale) / 900.0;
-        scale_factor_w = (162.0* partyScale) / 900.0;
-        scale_factor_mana_y = (60.0* partyScale) / 900.0;
-        sf_frame_w = (270.0 * partyScale) / 900.0;
-        sf_frame_h = (100.0 * partyScale)/ 900.0;
+        scale_factor_icon_w = (108.0 * partyScale)/ 1080.0;
+        scale_factor_icon_h = (108.0* partyScale)/ 1080.0;
+        scale_factor_h = (40.0 * partyScale)/ 1080.0;
+        scale_factor_name_h = (20.0* partyScale) / 1080.0;
+        scale_factor_w = (162.0* partyScale) / 1080.0;
+        scale_factor_mana_y = (60.0* partyScale) / 1080.0;
+        sf_frame_w = (270.0 * partyScale) / 1080.0;
+        sf_frame_h = (100.0 * partyScale)/ 1080.0;
 
         //todo fix icon scaling too
         unitIcon->setPixmap(avatar.scaled(newSize.height()*scale_factor_icon_w,

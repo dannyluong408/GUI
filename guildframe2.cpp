@@ -213,7 +213,7 @@ GuildFrame2::GuildFrame2(QWidget *parent)
 
 void GuildFrame2::resizeMe(QSize newSize){
     double scale_x = 300.0/1200.0;
-    double scale_y = 400.0/900.0;
+    double scale_y = 400.0/1080.0;
     double scale;
     double new_w = newSize.width();
     double new_h = newSize.height();
@@ -226,7 +226,7 @@ void GuildFrame2::resizeMe(QSize newSize){
         scale = 40.0/1200.0;
     }
     else{
-        scale = 40.0/900.0;
+        scale = 40.0/1080.0;
     }
     Icon->setFixedSize(new_h*scale,
                          new_h*scale);

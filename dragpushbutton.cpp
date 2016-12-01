@@ -29,7 +29,7 @@ void PushButton::setSpellbookBool(bool value){
 }
 
 void PushButton::resizeMe(QSize newSize){
-    const double minSize = 900.0;
+    const double minSize = 1080.0;
     const double square_icon_frame = 50.0 / minSize;
     this->resize(newSize.height()*square_icon_frame,
                  newSize.height()*square_icon_frame);

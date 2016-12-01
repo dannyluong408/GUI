@@ -19,7 +19,7 @@ QSize BuffIcon::sizeHint() const{
     }
 }
 void BuffIcon::resizeMe(QSize newSize){
-    const double minSize = 900.0;
+    const double minSize = 1080.0;
     double square_icon;
     if (!isPlayer){ //target size
         square_icon = 24.0 / minSize;

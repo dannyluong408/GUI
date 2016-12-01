@@ -1,28 +1,29 @@
 #include "ChatFrame.hpp"
 
-
+#define FRAME_WIDTH 250
+#define FRAME_HEIGHT 250
 
 ChatFrame::ChatFrame(QWidget *parent)
     : QFrame(parent)
 {
-    setGeometry(0,650,300,250);
+    setGeometry(0,830,FRAME_WIDTH,FRAME_HEIGHT);
     setObjectName("chatFrame");
     setStyleSheet("border: 1px solid black;");
 
     chatTabs = new QTabWidget(this);
-    chatTabs->setGeometry(0,0,300,220);
+    chatTabs->setGeometry(0,0,FRAME_WIDTH,220);
     chatTabs->setMaximumHeight(220);
 
     chatInput = new TextEdit(this);
     chatInput->setStyleSheet("background-color: rgba(0,0,0,0);");
     chatInput->setMaximumHeight(30);
     chatInput->setText("Type stuff here into chat!");
-    chatInput->setGeometry(0,220,300,30);
+    chatInput->setGeometry(0,220,FRAME_WIDTH,30);
     connect(chatInput,SIGNAL(send()),this,SLOT(handleSend()));
 
     QWidget *mainChatFrame = new QWidget(this);
     mainChatFrame->setObjectName("Main");
-    mainChatFrame->resize(300,220);
+    mainChatFrame->resize(FRAME_WIDTH,220);
 
     QTextBrowser *mainChatBrowser = new QTextBrowser(mainChatFrame);
     mainChatBrowser->setObjectName("mainChatBrowser");
@@ -41,7 +42,7 @@ ChatFrame::ChatFrame(QWidget *parent)
 
     QWidget *whisperFrame = new QWidget(this);
     whisperFrame->setObjectName("Whispers");
-    whisperFrame->resize(300,220);
+    whisperFrame->resize(FRAME_WIDTH,220);
 
     QTextBrowser *whisperBrowser = new QTextBrowser(whisperFrame);
     whisperBrowser->setObjectName("whisperBrowser");
@@ -63,7 +64,7 @@ ChatFrame::ChatFrame(QWidget *parent)
 
     QWidget *guildFrame = new QWidget(this);
     guildFrame->setObjectName("Guild");
-    guildFrame->resize(300,220);
+    guildFrame->resize(FRAME_WIDTH,220);
 
     QTextBrowser *guildBrowser = new QTextBrowser(guildFrame);
     guildBrowser->setObjectName("guildBrowser");
@@ -96,37 +97,37 @@ void ChatFrame::handleSend(){
 }
 
 void ChatFrame::resizeMe(QSize size){ //fix this too for 1080p
-    double scale_factor_y = 650.0/900.0;
-    double scale_factor_w = 300.0/1200.0;
-    double scale_factor_h = 250.0/900.0;
+    double scale_factor_y = 830.0/1080.0;
+    double scale_factor_w = 250.0/1080.0;
+    double scale_factor_h = 250.0/1080.0;
 
     move(0,size.height()*scale_factor_y);
     resize(size.width()*scale_factor_w,
            size.height()*scale_factor_h);
 
-    scale_factor_y = 220.0/900.0;
-    scale_factor_w = 300.0/1200.0;
-    scale_factor_h = 30.0/900.0;
+    scale_factor_y = 220.0/1080.0;
+    scale_factor_w = 250.0/1080.0;
+    scale_factor_h = 30.0/1080.0;
 
     chatInput->setGeometry(0,
                            size.height()*scale_factor_y,
                            size.width()*scale_factor_w,
                            size.height()*scale_factor_h);
 
-    scale_factor_h = 220.0/900.0;
+    scale_factor_h = 220.0/1080.0;
     chatTabs->setGeometry(0,0,
                            size.width()*scale_factor_w,
                            size.height()*scale_factor_h);
 
 
     //Mess with Tab Bar Resizing
-//    scale_factor_h = 25.0/900.0;
+//    scale_factor_h = 25.0/1080.0;
 
 //    chatTabs->tabBar()->resize(size.width()*scale_factor_w,
 //                               size.height()*scale_factor_h);
 
 
-    scale_factor_h = 200.0/900.0;
+    scale_factor_h = 200.0/1080.0;
     for(int i =0; i < chatTabFrames.count();i++){
         chatTabFrames[i]->resize(size.width()*scale_factor_w,
                                         size.height()*scale_factor_h);
