@@ -14,7 +14,6 @@ KeybindDialog::KeybindDialog(QWidget *parent)
     info->setWordWrap(true);
     num = -1;
     count = 0;
-    section = "";
     setFocus();
     grabKeyboard();
     grabMouse();
@@ -36,14 +35,14 @@ void KeybindDialog::keyPressEvent(QKeyEvent *event){
         if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
         if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
         buttonPress.append(QKeySequence(event->key()).toString());
+        qDebug() << "Abc:" << event->nativeScanCode() << event->key() << event->text();
         emit newBind(QKeySequence(buttonPress), num);
-        qDebug() << QKeySequence(buttonPress).toString();
+        qDebug() << "Dialog:" << QKeySequence(buttonPress).toString();
         delete(this);
         return;
     }
 }
 void KeybindDialog::mousePressEvent(QMouseEvent *mevent){
-    qDebug() << "a";
     if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
         mod = mevent->modifiers();
         if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
@@ -54,7 +53,6 @@ void KeybindDialog::mousePressEvent(QMouseEvent *mevent){
         if (mevent->button() == Qt::ForwardButton) buttonPress.append("F35");
 
         qDebug() << QKeySequence(buttonPress).toString();
-        qDebug() << "a";
         qDebug() << mevent->button();
         qDebug() << buttonPress;
         //add if statement to only emit if cursor is in correct place

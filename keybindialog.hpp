@@ -15,7 +15,6 @@ class KeybindDialog: public QFrame
         void mousePressEvent(QMouseEvent *mevent);
         void wheelEvent(QWheelEvent *wevent);
         int num;
-        QString section;
 
     signals:
         void newBind(QKeySequence newBind, int num);

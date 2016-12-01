@@ -189,7 +189,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //}
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
-    QString keyCombo = "";
+    QString keyCombo;
     quint32 mod = event->modifiers();
     if (mod & Qt::ControlModifier ) keyCombo.append("Ctrl+");
     if (mod & Qt::ShiftModifier ) keyCombo.append("Shift+");
@@ -208,7 +208,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event){
 }
 
 void MainWindow::wheelEvent(QWheelEvent *wevent){
-    QString keyCombo = "";
     quint32 mod = wevent->modifiers();
     int combo = Qt::NoModifier;
     if (mod & Qt::ControlModifier ){
@@ -236,7 +235,6 @@ void MainWindow::wheelEvent(QWheelEvent *wevent){
 
 void MainWindow::mousePressEvent(QMouseEvent *mevent){
     if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
-        QString keyCombo = "";
         quint32 mod = mevent->modifiers();
         int combo = Qt::NoModifier;
         if (mod & Qt::ControlModifier ){

@@ -521,7 +521,8 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
     keyText.replace(QString("F35"),"Mouse-Forward");
     qDebug() << keyText;
 
-    assert(num >= 0);
+    assert(num >= 0 && num< KEYBINDCOUNT);
+
     if(num < MOVE_BINDS_RANGE){
         keybind[num]->setText(keyText);
         qDebug() << "Setup Move";
@@ -627,10 +628,9 @@ void KeybindMenu::setBindMain(int num){
 
 void KeybindMenu::setBindBackup(int num){
     qDebug() << num;
-    if(num < 0){
-        qDebug() << "Error";
-    }
-    else if(num < MOVE_BINDS_RANGE){
+    assert(num >= 0 && num< KEYBINDCOUNT);
+
+    if(num < MOVE_BINDS_RANGE){
         qDebug() << "Setup Move Backup";
     }
     else if(num < COMBAT_BINDS_RANGE){
