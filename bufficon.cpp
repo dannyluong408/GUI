@@ -1,6 +1,5 @@
 #include "bufficon.h"
 
-
 BuffIcon::BuffIcon(QWidget *parent)
     : QLabel(parent)
 {

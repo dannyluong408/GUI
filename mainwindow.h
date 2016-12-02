@@ -61,18 +61,20 @@ public:
     void whisper(int type);
     void screenshot();
 
-    //void mousePressEvent(QMouseEvent *mevent);
     void wheelEvent(QWheelEvent *wevent);
     void mousePressEvent(QMouseEvent *mevent);
+
+    uint32_t cursorID;
 
 public slots:
     void openOption(QString name);
     void disableShortcuts();
     void enableShortcuts();
-    void newBindRecv(QKeySequence newKeybind, int num);
+    void newBindRecv(QKeySequence newKeybind, unsigned int num);
     void saveKeybinds();
     void defaultKeybinds();
     void saveActionBars();
+    void spellPickedUp(const uint32_t spellId);
 
 private slots:
     void castSpell(int buttonPos);

@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     setAcceptDrops(true);
 
+    cursorID = 0;
+
     //action bars
     numBars = 2;
     actionBar[0] = new ActionBar(ui->gameScreen);
@@ -18,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     actionBar[1]->move(350,850);
     actionBar[1]->setIndex(1);
 
+    connect(actionBar[0],SIGNAL(spellPickedUp(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
+    connect(actionBar[1],SIGNAL(spellPickedUp(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
 //    //test stuff for action bars -- remove later
 //    actionBar[0]->setButtonSpell(1,1);
 //    actionBar[0]->setButtonSpell(2,2);
@@ -67,15 +71,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //chatbox
     chatFrame = new ChatFrame(ui->gameScreen);
+    connect(chatFrame,SIGNAL(resetCursor(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
 
     //menubar
     menuBar = new Menubar(ui->gameScreen);
 
     //spellbook
     spellBook = new SpellBook(ui->gameScreen);
+    connect(spellBook,SIGNAL(spellPickedUp(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
 
     //guild menu
     guildFrame = new GuildFrame2(ui->gameScreen);
+    connect(guildFrame,SIGNAL(resetCursor(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
 
     //honor menu
     honorFrame = new HonorFrame(ui->gameScreen);
@@ -154,7 +161,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(pushKeybinds(QString*)),optionsMenu,SLOT(updateKeybinds(QString*)));
     connect(optionsMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcuts()));
     connect(optionsMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcuts()));
-    connect(optionsMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
+    connect(optionsMenu,SIGNAL(newBindSend(QKeySequence,unsigned int)),this,SLOT(newBindRecv(QKeySequence,unsigned int)));
     connect(optionsMenu,SIGNAL(saveBinds()),this,SLOT(saveKeybinds()));
     connect(optionsMenu,SIGNAL(defaultBinds()),this,SLOT(defaultKeybinds()));
 
@@ -165,30 +172,32 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug() << "Keybinds Complete";
     //connect(optionsMenu,SIGNAL()
 
+    this->setCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
 }
 
 
+void MainWindow::spellPickedUp(const uint32_t spellId){
+    const double scale = 50.0 / 900.0;
+    const double size = scale * this->height();
+    qDebug() << "Handled ID:" << spellId;
+    switch (spellId){
+        case 1:
+            this->setCursor(QCursor(QPixmap(":/ui/images/boat.png").scaled(size,size),0,0));
+            break;
+        case 2:
+            this->setCursor(QCursor(QPixmap(":/ui/images/car.png").scaled(size,size),0,0));
+            break;
+        case 3:
+            this->setCursor(QCursor(QPixmap(":/ui/images/house.png").scaled(size,size),0,0));
+            break;
+        case 0:
+            this->setCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
+            break;
+    }
+    cursorID = spellId;
+    qDebug() << "Set cursorID to " << cursorID;
+}
 
-//void MainWindow::mousePressEvent(QMouseEvent *mevent){
-//    qDebug() << "a";
-//    if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
-//        mod = mevent->modifiers();
-//        if (mod & Qt::ControlModifier ) buttonPress.append("Ctrl+");
-//        if (mod & Qt::ShiftModifier ) buttonPress.append("Shift+");
-//        if (mod & Qt::AltModifier ) buttonPress.append("Alt+");
-//        if (mevent->button() == Qt::MidButton) buttonPress.append("F33");
-//        if (mevent->button() == Qt::BackButton) buttonPress.append("F34");
-//        if (mevent->button() == Qt::ForwardButton) buttonPress.append("F35");
-
-//        qDebug() << QKeySequence(buttonPress).toString();
-//        qDebug() << "a";
-//        qDebug() << mevent->button();
-//        qDebug() << buttonPress;
-//        //add if statement to only emit if cursor is in correct place
-//        emit newBind(QKeySequence(buttonPress), num);
-//        return;
-//    }
-//}
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
     QString keyCombo;
@@ -236,6 +245,12 @@ void MainWindow::wheelEvent(QWheelEvent *wevent){
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *mevent){
+    if(cursorID != 0){
+        qDebug() << "Dropped not on a bar";
+        cursorID = 0;
+        this->setCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
+        return;
+    }
     if (mevent->button() == Qt::MidButton || mevent->button() == Qt::BackButton || mevent->button() == Qt::ForwardButton) {
         quint32 mod = mevent->modifiers();
         int combo = Qt::NoModifier;
@@ -267,7 +282,7 @@ void MainWindow::defaultKeybinds(){
     initDefaultKeybinds();
 }
 
-void MainWindow::newBindRecv(QKeySequence newKeybind, int num){
+void MainWindow::newBindRecv(QKeySequence newKeybind, unsigned int num){
     qDebug() << "Setting shortcut:" << num << " to "<< newKeybind.toString();
     shortcut[num]->setKey(newKeybind);
 }
@@ -854,10 +869,13 @@ void MainWindow::initDefaultKeybinds(){
 
 void MainWindow::saveKeybinds(){
     qDebug() << "Saving Keybinds to File";
-    QString path = QCoreApplication::applicationDirPath() + "/userdata/keybinds.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/resources/user/keybinds.txt";
     QDir dir;
-    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
-        qDebug() << "Doesnt Exist Creating Userdata Folder";
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/resources")){
+        qDebug() << "Doesnt Exist Creating Resources Folder";
+    }
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/resources/user")){
+        qDebug() << "Doesnt Exist Creating User Folder";
     }
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)){
@@ -875,7 +893,7 @@ void MainWindow::saveKeybinds(){
 }
 
 void MainWindow::initKeybinds(){
-    QString path = QCoreApplication::applicationDirPath() + "/userdata/keybinds.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/resources/user/keybinds.txt";
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
@@ -912,10 +930,13 @@ void MainWindow::initKeybinds(){
 
 void MainWindow::saveActionBars(){
     qDebug() << "Saving Action Bars to File";
-    QString path = QCoreApplication::applicationDirPath() + "/userdata/actionbars.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/resources/user/actionbars.txt";
     QDir dir;
-    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/userdata")){
-        qDebug() << "Doesnt Exist Creating Userdata Folder";
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/resources")){
+        qDebug() << "Doesnt Exist Creating Resources Folder";
+    }
+    if(dir.mkdir(QCoreApplication::applicationDirPath()+"/resources/user")){
+        qDebug() << "Doesnt Exist Creating User Folder";
     }
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)){
@@ -938,7 +959,7 @@ void MainWindow::saveActionBars(){
 
 void MainWindow::loadActionBars(){
     qDebug() << "Loading Action Bars";
-    QString path = QCoreApplication::applicationDirPath() + "/userdata/actionbars.txt";
+    QString path = QCoreApplication::applicationDirPath() + "/resources/user/actionbars.txt";
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly)){
           qDebug() << file.errorString();
@@ -1038,8 +1059,6 @@ void MainWindow::resizeEvent(QResizeEvent *event){
     if (event->oldSize().height() == -1 || event->oldSize().width() == -1){
         return;
     }
-
-    qDebug() << event->size();
 
     double scale_factor_x = 550.0 / 900.0;
     double scale_factor_y = 1030.0 / 900.0;

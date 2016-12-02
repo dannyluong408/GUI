@@ -25,7 +25,7 @@ ChatFrame::ChatFrame(QWidget *parent)
     mainChatFrame->setObjectName("Main");
     mainChatFrame->resize(FRAME_WIDTH,220);
 
-    QTextBrowser *mainChatBrowser = new QTextBrowser(mainChatFrame);
+    TextBrowser *mainChatBrowser = new TextBrowser(mainChatFrame);
     mainChatBrowser->setObjectName("mainChatBrowser");
     mainChatBrowser->resize(mainChatFrame->size());
     mainChatBrowser->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
@@ -44,7 +44,7 @@ ChatFrame::ChatFrame(QWidget *parent)
     whisperFrame->setObjectName("Whispers");
     whisperFrame->resize(FRAME_WIDTH,220);
 
-    QTextBrowser *whisperBrowser = new QTextBrowser(whisperFrame);
+    TextBrowser *whisperBrowser = new TextBrowser(whisperFrame);
     whisperBrowser->setObjectName("whisperBrowser");
     whisperBrowser->resize(whisperFrame->size());
     whisperBrowser->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
@@ -66,7 +66,7 @@ ChatFrame::ChatFrame(QWidget *parent)
     guildFrame->setObjectName("Guild");
     guildFrame->resize(FRAME_WIDTH,220);
 
-    QTextBrowser *guildBrowser = new QTextBrowser(guildFrame);
+    TextBrowser *guildBrowser = new TextBrowser(guildFrame);
     guildBrowser->setObjectName("guildBrowser");
     guildBrowser->resize(whisperFrame->size());
     guildBrowser->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
@@ -83,6 +83,10 @@ ChatFrame::ChatFrame(QWidget *parent)
     chatTabs->addTab(guildFrame,guildFrame->objectName());
     chatTabFrames.push_back(guildFrame);
     chatBrowsers.push_back(guildBrowser);
+
+    connect(mainChatBrowser,SIGNAL(resetCursor(uint32_t)),this,SIGNAL(resetCursor(uint32_t)));
+    connect(whisperBrowser,SIGNAL(resetCursor(uint32_t)),this,SIGNAL(resetCursor(uint32_t)));
+    connect(guildBrowser,SIGNAL(resetCursor(uint32_t)),this,SIGNAL(resetCursor(uint32_t)));
 
     chatInput->hide();
 }

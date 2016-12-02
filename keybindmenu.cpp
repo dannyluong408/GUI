@@ -68,7 +68,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     connect(keybindMapperBackup,SIGNAL(mapped(int)),this,SLOT(setBindBackup(int)));
 
     //indexes for grid
-    int i = 0, index = 0, sectionIndex = 0, buttonNum = 0;
+    unsigned int i = 0, index = 0, sectionIndex = 0, buttonNum = 0;
 
     //column header labels
     for(i = 0; i<3; i++){
@@ -512,7 +512,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
 //void KeybindMenu::removeBinds(){
 //}
 
-void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
+void KeybindMenu::updateBind(QKeySequence newKeybind, const unsigned int num){
     qDebug() << "Detected" << newKeybind.toString() << num;
     QString keyText = newKeybind.toString();
     keyText.replace(QString("F31"),"Mouse-Up");
@@ -522,8 +522,9 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
     keyText.replace(QString("F35"),"Mouse-Forward");
     qDebug() << keyText;
 
-    assert(num >= 0 && num< KEYBINDCOUNT);
+    assert(num< KEYBINDCOUNT);
 
+// TODO: remove this entire section
     if(num < MOVE_BINDS_RANGE){
         keybind[num]->setText(keyText);
         qDebug() << "Setup Move";
@@ -562,20 +563,16 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, int num){
     }
 
     //check if overwriting other binds by assigning this keyseq
-    int i;
-
-    for(i = 0; i< KEYBINDCOUNT; i++){
-        if(i != num){
-            if(shortcuts[i]->key() == newKeybind){
-                qDebug() << "Dupe found at:" << i;
-                updateText(i);
-            }
+    for (uint16_t i = 0; i< KEYBINDCOUNT; i++) {
+        if (i != num && shortcuts[i]->key() == newKeybind) {
+            qDebug() << "Dupe found at:" << i;
+            updateText(i);
         }
     }
 }
 
-void KeybindMenu::updateText(int num){
-    assert(num >= 0);
+void KeybindMenu::updateText(const unsigned int num){
+    assert(num < KEYBINDCOUNT);
 
     qDebug() << "Updating at:" << num;
 
@@ -583,7 +580,7 @@ void KeybindMenu::updateText(int num){
     emit newBindSend(QKeySequence(),num);
 }
 
-void KeybindMenu::newBindRecv(QKeySequence newKeybind, int num){
+void KeybindMenu::newBindRecv(QKeySequence newKeybind, const unsigned int num){
     updateBind(newKeybind,num);
     emit newBindSend(newKeybind,num);
 }
@@ -604,6 +601,8 @@ void KeybindMenu::setBindMain(int num){
     emit new keybind back to mainwindow to update
     close window
     */
+
+    assert(num < KEYBINDCOUNT);
 
     if(this->findChild<KeybindDialog*>("keybindDialog")){
         qDebug() << "One is open right now";
@@ -629,7 +628,8 @@ void KeybindMenu::setBindMain(int num){
 
 void KeybindMenu::setBindBackup(int num){
     qDebug() << num;
-    assert(num >= 0 && num< KEYBINDCOUNT);
+
+    assert(num< KEYBINDCOUNT);
 
     if(num < MOVE_BINDS_RANGE){
         qDebug() << "Setup Move Backup";

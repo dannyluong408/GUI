@@ -5,13 +5,15 @@
 #include <qglobal.h>
 #include <QTime>
 #include "modules/util.h"
+#include "modules/localization.h"
+
 
 int main(int argc, char *argv[]) {
     if (mc_util_init(argc, argv)) return -1;
 
     QApplication a(argc, argv);
     a.setStyle("fusion");
-    a.setOverrideCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
+
 
     MainWindow w;
     w.setWindowFlags(Qt::CustomizeWindowHint |

@@ -1,8 +1,6 @@
 #pragma once
-
-#include <QtWidgets>
 #include "dragpushbutton.h"
-
+#include <QtWidgets>
 
 
 class SpellBook : public QFrame
@@ -11,6 +9,7 @@ class SpellBook : public QFrame
     public:
         SpellBook(QWidget *parent);
         void setSlotSpell(int slot, uint32_t spellId);
+        uint32_t getCursorID();
 
     public slots:
         void resizeMe(QSize newSize);
@@ -20,6 +19,9 @@ class SpellBook : public QFrame
 
     private slots:
         void pageTurn();
+
+    signals:
+        void spellPickedUp(const uint32_t spellid);
 
     private:
         QLabel *frameTitle;

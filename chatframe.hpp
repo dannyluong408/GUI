@@ -2,6 +2,7 @@
 
 #include <QtWidgets>
 #include <textedit.hpp>
+#include "textbrowser.hpp"
 
 
 class ChatFrame: public QFrame
@@ -16,11 +17,12 @@ class ChatFrame: public QFrame
     public slots:
         void handleSend();
         void resizeMe(QSize size);
-
+    signals:
+        void resetCursor(uint32_t num);
     private:
         QTabWidget *chatTabs;
         QVector<QWidget*> chatTabFrames;
-        QVector<QTextBrowser*> chatBrowsers;
+        QVector<TextBrowser*> chatBrowsers;
         TextEdit *chatInput;
 
 };

@@ -136,7 +136,7 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                     keybindMenu->setSizePolicy(sizePolicy);
                     connect(keybindMenu,SIGNAL(disableShortcuts()),this,SIGNAL(disableShortcuts()));
                     connect(keybindMenu,SIGNAL(enableShortcuts()),this,SIGNAL(enableShortcuts()));
-                    connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SIGNAL(newBindSend(QKeySequence,int)));
+                    connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,unsigned int)),this,SIGNAL(newBindSend(QKeySequence,unsigned int)));
                     connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
                     connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
                     connect(this,SIGNAL(resizeChildren(QSize)),keybindMenu,SLOT(resizeMe(QSize)));

@@ -19,9 +19,13 @@ public:
     void callSlotSpell(int i);
     void setIndex(int i);
     int getIndex();
+    uint32_t getCursorID();
 
 public slots:
     void resizeMe(QSize newSize);
+
+signals:
+    void spellPickedUp(const uint32_t spellid);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;

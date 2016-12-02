@@ -31,6 +31,7 @@ SOURCES += main.cpp\
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
 	modules/util.cpp \
+	modules/localization.cpp \
 	\
     nx_src/nx_asset.cpp \
     nx_src/nx_error.c \
@@ -80,7 +81,8 @@ HEADERS  += mainwindow.h \
     miscenum.hpp \
     keybindialog.hpp \
     gamemenu.hpp \
-    guildframe2.hpp
+    guildframe2.hpp \
+    modules/localization.h
 
 FORMS    += mainwindow.ui
 

@@ -184,12 +184,13 @@ GuildFrame2::GuildFrame2(QWidget *parent)
     verticalLayout_3->setSpacing(0);
     verticalLayout_3->setContentsMargins(0,0,0,0);
     verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-    textBrowser = new QTextBrowser(Frame4);
+    textBrowser = new TextBrowser(Frame4);
     textBrowser->setObjectName(QStringLiteral("textBrowser"));
     textBrowser->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     textBrowser->setSizeIncrement(QSize(0, 0));
     textBrowser->setBaseSize(QSize(280, 90));
     textBrowser->setStyleSheet(QStringLiteral("border-color: rgb(255, 255, 255);"));
+    connect(textBrowser,SIGNAL(resetCursor(uint32_t)),this,SIGNAL(resetCursor(uint32_t)));
 
     verticalLayout_3->addWidget(textBrowser);
 

@@ -23,9 +23,10 @@ public:
 public slots:
     void doThisClicked();
     void updateIcon(bool);
-    void setSpellId(uint32_t spellid);
+    void setSpellId(const uint32_t spellid);
 
 signals:
+    void spellPickedUp(const uint32_t spellid);
     void valueChanged(bool changed);
 
 protected:

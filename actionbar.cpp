@@ -1,7 +1,7 @@
 #include <QtWidgets>
 
 #include "actionbar.h"
-
+#include "gamescreen.hpp"
 
 //blah
 
@@ -21,6 +21,7 @@ ActionBar::ActionBar(QWidget *parent)
     for (int i = 0 ; i < NUMBUTTONS; i++){
         buttonSet[i] = new PushButton(this);
         buttonSet[i]->setSpellbookBool(false);
+        connect(buttonSet[i],SIGNAL(spellPickedUp(uint32_t)),this,SIGNAL(spellPickedUp(uint32_t)));
         QIcon icon;
         icon.addFile(QStringLiteral("../NADL/oldguy.ico"), QSize(), QIcon::Normal, QIcon::Off);
         buttonSet[i]->setIcon(icon);
@@ -28,6 +29,12 @@ ActionBar::ActionBar(QWidget *parent)
         actionBarGrid->addWidget(buttonSet[i],0,i);
     }
     index = -1;
+}
+
+uint32_t ActionBar::getCursorID(){
+    GameScreen *info = (GameScreen*)parent();
+    qDebug() << "Grabbing ID:" << info->getCursorID();
+    return info->getCursorID();
 }
 
 void ActionBar::setIndex(int i){

@@ -35,22 +35,22 @@ class KeybindMenu: public QFrame
     Q_OBJECT
     public:
         KeybindMenu(QWidget *parent);
-        void updateBind(QKeySequence newKeybind, int num);
+        void updateBind(QKeySequence newKeybind, const unsigned int num);
         void copyShortcuts(QShortcut *copyshort[]);
         //void updateShortcut(QKeySequence keyseq);
-        void updateText(int num);
+        void updateText(const unsigned int num);
 
     public slots:
         void updateKeybinds(QString *shortcuts);
         void setBindMain(int num);
         void setBindBackup(int num);
-        void newBindRecv(QKeySequence newKeybind, int num);
+        void newBindRecv(QKeySequence newKeybind, const unsigned int num);
         void resizeMe(QSize newSize);
 
     signals:
         void disableShortcuts();
         void enableShortcuts();
-        void newBindSend(QKeySequence newKeybind, int num);
+        void newBindSend(QKeySequence newKeybind, const unsigned int num);
         void defaultBinds();
         //void removeBinds();
         void saveBinds();

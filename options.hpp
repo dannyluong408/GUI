@@ -18,7 +18,7 @@ class OptionsFrame : public QFrame
     signals:
         void disableShortcuts();
         void enableShortcuts();
-        void newBindSend(QKeySequence newBind, int num);
+        void newBindSend(QKeySequence newBind, unsigned int num);
         void saveBinds();
         void defaultBinds();
         void resizeChildren(QSize newSize);

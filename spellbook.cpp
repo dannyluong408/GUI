@@ -1,5 +1,7 @@
 #include "spellbook.h"
 
+#include "gamescreen.hpp"
+
 #include <QtGlobal>
 
 
@@ -94,6 +96,9 @@ SpellBook::SpellBook(QWidget *parent)
         }
     }
 
+    for(unsigned int a = 0; a < 60; a++){
+        connect(spellSlot[a],SIGNAL(spellPickedUp(uint32_t)),this,SIGNAL(spellPickedUp(uint32_t)));
+    }
 
 
     pageL = new QPushButton(this);
@@ -112,6 +117,12 @@ SpellBook::SpellBook(QWidget *parent)
 
     greyButtons(0);
     setVisible(false);
+}
+
+uint32_t SpellBook::getCursorID(){
+    GameScreen *info = (GameScreen*)parent();
+    qDebug() << "Grabbing ID:" << info->getCursorID();
+    return info->getCursorID();
 }
 
 void SpellBook::setSlotSpell(int slot, uint32_t spellId){

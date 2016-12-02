@@ -1,6 +1,8 @@
 #include <QtWidgets>
 
 #include "dragpushbutton.h"
+#include "actionbar.h"
+#include "spellbook.h"
 
 PushButton::PushButton(QWidget *parent)
     : QPushButton(parent)
@@ -92,11 +94,9 @@ void PushButton::dragEnterEvent(QDragEnterEvent *event)
         if (event->source() == this) {
             event->setDropAction(Qt::MoveAction);
             event->accept();
-            printf("DPB Inside1\n");
             fflush(stdout);
         } else {
             event->acceptProposedAction();
-            printf("DPB Outside1\n");
             fflush(stdout);
         }
     } else {
@@ -122,9 +122,8 @@ void PushButton::dropEvent(QDropEvent *event)
 {
     if (event->mimeData()->hasFormat("spellData")) {
 
-//        qDebug() << "DPB This Pos" << this->pos();
-//        qDebug() << "DPB Event Pos" << event->pos();
-
+        bool pickup = false;
+        const uint32_t oldSpellId = this->getSpellId();
 
         QByteArray itemData = event->mimeData()->data("spellData");
         QDataStream dataStream(&itemData, QIODevice::ReadOnly);
@@ -132,12 +131,13 @@ void PushButton::dropEvent(QDropEvent *event)
         uint32_t newSpellId;
         dataStream >> newSpellId;
 
-//        qDebug() << "Lol" << this->metaObject()->className();
-//        qDebug() << "Global Pos" << mapToGlobal(this->pos());
         qDebug() << "Old SpellID:" << this->getSpellId();
         qDebug() << "New SpellID:" << newSpellId;
 
 
+        if(this->getSpellId() != 0){
+            pickup = true;
+        }
         qDebug() << "New Spell!";
         this->setSpellId(newSpellId);
 
@@ -151,6 +151,10 @@ void PushButton::dropEvent(QDropEvent *event)
             event->acceptProposedAction();
             printf("DPB Outside DnD\n");
             fflush(stdout);
+            if(pickup){
+                qDebug() << "Emitted!";
+                emit spellPickedUp(oldSpellId);
+            }
         }
     } else {
         event->ignore();
@@ -159,10 +163,26 @@ void PushButton::dropEvent(QDropEvent *event)
 
 void PushButton::mousePressEvent(QMouseEvent *event)
 {
-    //qDebug() << "QAPPDD1:" << QApplication::startDragDistance();
+    uint32_t mouseID;
+    if(!spellbookIcon){
+        ActionBar *info = (ActionBar*)parent();
+        mouseID = info->getCursorID();
+        qDebug() << "Action ID" << mouseID;
+    }
+    else{
+        qDebug() << "Clear";
+        emit spellPickedUp(0);
+        return;
+    }
+
+
     if (event->button() == Qt::LeftButton){
         dragStartPosition = event->pos();
-        //qDebug() << "DPB PressEvent" << dragStartPosition;
+        if(mouseID != 0 && !spellbookIcon){
+            qDebug() << "Not zero";
+            this->setSpellId(mouseID);
+            emit spellPickedUp(0);
+        }
         this->click();
     }
     else{
@@ -172,12 +192,6 @@ void PushButton::mousePressEvent(QMouseEvent *event)
 
 void PushButton::mouseMoveEvent(QMouseEvent *event)
 {
-    //qDebug() << "DPB Printed This\n";
-
-    //qDebug() << "EventPos:" << event->pos();
-    //qDebug() << "DragStartPos:" << dragStartPosition;
-    //qDebug() << "QAPPDD2:" << QApplication::startDragDistance();
-
     if ((event->pos() - dragStartPosition).manhattanLength() < QApplication::startDragDistance()){
            //qDebug() <<  (event->pos() - dragStartPosition).manhattanLength()<<" vs " <<  QApplication::startDragDistance();
            return;
@@ -205,17 +219,6 @@ void PushButton::mouseMoveEvent(QMouseEvent *event)
         QIcon dragIcon = child->icon();
         drag->setPixmap(dragIcon.pixmap(QSize(50,50)));
         drag->setHotSpot(event->pos());
-
-//        //This stuff to show icon while dragging
-//        QPixmap tempPixmap = pixmap;
-//        QPainter painter;
-//        painter.begin(&tempPixmap);
-//        painter.fillRect(pixmap.rect(), QColor(127, 127, 127, 127));
-//        painter.end();
-//        QIcon buttonIcon(tempPixmap);
-//        child->setIcon(buttonIcon);
-//        child->setIconSize(pixmap.rect().size());
-
 
         if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
             child->show();

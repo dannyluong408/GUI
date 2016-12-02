@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-
+#include "textbrowser.hpp"
 
 class GuildFrame2 : public QFrame
 {
@@ -10,6 +10,9 @@ class GuildFrame2 : public QFrame
         GuildFrame2(QWidget *parent);
     public slots:
         void resizeMe(QSize newSize);
+
+    signals:
+        void resetCursor(uint32_t num);
 
     private:
         QVBoxLayout *mainLayout;
@@ -37,5 +40,5 @@ class GuildFrame2 : public QFrame
         QCheckBox *showoffline;
         QFrame *Frame4;
         QVBoxLayout *verticalLayout_3;
-        QTextBrowser *textBrowser;
+        TextBrowser *textBrowser;
 };
