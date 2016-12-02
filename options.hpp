@@ -1,6 +1,3 @@
-#ifndef OPTIONS_HPP
-#define OPTIONS_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -35,5 +32,3 @@ class OptionsFrame : public QFrame
         QFrame *optionFrame[6], *buttonFrame, *mainFrame;
         KeybindMenu *keybindMenu;
 };
-
-#endif // OPTIONS_HPP

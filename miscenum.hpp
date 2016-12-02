@@ -1,5 +1,4 @@
-#ifndef MISCENUM_HPP
-#define MISCENUM_HPP
+#pragma once
 
 namespace Keybinds{
     enum{
@@ -67,4 +66,3 @@ namespace Keybinds{
         RE_WHISPER
     };
 }
-#endif // MISCENUM_HPP

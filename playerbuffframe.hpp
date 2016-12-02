@@ -1,6 +1,3 @@
-#ifndef PLAYERBUFFFRAME_HPP
-#define PLAYERBUFFFRAME_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -31,7 +28,3 @@ class PlayerBuffFrame : public QFrame
         QVector<BuffIcon*> buffs;
         bool isDebuff;
 };
-
-
-
-#endif // PLAYERBUFFFRAME_HPP

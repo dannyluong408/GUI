@@ -1,6 +1,3 @@
-#ifndef SpellBook_H
-#define SpellBook_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -38,6 +35,3 @@ class SpellBook : public QFrame
         uint32_t spellCount;
         QPushButton *pageL,*pageR,*x;
 };
-
-
-#endif // SpellBook_H

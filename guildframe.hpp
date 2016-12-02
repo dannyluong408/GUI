@@ -1,6 +1,3 @@
-#ifndef GUILDFRAME_HPP
-#define GUILDFRAME_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -23,6 +20,3 @@ class GuildFrame : public QFrame
         QTableView *view;\
         QPixmap guildLogoPix;
 };
-
-
-#endif // GUILDFRAME_HPP

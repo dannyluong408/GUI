@@ -1,7 +1,3 @@
-#ifndef GUILDFRAME2_HPP
-#define GUILDFRAME2_HPP
-
-
 #pragma once
 
 #include <QtWidgets>
@@ -43,5 +39,3 @@ class GuildFrame2 : public QFrame
         QVBoxLayout *verticalLayout_3;
         QTextBrowser *textBrowser;
 };
-
-#endif // GUILDFRAME2_HPP

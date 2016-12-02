@@ -1,6 +1,3 @@
-#ifndef MENUBAR_H
-#define MENUBAR_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -24,5 +21,3 @@ class Menubar: public QFrame
         QPushButton *menuButton[5];
 
 };
-
-#endif // MENUBAR_H

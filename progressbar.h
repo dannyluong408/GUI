@@ -1,6 +1,3 @@
-#ifndef PROGRESSBAR_H
-#define PROGRESSBAR_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -17,5 +14,3 @@ class ProgressBar : public QProgressBar
 
 };
 
-
-#endif // PROGRESSBAR_H

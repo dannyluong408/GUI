@@ -1,6 +1,3 @@
-#ifndef HONORFRAME_HPP
-#define HONORFRAME_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -21,4 +18,3 @@ class HonorFrame : public QFrame
 
 };
 
-#endif // HONORFRAME_HPP

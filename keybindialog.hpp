@@ -1,6 +1,3 @@
-#ifndef KEYDIALOG_HPP
-#define KEYDIALOG_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -28,6 +25,3 @@ class KeybindDialog: public QFrame
 
         int count;
 };
-
-
-#endif // KEYDIALOG_HPP
