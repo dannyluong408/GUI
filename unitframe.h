@@ -1,6 +1,3 @@
-#ifndef UNITFRAME_H
-#define UNITFRAME_H
-
 #pragma once
 
 
@@ -29,8 +26,3 @@ class UnitFrame : public QFrame
         double partyScale;
 };
 
-
-
-
-
-#endif // UNITFRAME_H

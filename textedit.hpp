@@ -1,6 +1,3 @@
-#ifndef CHATINPUT_HPP
-#define CHATINPUT_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -20,5 +17,3 @@ class TextEdit: public QTextEdit
 
 
 };
-
-#endif // CHATINPUT_HPP

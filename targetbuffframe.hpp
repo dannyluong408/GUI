@@ -1,6 +1,4 @@
-#ifndef BUFFFRAME_H
-#define BUFFFRAME_H
-
+#pragma once
 #include <QtWidgets>
 #include "bufficon.h"
 
@@ -29,7 +27,3 @@ class TargetBuffFrame : public QFrame
         QVector<BuffIcon*> buffs;
         bool isDebuff;
 };
-
-
-
-#endif // BUFFFRAME_H

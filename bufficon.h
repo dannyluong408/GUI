@@ -1,6 +1,3 @@
-#ifndef BUFFICON_H
-#define BUFFICON_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -29,7 +26,3 @@ class BuffIcon : public QLabel
         uint64_t end_time;
         bool isPlayer;
 };
-
-
-
-#endif // BUFFICON_H

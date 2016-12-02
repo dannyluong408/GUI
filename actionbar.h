@@ -1,6 +1,3 @@
-#ifndef ACTIONBAR_H
-#define ACTIONBAR_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -37,6 +34,3 @@ private:
     PushButton *buttonSet[NUMBUTTONS];
     int index;
 };
-
-
-#endif // ACTIONBAR_H

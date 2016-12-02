@@ -1,6 +1,3 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
 #pragma once
 
 #include <QMainWindow>
@@ -120,5 +117,3 @@ private:
     QSignalMapper *keybindMapper;
 
 };
-
-#endif // MAINWINDOW_H

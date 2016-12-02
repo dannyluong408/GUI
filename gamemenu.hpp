@@ -1,6 +1,3 @@
-#ifndef GAMEMENU_H
-#define GAMEMENU_H
-
 #pragma once
 
 
@@ -26,7 +23,3 @@ class GameMenu : public QFrame
         QVBoxLayout *mainLayout, *buttonLayout;
         QPushButton *options[5];
 };
-
-
-
-#endif // GAMEMENU_H

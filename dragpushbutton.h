@@ -1,6 +1,3 @@
-#ifndef DRAGPUSHBUTTON_H
-#define DRAGPUSHBUTTON_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -45,4 +42,3 @@ private:
     bool spellbookIcon;
 };
 
-#endif // DRAGPUSHBUTTON_H

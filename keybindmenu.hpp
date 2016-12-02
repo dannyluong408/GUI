@@ -1,6 +1,3 @@
-#ifndef KEYBINDMENU_HPP
-#define KEYBINDMENU_HPP
-
 #pragma once
 
 #include <QtWidgets>
@@ -101,5 +98,3 @@ class KeybindMenu: public QFrame
 
 
 };
-
-#endif // KEYBINDMENU_HPP

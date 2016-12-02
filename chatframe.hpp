@@ -1,6 +1,3 @@
-#ifndef CHATBOX_H
-#define CHATBOX_H
-
 #pragma once
 
 #include <QtWidgets>
@@ -27,6 +24,3 @@ class ChatFrame: public QFrame
         TextEdit *chatInput;
 
 };
-
-
-#endif // CHATBOX_H

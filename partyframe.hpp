@@ -1,7 +1,3 @@
-#ifndef PARTYFRAME_HPP
-#define PARTYFRAME_HPP
-
-
 #pragma once
 
 #include <QtWidgets>
@@ -22,4 +18,3 @@ class PartyFrame : public QFrame
         double scale;
 
 };
-#endif // PARTYFRAME_HPP
