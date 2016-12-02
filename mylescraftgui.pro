@@ -51,7 +51,9 @@ SOURCES += main.cpp\
     textedit.cpp \
     keybindmenu.cpp \
     keybinddialog.cpp \
-    guildframe2.cpp
+    guildframe2.cpp \
+    gamescreen.cpp \
+    textbrowser.cpp
 
 HEADERS  += mainwindow.h \
     dragwidget.h \
@@ -82,7 +84,9 @@ HEADERS  += mainwindow.h \
     keybindialog.hpp \
     gamemenu.hpp \
     guildframe2.hpp \
-    modules/localization.h
+    modules/localization.h \
+    gamescreen.hpp \
+    textbrowser.hpp
 
 FORMS    += mainwindow.ui
 

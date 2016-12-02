@@ -22,17 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(actionBar[0],SIGNAL(spellPickedUp(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
     connect(actionBar[1],SIGNAL(spellPickedUp(uint32_t)),this,SLOT(spellPickedUp(uint32_t)));
-//    //test stuff for action bars -- remove later
-//    actionBar[0]->setButtonSpell(1,1);
-//    actionBar[0]->setButtonSpell(2,2);
-//    actionBar[0]->setButtonSpell(3,3);
-//    actionBar[0]->setButtonSpell(1,4);
-//    actionBar[0]->setButtonSpell(2,5);
-//    actionBar[0]->setButtonSpell(3,6);
-//    actionBar[0]->setButtonSpell(1,7);
-//    actionBar[0]->setButtonSpell(2,8);
-//    actionBar[0]->setButtonSpell(3,9);
-//    actionBar[0]->setButtonSpell(1,10);
 
     //player+target frames
     playerFrame = new UnitFrame(ui->gameScreen);
