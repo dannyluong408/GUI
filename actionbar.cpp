@@ -5,6 +5,9 @@
 
 //blah
 
+
+//blah
+
 ActionBar::ActionBar(QWidget *parent)
     : QFrame(parent)
 {
