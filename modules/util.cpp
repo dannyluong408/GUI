@@ -1,5 +1,6 @@
 #include <modules/util.h>
 #include <nx_include/nx_deferred_processing.hpp>
+#include <nx_include/nx_localization.h>
 
 void queue_assets_nxt() {
 	uint32_t count = 0;
@@ -52,4 +53,15 @@ int mc_util_init(int argc, char **argv) {
 void mc_util_exit() {
 	NXT_exit();
 	nx_log_exit();
+}
+
+int mc_load_localization_file(const char *path) {
+	char *true_path = nx_asset_translate_path(path);
+	if (!path) return -1;
+	char *file = nx_asset_read_text(true_path, NULL);
+	free(true_path);
+	if (!file) return -2; // len == 0 returns NULL.
+	const int ret = nx_parse_localization_file(file);
+	free(file);
+	return ret;
 }

@@ -10,6 +10,9 @@ char *nx_localize_str(const uint32_t identifier);
 void nx_map_identifier(const char *str, const uint32_t identifier);
 
 // Parses a localization file. @data is temporarily modified at times.
-// All strings must be formatted properly.
+// All strings must be formatted properly. 
+// Returns 0 on success.
 int nx_parse_localization_file(char *data);
 
+// This function must be called after all utilizing threads are joined.
+void nx_localization_exit();

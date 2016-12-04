@@ -5,11 +5,15 @@
 #include <qglobal.h>
 #include <QTime>
 #include "modules/util.h"
-#include "modules/localization.h"
+#include <nx_include/nx_localization.h>
 
 
 int main(int argc, char *argv[]) {
     if (mc_util_init(argc, argv)) return -1;
+
+    // this isn't supposed to be optional, but it can be for now.
+    //if (mc_load_localization_file("resources/localization/english_strings")) return -2;
+    mc_load_localization_file("resources/localization/english_strings");
 
     QApplication a(argc, argv);
     a.setStyle("fusion");
@@ -26,5 +30,6 @@ int main(int argc, char *argv[]) {
 
     a.exec();
     mc_util_exit();
+    nx_localization_exit();
     return 0;
 }

@@ -616,7 +616,7 @@ char *nx_asset_read_text(const char *path, uint64_t *output_length) {
 	return source;
 	
 	#else
-		#error "No valid file reading function"
+		#error "No valid text file reading function"
 	#endif
 }
 /*
@@ -744,37 +744,6 @@ void *nx_load_asset(void *input) {
                 }
                 asset->data = (void*)ptr;
                 asset->length = sizeof(QImage);
-
-                /*
-                if (img.isNull()) {
-                    asset->status = NX_ASSET_FAILED_INVALID_FILE;
-                    pthread_mutex_unlock(&asset->mtx);
-                    return;
-                }
-
-                // translate to nx_asset_image
-                const unsigned char *pixeldata = img.constBits();
-                struct nx_asset_img image;
-                image.data = malloc(img.byteCount());
-                if (!image.data) {
-                    asset->status = NX_ASSET_FAILED_INVALID_FILE;
-                    pthread_mutex_unlock(&asset->mtx);
-                    nx_log_msg("nx_load_asset: Failed to allocate memory for pixel buffer.",2);
-                    return;
-                }
-                memcpy(image.data, pixeldata, img.byteCount());
-                image.w = img.width();
-                image.h = img.height();
-                image.colorspace = NX_RGBA;
-
-                image.texture_id = 0;
-                image.position = 0;
-
-                asset->data = malloc(sizeof(image));
-                memcpy(asset->data, &image, sizeof(image));
-                asset->length = sizeof(image); // don't count the pixel data length here.
-                */
-
 
                 asset->status = NX_ASSET_LOADED;
                 nx_log_msg("nx_load_asset: Successfully read IMG %s.",5,asset->file);

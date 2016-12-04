@@ -1,5 +1,6 @@
-#include "localization.h"
+#include <nx_include/nx_localization.h>
 #include <assert.h>
+#include <memory>
 #include <unordered_map>
 #include <pthread.h>
 
@@ -62,8 +63,7 @@ int nx_parse_localization_file(char *data) {
 	assert(strlen(data));
 	const size_t len = strlen(data);
 	size_t at = 0;
-	printf("file length is %u\n",len);
-	fflush(stdout);
+
 	pthread_mutex_lock(&mtx);
 	while (at < len) {
 		const size_t line_len = strcspn(&data[at],"\n");
@@ -92,11 +92,18 @@ int nx_parse_localization_file(char *data) {
 			}
 			at++;
 		}
-		printf("at %u, len %u\n",at,len);fflush(stdout);
 	}
 	#ifndef NDEBUG
 	verify_string_db();
 	#endif
 	pthread_mutex_unlock(&mtx);
 	return 0;
+}
+
+void nx_localization_exit() {
+	pthread_mutex_destroy(&mtx);
+	for (auto i : localized_strings) {
+		free(i.second);
+		i.second = NULL;
+	}
 }

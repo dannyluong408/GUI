@@ -19,7 +19,7 @@ TEMPLATE = app
 DEFINES += NX_USE_ASSETS ASSET_USE_GL DEBUG USING_QT
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+	mainwindow.cpp \
     dragwidget.cpp \
     dragpushbutton.cpp \
     actionbar.cpp \
@@ -31,8 +31,8 @@ SOURCES += main.cpp\
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
 	modules/util.cpp \
-	modules/localization.cpp \
 	\
+	nx_src/nx_localization.cpp \
     nx_src/nx_asset.cpp \
     nx_src/nx_error.c \
     nx_src/nx_profiling.c \
@@ -86,7 +86,8 @@ HEADERS  += mainwindow.h \
     guildframe2.hpp \
     modules/localization.h \
     gamescreen.hpp \
-    textbrowser.hpp
+    textbrowser.hpp \
+    nx_include/nx_localization.h
 
 FORMS    += mainwindow.ui
 
