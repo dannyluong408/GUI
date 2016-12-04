@@ -34,7 +34,7 @@ SOURCES += main.cpp\
 	\
 	nx_src/nx_localization.cpp \
     nx_src/nx_asset.cpp \
-    nx_src/nx_error.c \
+	nx_src/nx_error.cpp \
     nx_src/nx_profiling.c \
     nx_src/nx_timing.c \
 	nx_src/nx_deferred_processing.cpp \

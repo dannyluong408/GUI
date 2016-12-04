@@ -1,5 +1,9 @@
 #include <nx_include/nx_error.h>
 
+#ifdef USING_QT
+#include <QMessageBox>
+#endif
+
 #define NX_DEFAULT_OUTPUT stdout
 
 #ifdef __cplusplus
@@ -8,6 +12,7 @@ extern "C" {
 
 static int setup = 0;
 char *invalid_msg = "Unknown error (message failed to save)";
+char *msg_unspecified = "Unspecified error.";
 
 struct NX_LOG_INTERNAL {
 	FILE *log_file;
@@ -38,7 +43,7 @@ int nx_log_init(const char *log_path) {
 				nx_log_strerror_finish();
 			} else {
 				const uint32_t len = strlen(log_path) + 1;
-				internal.filename = malloc(len);
+				internal.filename = (char*)malloc(len);
 				if (internal.filename) {
 					memcpy(internal.filename, log_path, len);
 				} // otherwise ignore
@@ -60,34 +65,41 @@ void nx_log_msg(const char *msg, const uint8_t level, ...) {
 	if (level > internal.suppress_level) {
 		return;
 	}
-	char buffer[4000];
-	va_list args;
-	va_start(args, level);
-	vsnprintf(buffer, sizeof(buffer)-2, msg, args);
-	va_end(args);
-	const int len = strlen(buffer);
-	// Append a newline 
-	buffer[len] = '\n';
-	buffer[len+1] = 0;
-	pthread_mutex_lock(&internal.mtx);
-	fputs(buffer, NX_DEFAULT_OUTPUT);
-	#ifdef DEBUG
-	// want to flush this for crash logs
-	fflush(NX_DEFAULT_OUTPUT);
-	#endif
-	if (internal.log_file) {
-		fputs(buffer, internal.log_file);
-	}
-	if (level == NX_EXIT) {
-		internal.quit = 1;
-		internal.crit_error = malloc(len+2);
-		if (internal.crit_error) {
-			memcpy(internal.crit_error, buffer, len+2);
-		} else {
-			internal.crit_error = invalid_msg;
-		}
+	if (msg) {
+		char buffer[4000];
+		va_list args;
+		va_start(args, level);
+		vsnprintf(buffer, sizeof(buffer)-2, msg, args);
+		va_end(args);
+		const int len = strlen(buffer);
+		// Append a newline 
+		buffer[len] = '\n';
+		buffer[len+1] = 0;
+		pthread_mutex_lock(&internal.mtx);
+		fputs(buffer, NX_DEFAULT_OUTPUT);
+		#ifdef DEBUG
+		// want to flush this for crash logs
 		fflush(NX_DEFAULT_OUTPUT);
-		fflush(internal.log_file);
+		#endif
+		if (internal.log_file) {
+			fputs(buffer, internal.log_file);
+		}
+		if (level == NX_EXIT) {
+			internal.quit = 1;
+			internal.crit_error = (char*)malloc(len+2);
+			if (internal.crit_error) {
+				memcpy(internal.crit_error, buffer, len+2);
+			} else {
+				internal.crit_error = invalid_msg;
+			}
+			fflush(NX_DEFAULT_OUTPUT);
+			fflush(internal.log_file);
+		}
+	} else {
+		if (level == NX_EXIT) {
+			internal.quit = 1;
+			internal.crit_error = msg_unspecified;
+		}
 	}
 	pthread_mutex_unlock(&internal.mtx);
 }
@@ -135,14 +147,16 @@ void nx_display_popup_msg(const char *title, const char *errmsg, ...) {
 	va_start(args, errmsg);
 	vsnprintf(buffer, sizeof(buffer)-1, errmsg, args);
 	va_end(args);
-	#ifdef __WIN32
-        #ifndef USING_QT
-            MessageBox(NULL, buffer, title, MB_OK | MB_TASKMODAL);
-        #endif
-	#else
-		#ifndef NX_ERROR_USING_CLI
-			#warning "no supported message dialog, using default output stream"
+	#ifndef USING_QT
+		#ifdef __WIN32
+			MessageBox(NULL, buffer, title, MB_OK | MB_TASKMODAL);
+		#else
+			#ifndef NX_ERROR_USING_CLI
+				#warning "no supported message dialog, using default output stream"
+			#endif
 		#endif
+	#else
+		QMessageBox::information(NULL, title, errmsg);
 	#endif
     fputs(buffer, NX_DEFAULT_OUTPUT);
 }
