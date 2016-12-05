@@ -7,6 +7,7 @@
 #include "modules/util.h"
 #include <nx_include/nx_localization.h>
 
+MainWindow *mainwindow;
 
 int main(int argc, char *argv[]) {
     if (mc_util_init(argc, argv)) return -1;
@@ -18,14 +19,14 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     a.setStyle("fusion");
 
-    MainWindow w;
-    w.setWindowFlags(Qt::CustomizeWindowHint |
+    mainwindow = new MainWindow;
+    mainwindow->setWindowFlags(Qt::CustomizeWindowHint |
                      Qt::WindowMinimizeButtonHint |
                      Qt::WindowMaximizeButtonHint |
                      Qt::WindowCloseButtonHint);
     //w.showMaximized();
 
-    w.show();
+    mainwindow->show();
 
     a.exec();
     mc_util_exit();

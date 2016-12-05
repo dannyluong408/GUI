@@ -3,10 +3,8 @@
 #include "actionbar.h"
 #include "gamescreen.hpp"
 
-//blah
-
-
-//blah
+#include "mainwindow.h"
+//mainwindow->do_thing()
 
 ActionBar::ActionBar(QWidget *parent)
     : QFrame(parent)

@@ -5,30 +5,32 @@
 #include <QDebug>
 #include <QtGlobal>
 #include <time.h>
-#include "ui_mainwindow.h"
-#include "actionbar.h"
-#include "dragpushbutton.h"
-#include "actionbar.h"
-#include "bufficon.h"
-#include "targetbuffframe.hpp"
-#include "playerbuffframe.hpp"
-#include "unitframe.h"
-#include "progressbar.h"
-#include "chatframe.hpp"
-#include "spellbook.h"
-#include "gamemenu.hpp"
-#include "guildframe.hpp"
-#include "guildframe2.hpp"
-#include "honorframe.hpp"
-#include "partyframe.hpp"
-#include "keybindmenu.hpp"
-#include "menubar.h"
-#include "options.hpp"
 #include "miscenum.hpp"
 #include <QFlags>
 #include <cassert>
+#include <QWidget>
+#include <QTimer>
+#include <QShortcut>
+#include <QSignalMapper>
+#include <QPushButton>
 
 #define KEYBINDCOUNT 73
+
+class ActionBar;
+class UnitFrame;
+class ActionBar;
+class UnitFrame;
+class PartyFrame;
+class PlayerBuffFrame;
+class TargetBuffFrame;
+class ChatFrame;
+class Menubar;
+class SpellBook;
+class GuildFrame2;
+class HonorFrame;
+class GameMenu;
+class OptionsFrame;
+
 
 namespace Ui {
 class MainWindow;
@@ -119,3 +121,5 @@ private:
     QSignalMapper *keybindMapper;
 
 };
+
+extern MainWindow *mainwindow;

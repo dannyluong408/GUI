@@ -1,4 +1,23 @@
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "actionbar.h"
+#include "dragpushbutton.h"
+#include "actionbar.h"
+#include "bufficon.h"
+#include "targetbuffframe.hpp"
+#include "playerbuffframe.hpp"
+#include "unitframe.h"
+#include "progressbar.h"
+#include "chatframe.hpp"
+#include "spellbook.h"
+#include "gamemenu.hpp"
+#include "guildframe.hpp"
+#include "guildframe2.hpp"
+#include "honorframe.hpp"
+#include "partyframe.hpp"
+#include "keybindmenu.hpp"
+#include "menubar.h"
+#include "options.hpp"
 
 QSize testSize = QSize(1200.0,900.0);
 
