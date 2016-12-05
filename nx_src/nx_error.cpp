@@ -11,8 +11,8 @@ extern "C" {
 #endif
 
 static int setup = 0;
-char *invalid_msg = "Unknown error (message failed to save)";
-char *msg_unspecified = "Unspecified error.";
+const char *invalid_msg = "Unknown error (message failed to save)";
+const char *msg_unspecified = "Unspecified error.";
 
 struct NX_LOG_INTERNAL {
 	FILE *log_file;
@@ -90,7 +90,7 @@ void nx_log_msg(const char *msg, const uint8_t level, ...) {
 			if (internal.crit_error) {
 				memcpy(internal.crit_error, buffer, len+2);
 			} else {
-				internal.crit_error = invalid_msg;
+                internal.crit_error = (char*)invalid_msg;
 			}
 			fflush(NX_DEFAULT_OUTPUT);
 			fflush(internal.log_file);
@@ -98,7 +98,7 @@ void nx_log_msg(const char *msg, const uint8_t level, ...) {
 	} else {
 		if (level == NX_EXIT) {
 			internal.quit = 1;
-			internal.crit_error = msg_unspecified;
+            internal.crit_error = (char*)msg_unspecified;
 		}
 	}
 	pthread_mutex_unlock(&internal.mtx);

@@ -1,3 +1,4 @@
+#include <modules/game.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "actionbar.h"
@@ -128,7 +129,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(newSize(QSize)),gameMenu,SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),optionsMenu,SLOT(resizeMe(QSize)));
 
-    ui->openGLWidget->hide();
+    //ui->openGLWidget->show();
     //hide screen + login screen
     ui->gameScreen->hide();
 
@@ -409,7 +410,7 @@ void MainWindow::movePlayer(int direction){
             break;
     }
 }
-
+// this is not acceptable code nevinyrral.
 void MainWindow::keybindSlot(int id){ //functions get mapped here
     qDebug() << id << "Emitted!";
     switch(id){
@@ -874,6 +875,10 @@ void MainWindow::initDefaultKeybinds(){
     emit pushKeybinds(keybindString);
 }
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    game.flag_exit();
+    QMainWindow::closeEvent(event);
+}
 
 void MainWindow::saveKeybinds(){
     qDebug() << "Saving Keybinds to File";

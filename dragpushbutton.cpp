@@ -211,6 +211,8 @@ void PushButton::mouseMoveEvent(QMouseEvent *event)
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
         dataStream << child->spell_id;
+
+        // Nevin: these two new calls appear to be leaks. please double check them.
         QMimeData *mimeData = new QMimeData;
         mimeData->setData("spellData", itemData);
 

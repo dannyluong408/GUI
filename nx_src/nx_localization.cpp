@@ -49,7 +49,7 @@ static void map_string(const char *input, const uint32_t identifier) {
 	
 	localized_strings[identifier] = copy;
 }
-
+#ifndef NDEBUG
 // this function is only called in debug mode, so the error message has a high priority.
 static void verify_string_db() {
 	for (auto i : string_mappings) {
@@ -58,9 +58,10 @@ static void verify_string_db() {
 		}
 	}
 }
+#endif
 
 int nx_parse_localization_file(char *data) {
-	assert(strlen(data));
+	assert(data && strlen(data));
 	const size_t len = strlen(data);
 	size_t at = 0;
 
@@ -104,6 +105,6 @@ void nx_localization_exit() {
 	pthread_mutex_destroy(&mtx);
 	for (auto i : localized_strings) {
 		free(i.second);
-		i.second = NULL;
+		//i.second = NULL;
 	}
 }

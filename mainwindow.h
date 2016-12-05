@@ -65,6 +65,8 @@ public:
 
     void wheelEvent(QWheelEvent *wevent);
     void mousePressEvent(QMouseEvent *mevent);
+    void closeEvent(QCloseEvent *event);
+
 
     uint32_t cursorID;
 

@@ -11,7 +11,7 @@ uint64_t nx_get_highres_time_us() {
 	/* This function will need to be modified to run on pre-winxp machines, or not. */
 	QueryPerformanceFrequency(&freq);
 	QueryPerformanceCounter(&time); 
-	return (time.QuadPart * 1000000.0 / freq.QuadPart);
+    return (time.QuadPart * (uint64_t)1000000 / freq.QuadPart);
 }
 #elif defined (__linux__)
 #include <unistd.h>

@@ -31,6 +31,9 @@ SOURCES += main.cpp\
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
 	modules/util.cpp \
+	modules/game.cpp \
+	modules/user.cpp \
+	modules/camera.cpp \
 	\
 	nx_src/nx_localization.cpp \
     nx_src/nx_asset.cpp \
