@@ -19,53 +19,51 @@ TEMPLATE = app
 DEFINES += NX_USE_ASSETS ASSET_USE_GL DEBUG USING_QT
 
 SOURCES += main.cpp\
-	mainwindow.cpp \
-    dragwidget.cpp \
-    dragpushbutton.cpp \
-    actionbar.cpp \
-    bufficon.cpp \
-    unitframe.cpp \
-    progressbar.cpp \
-    menubar.cpp \
-	\
+    GUI/mainwindow.cpp \
+    GUI/dragwidget.cpp \
+    GUI/dragpushbutton.cpp \
+    GUI/actionbar.cpp \
+    GUI/bufficon.cpp \
+    GUI/unitframe.cpp \
+    GUI/progressbar.cpp \
+    GUI/menubar.cpp \
     modules/buffs_ext.cpp \
     modules/spell_module.cpp \
-	modules/util.cpp \
-	modules/game.cpp \
-	modules/user.cpp \
-	modules/camera.cpp \
-	\
-	nx_src/nx_localization.cpp \
+    nx_src/nx_localization.cpp \
+    modules/util.cpp \
+    modules/game.cpp \
+    modules/user.cpp \
+    modules/camera.cpp \
     nx_src/nx_asset.cpp \
-	nx_src/nx_error.cpp \
+    nx_src/nx_error.cpp \
     nx_src/nx_profiling.c \
     nx_src/nx_timing.c \
-	nx_src/nx_deferred_processing.cpp \
-	\
-    gamemenu.cpp \
-    spellbook.cpp \
-    guildframe.cpp \
-    options.cpp \
-    playerbuffframe.cpp \
-    targetbuffframe.cpp \
-    partyframe.cpp \
-    honorframe.cpp \
-    chatframe.cpp \
-    textedit.cpp \
-    keybindmenu.cpp \
-    keybinddialog.cpp \
-    guildframe2.cpp \
-    gamescreen.cpp \
-    textbrowser.cpp
+    nx_src/nx_deferred_processing.cpp \
+    GUI/gamemenu.cpp \
+    GUI/spellbook.cpp \
+    GUI/guildframe.cpp \
+    GUI/options.cpp \
+    GUI/playerbuffframe.cpp \
+    GUI/targetbuffframe.cpp \
+    GUI/partyframe.cpp \
+    GUI/honorframe.cpp \
+    GUI/chatframe.cpp \
+    GUI/textedit.cpp \
+    GUI/keybindmenu.cpp \
+    GUI/keybinddialog.cpp \
+    GUI/guildframe2.cpp \
+    GUI/gamescreen.cpp \
+    GUI/textbrowser.cpp \
+    GUI/application.cpp
 
-HEADERS  += mainwindow.h \
-    dragwidget.h \
-    dragpushbutton.h \
-    actionbar.h \
-    bufficon.h \
-    unitframe.h \
-    progressbar.h \
-    menubar.h \
+HEADERS  += GUI/mainwindow.h \
+    GUI/dragwidget.h \
+    GUI/dragpushbutton.h \
+    GUI/actionbar.h \
+    GUI/bufficon.h \
+    GUI/unitframe.h \
+    GUI/progressbar.h \
+    GUI/menubar.h \
     modules/buffs_module.h \
     modules/spell_module.h \
     nx_include/spell_list.h \
@@ -73,28 +71,28 @@ HEADERS  += mainwindow.h \
     nx_include/nx_error.h \
     nx_include/nx_timing.h \
     nx_include/nx_profiling.h \
-    spellbook.h \
-    guildframe.hpp \
-    options.hpp \
-    playerbuffframe.hpp \
-    targetbuffframe.hpp \
-    partyframe.hpp \
-    honorframe.hpp \
-    chatframe.hpp \
-    textedit.hpp \
-    keybindmenu.hpp \
-    miscenum.hpp \
-    keybindialog.hpp \
-    gamemenu.hpp \
-    guildframe2.hpp \
-    modules/localization.h \
-    gamescreen.hpp \
-    textbrowser.hpp \
-    nx_include/nx_localization.h
+    GUI/spellbook.h \
+    GUI/guildframe.hpp \
+    GUI/options.hpp \
+    GUI/playerbuffframe.hpp \
+    GUI/targetbuffframe.hpp \
+    GUI/partyframe.hpp \
+    GUI/honorframe.hpp \
+    GUI/chatframe.hpp \
+    GUI/textedit.hpp \
+    GUI/keybindmenu.hpp \
+    GUI/miscenum.hpp \
+    GUI/keybindialog.hpp \
+    GUI/gamemenu.hpp \
+    GUI/guildframe2.hpp \
+    GUI/gamescreen.hpp \
+    GUI/textbrowser.hpp \
+    nx_include/nx_localization.h \
+    GUI/application.hpp
 
 FORMS    += mainwindow.ui
 
-DISTFILES +=           
+DISTFILES +=
 
 RESOURCES += \
     resources.qrc

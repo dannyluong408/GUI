@@ -1,7 +1,7 @@
-#include "mainwindow.h"
+#include "GUI/mainwindow.h"
 #include <QApplication>
 #include <QHBoxLayout>
-#include "dragwidget.h"
+#include "GUI/dragwidget.h"
 #include <qglobal.h>
 #include <QTime>
 #include <modules/game.h>

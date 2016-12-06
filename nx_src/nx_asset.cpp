@@ -1,5 +1,4 @@
 #include <nx_include/nx_asset.h>
-//#include <png.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
