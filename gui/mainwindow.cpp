@@ -1,7 +1,7 @@
 #include "GUI/mainwindow.h"
 #include "ui_mainwindow.h"
 #include "GUI/actionbar.h"
-#include "GUI/dragpushbutton.h"
+#include "GUI/dragicon.hpp"
 #include "GUI/actionbar.h"
 #include "GUI/bufficon.h"
 #include "GUI/targetbuffframe.hpp"
@@ -12,7 +12,7 @@
 #include "GUI/spellbook.h"
 #include "GUI/gamemenu.hpp"
 #include "GUI/guildframe.hpp"
-#include "GUI/guildframe2.hpp"
+#include "GUI/guildframe.hpp"
 #include "GUI/honorframe.hpp"
 #include "GUI/partyframe.hpp"
 #include "GUI/keybindmenu.hpp"
@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setAcceptDrops(true);
 
     cursorID = 0;
+    keybindVersion = 0;
 
     //action bars
     numBars = 2;
@@ -895,6 +896,7 @@ void MainWindow::saveKeybinds(){
     }
 
     QDataStream out(&file);
+    out << keybindVersion;
     for (int i = 0; i < KEYBINDCOUNT; i++){
         //qDebug() << "Saving shortcut" << i << shortcut[i]->key().toString();
         out << shortcut[i]->key().toString();
@@ -915,6 +917,16 @@ void MainWindow::initKeybinds(){
     QString tempShortcut[KEYBINDCOUNT];
     QDataStream in(&file);
     QString readShortcut;
+
+    int fileKeybindV;
+    in >> fileKeybindV;
+    if ( fileKeybindV < keybindVersion){
+        //??? convert lmao
+    }
+    else if( fileKeybindV > keybindVersion){
+        //init defaults cause this shouldnt exist
+    }
+
     int i = 0;
 
     for (i = 0; i < KEYBINDCOUNT; i++){

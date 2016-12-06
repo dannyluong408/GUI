@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets>
-#include "GUI/dragpushbutton.h"
+#include "GUI/dragicon.hpp"
 
 #define NUMBUTTONS 10
 #define MAXBARS 8

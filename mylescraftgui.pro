@@ -21,7 +21,6 @@ DEFINES += NX_USE_ASSETS ASSET_USE_GL DEBUG USING_QT
 SOURCES += main.cpp\
     GUI/mainwindow.cpp \
     GUI/dragwidget.cpp \
-    GUI/dragpushbutton.cpp \
     GUI/actionbar.cpp \
     GUI/bufficon.cpp \
     GUI/unitframe.cpp \
@@ -53,11 +52,11 @@ SOURCES += main.cpp\
     GUI/gamescreen.cpp \
     GUI/textbrowser.cpp \
     GUI/application.cpp \
-    GUI/guildframe.cpp
+    GUI/guildframe.cpp \
+    GUI/dragicon.cpp
 
 HEADERS  += GUI/mainwindow.h \
     GUI/dragwidget.h \
-    GUI/dragpushbutton.h \
     GUI/actionbar.h \
     GUI/bufficon.h \
     GUI/unitframe.h \
@@ -86,7 +85,8 @@ HEADERS  += GUI/mainwindow.h \
     GUI/textbrowser.hpp \
     nx_include/nx_localization.h \
     GUI/application.hpp \
-    GUI/guildframe.hpp
+    GUI/guildframe.hpp \
+    GUI/dragicon.hpp
 
 FORMS    += mainwindow.ui
 

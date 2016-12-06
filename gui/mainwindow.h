@@ -122,6 +122,7 @@ private:
     QShortcut *shortcut[73];
     QSignalMapper *keybindMapper;
 
+    int keybindVersion;
 };
 
 extern MainWindow *mainwindow;
