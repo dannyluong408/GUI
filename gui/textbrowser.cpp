@@ -15,8 +15,3 @@ void TextBrowser::mousePressEvent(QMouseEvent *mevent){
     emit resetCursor(0);
     QTextBrowser::mousePressEvent(mevent);
 }
-
-
-void TextBrowser::mouseMoveEvent(QHoverEvent *event){
-    qDebug() << "Hovering over chat";
-}

@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     nx_src/nx_deferred_processing.cpp \
     GUI/gamemenu.cpp \
     GUI/spellbook.cpp \
-    GUI/guildframe.cpp \
     GUI/options.cpp \
     GUI/playerbuffframe.cpp \
     GUI/targetbuffframe.cpp \
@@ -51,10 +50,10 @@ SOURCES += main.cpp\
     GUI/textedit.cpp \
     GUI/keybindmenu.cpp \
     GUI/keybinddialog.cpp \
-    GUI/guildframe2.cpp \
     GUI/gamescreen.cpp \
     GUI/textbrowser.cpp \
-    GUI/application.cpp
+    GUI/application.cpp \
+    GUI/guildframe.cpp
 
 HEADERS  += GUI/mainwindow.h \
     GUI/dragwidget.h \
@@ -72,7 +71,6 @@ HEADERS  += GUI/mainwindow.h \
     nx_include/nx_timing.h \
     nx_include/nx_profiling.h \
     GUI/spellbook.h \
-    GUI/guildframe.hpp \
     GUI/options.hpp \
     GUI/playerbuffframe.hpp \
     GUI/targetbuffframe.hpp \
@@ -84,11 +82,11 @@ HEADERS  += GUI/mainwindow.h \
     GUI/miscenum.hpp \
     GUI/keybindialog.hpp \
     GUI/gamemenu.hpp \
-    GUI/guildframe2.hpp \
     GUI/gamescreen.hpp \
     GUI/textbrowser.hpp \
     nx_include/nx_localization.h \
-    GUI/application.hpp
+    GUI/application.hpp \
+    GUI/guildframe.hpp
 
 FORMS    += mainwindow.ui
 

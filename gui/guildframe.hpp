@@ -1,22 +1,44 @@
 #pragma once
 
 #include <QtWidgets>
+#include "GUI/textbrowser.hpp"
 
-class GuildFrame : public QFrame
+class GuildFrame2 : public QFrame
 {
     Q_OBJECT
     public:
-        GuildFrame(QWidget *parent);
+        GuildFrame2(QWidget *parent);
     public slots:
-        void resizeMe(QSize size);
-        void hide();
+        void resizeMe(QSize newSize);
+
+    signals:
+        void resetCursor(uint32_t num);
 
     private:
-        QLabel *guildName,*online,*guildLogo;
-        QPushButton *x,*info,*settings,*add;
-        QTableView *guildTable;
-        QCheckBox *showOffline;
-        QTextBrowser *gmotd;
-        QTableView *view;\
-        QPixmap guildLogoPix;
+        QVBoxLayout *mainLayout;
+        QFrame *Frame1;
+        QHBoxLayout *horizontalLayout_3;
+        QLabel *Icon;
+        QFrame *subFrame1;
+        QVBoxLayout *verticalLayout_2;
+        QFrame *titleFrame;
+        QHBoxLayout *horizontalLayout_4;
+        QLabel *Title;
+        QPushButton *XOut;
+        QFrame *buttonFrame;
+        QHBoxLayout *horizontalLayout_5;
+        QPushButton *information;
+        QPushButton *settings;
+        QPushButton *addmember;
+        QSpacerItem *verticalSpacer,*hSpacer;
+        QFrame *Frame2;
+        QHBoxLayout *horizontalLayout_2;
+        QTableView *tableView;
+        QFrame *Frame3;
+        QHBoxLayout *horizontalLayout;
+        QLabel *label;
+        QCheckBox *showoffline;
+        QFrame *Frame4;
+        QVBoxLayout *verticalLayout_3;
+        TextBrowser *textBrowser;
 };
