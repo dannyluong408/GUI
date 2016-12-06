@@ -42,6 +42,16 @@ void *User::update_children() {
 	return (void*)count;
 }
 
+void User::flag_inactive() {
+	vec3f pos;
+	pos.x = 0.f;
+	pos.y = -10000000.f;
+	pos.z = 0.f;
+	for (auto e : entities) {
+		e.second->move_set(pos, 0.f, 0xff);
+	}
+}
+
 // Entities must be aware of their target_t identifiers.
 Entity::Entity(User *_parent, const uint16_t _id) {
 	parent = _parent;
@@ -144,14 +154,19 @@ void Entity::move_update(const uint32_t ms) {
     #pragma GCC diagnostic push
     #pragma GCC diagnostic ignored "-Wunused-variable"
         uint32_t use_ms = ms;
-        use_ms /= 2;
-
+    #pragma GCC diagnostic pop
 
 		
 	}
+	// get camera
+    //Camera the_game_camera = game.get_camera(); // this is how you get the camera.
+	// determine if this entity is within our view distance
+	
+	
+	
 	// determine if this entity fits (approximately) within the game's camera
-	Camera the_game_camera = game.get_camera(); // this is how you get the camera.
-    #pragma GCC diagnostic pop
+	
+	
 	
 	// if so, queue the draw
 	if (1) { 
@@ -172,10 +187,14 @@ void Entity::move_set(const vec3f new_pos, const float new_angle, const uint8_t 
 
 void Entity::move_reset() {
 	position.x = 0.f;
-	position.y = 0.f;
 	// throw this person outside of any reasonable drawing position.
-	position.z = -10000000.f;
+	position.y = -10000000.f;
+	position.z = 0.f;
 	movement_state = 0xff; // flag as a null movement state
+}
+
+glm::vec3 Entity::get_pos() const {
+	return position;
 }
 
 char *Entity::get_name() const {

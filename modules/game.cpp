@@ -51,17 +51,32 @@ void Game::step() {
 			active_step += desired_step;
 			desired_time += desired_step;
 		}
+		// New frame:
+		current_frame = new Frame_3D;
+		
+		
 		// do network update here
+		// ...
+		
 		
 		// apply our inputs & main player update
-		// we need our camera before we iterate through everyone.
-		
+		/// ...
 		
 		// user update
-		draw_buffer.clear();
         for (auto u : users) {
             NXT_add_job(update_user, (void*)u.second, NULL, 0, 0);
 		}
+		
+		// generate terrain draw buffer
+		// ...
+	
+		
+		// dispatch our draw here
+		//NXT_add_job(draw_frame, (void*)current_frame, NULL, 0, 0);
+		delete current_frame; // delete it for now.
+		
+		
+		// all finished
 		server_time += current_step();
 	} else if (game_state == state::undefined) {
 		// this first run through allows us to begin our assets asap.
@@ -96,9 +111,9 @@ void Game::mod_entity_count(const int n) {
 #endif
 
 void Game::queue_draw(Entity *e) {
-	pthread_mutex_lock(&draw_mtx);
-	draw_buffer.push_back(e);
-	pthread_mutex_unlock(&draw_mtx);
+	pthread_mutex_lock(&current_frame->mtx);
+	current_frame->draw_buffer.push_back(*e);
+	pthread_mutex_unlock(&current_frame->mtx);
 }
 
 Camera Game::get_camera() const {

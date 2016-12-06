@@ -67,20 +67,20 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1920</width>
-      <height>600</height>
+      <width>1200</width>
+      <height>900</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>900</width>
+      <width>800</width>
       <height>600</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>1920</width>
-      <height>1080</height>
+      <width>11520</width>
+      <height>4320</height>
      </size>
     </property>
    </widget>
