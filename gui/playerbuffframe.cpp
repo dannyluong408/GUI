@@ -16,6 +16,7 @@ static QString getBuffStyle(uint32_t buffid){
 //static bool lessThan(const BuffIcon* e1, const BuffIcon* e2){
 //    return e1->getBuffDuration() < e2->getBuffDuration();
 //}
+
 static bool lessThan(BuffIcon* e1, BuffIcon* e2){
     return e1->getBuffID() < e2->getBuffID();
 }
@@ -34,9 +35,7 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
     buffLayout->setSpacing(1);
     buffLayout->setMargin(1);
     buffLayout->setOriginCorner(Qt::TopRightCorner);
-    qDebug() << "Calling test" << BUFF;
     test(BUFF);
-//    sort(BUFF);
 
     debuffFrame = new QFrame(this);
     debuffFrame->setGeometry(0,42,440,42);
@@ -44,9 +43,7 @@ PlayerBuffFrame::PlayerBuffFrame(QWidget *parent)
     debuffLayout->setSpacing(1);
     debuffLayout->setMargin(1);
     debuffLayout->setOriginCorner(Qt::TopRightCorner);
-    qDebug() << "Calling test" << DEBUFF;
     test(DEBUFF);
-//    sort(DEBUFF);
 }
 
 
@@ -58,7 +55,6 @@ void PlayerBuffFrame::insertBuff(uint32_t buffid){
     assert(buffid < 1000); // change this later to whatever the highest possible buffid is
     qDebug() << "Handling buffid:" << buffid;
     if(buffid % 2 == 0){
-        qDebug() << "A";
         if (buffs.size() >= 20){
             qDebug() << "How to handle when over 20 buffs?";
             return;
@@ -72,7 +68,6 @@ void PlayerBuffFrame::insertBuff(uint32_t buffid){
         sort(BUFF);
     }
     else{
-        qDebug() << "B";
         if (debuffs.size() >= 20){
             qDebug() << "How to handle when over 20 debuffs?";
             return;
@@ -93,15 +88,10 @@ void PlayerBuffFrame::removeBuff(uint32_t buffid){ // find buff and pop, else re
     BuffIcon **buffIter = nullptr, *removeMarker = nullptr;
 
     if(buffid % 2 == 0){
-        qDebug() << "Removing Buff:" << buffid;
         buffIter = buffs.data();
-        for(int j = 0 ; j < buffs.size(); j++){
-            qDebug() << j  << ":" << buffIter[j]->getBuffID();
-        }
 
         for(int i = 0; i< buffs.size(); i++){
             if(buffIter[i]->getBuffID() == buffid){
-                qDebug() << "Found at" << i << "out of " << buffs.size();
                 removeMarker = buffIter[i];
                 buffs.remove(i);
                 buffLayout->removeWidget(buffIter[i]);
@@ -112,15 +102,10 @@ void PlayerBuffFrame::removeBuff(uint32_t buffid){ // find buff and pop, else re
     }
 
     else{
-        qDebug() << "Removing Debuff:" << buffid;
         buffIter = debuffs.data();
-        for(int j = 0 ; j < debuffs.size(); j++){
-            qDebug() << j  << ":" << buffIter[j]->getBuffID();
-        }
 
         for(int i = 0; i< debuffs.size(); i++){
             if(buffIter[i]->getBuffID() == buffid){
-                qDebug() << "Found at" << i << "out of " << debuffs.size();
                 removeMarker = buffIter[i];
                 debuffs.remove(i);
                 debuffLayout->removeWidget(buffIter[i]);
@@ -189,7 +174,6 @@ void PlayerBuffFrame::sort(bool buff){
 
         BuffIcon **temp = buffs.data();
         for(i = 0; i< buffs.size(); i++){
-            qDebug() << "Debug:" << i/10 << i%10;
             buffLayout->addWidget(temp[i],i/10,i%10);
         }
 
@@ -239,7 +223,6 @@ void PlayerBuffFrame::sort(bool buff){
 
         BuffIcon **temp = debuffs.data();
         for(i = 0; i< debuffs.size(); i++){
-            qDebug() << "Debug:" << i/10 << i%10;
             debuffLayout->addWidget(temp[i],i/10,i%10);
         }
 
