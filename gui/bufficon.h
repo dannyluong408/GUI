@@ -12,6 +12,8 @@ class BuffIcon : public QLabel
         void setOGPix(const QPixmap *ogPix);
         void setBuffDuration(uint64_t time);
         uint64_t getBuffDuration() const;
+        uint32_t getBuffID();
+        void setBuffID(uint32_t buffid);
         void setIsPlayer(bool player);
         bool getIsPlayer();
         QSize sizeHint() const;

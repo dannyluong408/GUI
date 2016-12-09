@@ -15,6 +15,14 @@ QSize BuffIcon::sizeHint() const{
         return QSize(42.0,42.0);
     }
 }
+
+void BuffIcon::setBuffID(uint32_t buffid){
+    buffID = buffid;
+}
+
+uint32_t BuffIcon::getBuffID(){
+    return buffID;
+}
 void BuffIcon::resizeMe(QSize newSize){
     const double minSize = 900.0;
     double square_icon;

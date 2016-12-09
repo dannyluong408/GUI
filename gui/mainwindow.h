@@ -52,6 +52,7 @@ public:
     void initKeybinds();
     void loadActionBars();
 
+    void handleIncomingBuff(uint32_t buffid, bool player, bool insert);
     void keyPressEvent(QKeyEvent *event);
 
     //keybind functions
@@ -108,8 +109,8 @@ private:
     int numBars;
     UnitFrame *playerFrame,*targetFrame;
     PartyFrame *partyFrame;
-    PlayerBuffFrame *playerBuff,*playerDebuff;
-    TargetBuffFrame *targetBuff,*targetDebuff;
+    PlayerBuffFrame *playerBuff;
+    TargetBuffFrame *targetBuff;
     ChatFrame *chatFrame;
     Menubar *menuBar;
     SpellBook *spellBook;

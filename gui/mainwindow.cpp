@@ -63,21 +63,10 @@ MainWindow::MainWindow(QWidget *parent) :
     playerBuff->setObjectName("playerBuff");
     playerBuff->move(747.5,12.5);
 
-    playerDebuff = new PlayerBuffFrame(ui->gameScreen);
-    playerDebuff->setObjectName("playerDebuff");
-    playerDebuff->setAsDebuff(true);
-    playerDebuff->move(747.5,57.5);
-
-
     //target buff/debuff frame
     targetBuff = new TargetBuffFrame(ui->gameScreen);
     targetBuff->setObjectName("targetBuff");
     targetBuff->move(285.0,113.5);
-
-    targetDebuff = new TargetBuffFrame(ui->gameScreen);
-    targetDebuff->setObjectName("targetDebuff");
-    targetDebuff->setAsDebuff(true);
-    targetDebuff->move(285.0,139.5);
 
     //chatbox
     chatFrame = new ChatFrame(ui->gameScreen);
@@ -113,9 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //connect signals for custom resize
     connect(this, SIGNAL(newSize(QSize)),playerBuff,SLOT(resizeMe(QSize)));
-    connect(this, SIGNAL(newSize(QSize)),playerDebuff,SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),targetBuff,SLOT(resizeMe(QSize)));
-    connect(this, SIGNAL(newSize(QSize)),targetDebuff,SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar[0],SLOT(resizeMe(QSize)));
     connect(this, SIGNAL(newSize(QSize)),actionBar[1],SLOT(resizeMe(QSize)));
     connect(this,SIGNAL(newSize(QSize)),playerFrame,SLOT(resizeMe(QSize)));
@@ -185,6 +172,28 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setCursor(QCursor(QPixmap(":/ui/images/cursor_normal.png"),0,0));
 }
 
+
+void MainWindow::handleIncomingBuff(uint32_t buffid, bool player, bool insert){
+    assert(buffid < 1000); //change this later to whatever the highest possible buffid is
+    if (player == true){
+        if(insert == true){
+            qDebug() << "Insert Player Buff";
+            playerBuff->insertBuff(buffid);
+        }
+        else{
+            qDebug() << "Remove Player Buff";
+            playerBuff->removeBuff(buffid);
+        }
+    }
+    else{
+        if(insert == true){
+            targetBuff->insertBuff(buffid);
+        }
+        else{
+            targetBuff->removeBuff(buffid);
+        }
+    }
+}
 
 void MainWindow::spellPickedUp(const uint32_t spellId){
     const double scale = 50.0 / 900.0;
@@ -582,20 +591,28 @@ void MainWindow::keybindSlot(int id){ //functions get mapped here
             cameraBind(Keybinds::CAMERA_REVERSE);
             break;
         }
-        case 41:{
+        case 41:{ //debug stuff with handleIncomingBuff
             actionBar[0]->callSlotSpell(0);
+            handleIncomingBuff(2,true,true);
+            handleIncomingBuff(2,false,true);
             break;
         }
         case 42:{
             actionBar[0]->callSlotSpell(1);
+            handleIncomingBuff(2,true,false);
+            handleIncomingBuff(2,false,false);
             break;
         }
         case 43:{
             actionBar[0]->callSlotSpell(2);
+            handleIncomingBuff(1,true,true);
+            handleIncomingBuff(1,false,true);
             break;
         }
         case 44:{
             actionBar[0]->callSlotSpell(3);
+            handleIncomingBuff(1,true,false);
+            handleIncomingBuff(1,false,false);
             break;
         }
         case 45:{
@@ -1131,24 +1148,12 @@ void MainWindow::resizeEvent(QResizeEvent *event){
                    event->size().height()*scale_factor_y);
 
 
-    scale_factor_y = 57.5 /  900.0;
-
-    playerDebuff->move(event->size().height()*scale_factor_x,
-                     event->size().height()*scale_factor_y);
-
 
     scale_factor_x = 285.0 /  900.0;
     scale_factor_y = 113.5 /  900.0;
 
     targetBuff->move(event->size().height()*scale_factor_x,
                      event->size().height()*scale_factor_y);
-
-    scale_factor_y = 139.5 /  900.0;
-
-    targetDebuff->move(event->size().height()*scale_factor_x,
-                       event->size().height()*scale_factor_y);
-
-
 
 
     //qDebug() << "Window Resized From" << event->oldSize() << " to " << event->size();
