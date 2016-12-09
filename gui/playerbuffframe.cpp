@@ -131,7 +131,7 @@ void PlayerBuffFrame::shiftMe(bool shift){
 void PlayerBuffFrame::resizeMe(QSize newSize) {
     const double minSize = 900.0;
     const double margin = 12.5 / minSize;
-    const double spacing = 44.0 / minSize;
+    const double spacing = 43.0 / minSize;
 
     setGeometry(newSize.width() - newSize.height()*spacing*10 - newSize.height()*margin,
                 newSize.height()*margin,
