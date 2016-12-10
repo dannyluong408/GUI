@@ -196,7 +196,7 @@ void MainWindow::handleIncomingBuff(uint32_t buffid, bool player, bool insert){
 }
 
 void MainWindow::spellPickedUp(const uint32_t spellId){
-    const double scale = 50.0 / 900.0;
+    const double scale = 45.0 / 900.0;
     const double size = scale * this->height();
     qDebug() << "Handled ID:" << spellId;
     a->restoreOverrideCursor();
@@ -220,8 +220,12 @@ void MainWindow::spellPickedUp(const uint32_t spellId){
     qDebug() << "Set cursorID to " << cursorID;
 }
 
-void MainWindow::dropEvent(QDropEvent *event){
-    qDebug() << "Dropped :)";
+void MainWindow::setCursorID(uint32_t id){
+    cursorID = id;
+}
+
+uint32_t MainWindow::getCursorID(){
+    return cursorID;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){

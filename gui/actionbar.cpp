@@ -32,9 +32,7 @@ ActionBar::ActionBar(QWidget *parent)
 }
 
 uint32_t ActionBar::getCursorID() {
-    GameScreen *info = (GameScreen*)parent();
-    qDebug() << "Grabbing AB ID:" << info->getCursorID();
-    return info->getCursorID();
+    return mainwindow->getCursorID();
 }
 
 void ActionBar::setIndex(int i){
@@ -247,6 +245,9 @@ void ActionBar::mousePressEvent(QMouseEvent *event)
              qDebug() << "AB Outside4\n";
              fflush(stdout);
         }
+    }
+    else{
+        mainwindow->setCursorID(0);
     }
     return;
 }

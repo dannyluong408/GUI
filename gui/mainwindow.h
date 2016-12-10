@@ -69,7 +69,8 @@ public:
     void wheelEvent(QWheelEvent *wevent);
     void mousePressEvent(QMouseEvent *mevent);
 
-    uint32_t cursorID;
+    void setCursorID(uint32_t id);
+    uint32_t getCursorID();
 
 public slots:
     void openOption(QString name);
@@ -123,7 +124,8 @@ private:
     QShortcut *shortcut[73];
     QSignalMapper *keybindMapper;
 
-    int keybindVersion;
+    uint32_t cursorID;
+    double keybindVersion;
 };
 
 extern MainWindow *mainwindow;

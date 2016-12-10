@@ -1,6 +1,7 @@
 #include "GUI/spellbook.h"
 
 #include "GUI/gamescreen.hpp"
+#include "gui/mainwindow.h"
 
 #include <QtGlobal>
 
@@ -120,9 +121,7 @@ SpellBook::SpellBook(QWidget *parent)
 }
 
 uint32_t SpellBook::getCursorID(){
-    GameScreen *info = (GameScreen*)parent();
-    qDebug() << "Grabbing SB ID:" << info->getCursorID();
-    return info->getCursorID();
+    return mainwindow->getCursorID();
 }
 
 void SpellBook::setSlotSpell(int slot, uint32_t spellId){
