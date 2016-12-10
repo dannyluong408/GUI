@@ -148,6 +148,7 @@ void TargetBuffFrame::resizeMe(QSize newSize) {
 void TargetBuffFrame::sort(bool buff){
     int i;
     const double scale = 25.0 / 900.0;
+    const double scale2 = 26.0 / 900.0;
     this->resize(this->width(),
                 ((buffs.size()/10+1)+(debuffs.size()/10+1))*
                  mainwindow->height()*scale);
@@ -166,11 +167,14 @@ void TargetBuffFrame::sort(bool buff){
         buffLayout = new QGridLayout(buffFrame);
         buffLayout->setSpacing(1);
         buffLayout->setMargin(1);
+        buffLayout->setColumnStretch(0,1);
         buffLayout->setRowMinimumHeight(0,mainwindow->height()*scale);
         if(buffs.size() > 10){
+            buffLayout->setColumnStretch(1,1);
             buffLayout->setRowMinimumHeight(1,mainwindow->height()*scale);
         }
         for(i = 0; i<10; i++){
+            buffLayout->setColumnStretch(i,1);
             buffLayout->setColumnMinimumWidth(i,mainwindow->height()*scale);
         }
 
@@ -215,11 +219,14 @@ void TargetBuffFrame::sort(bool buff){
         debuffLayout = new QGridLayout(debuffFrame);
         debuffLayout->setSpacing(1);
         debuffLayout->setMargin(1);
+        debuffLayout->setColumnStretch(0,1);
         debuffLayout->setRowMinimumHeight(0,mainwindow->height()*scale);
         if(debuffs.size() > 10){
+            debuffLayout->setColumnStretch(1,1);
             debuffLayout->setRowMinimumHeight(1,mainwindow->height()*scale);
         }
         for(i = 0; i<10; i++){
+            debuffLayout->setColumnStretch(i,1);
             debuffLayout->setColumnMinimumWidth(i,mainwindow->height()*scale);
         }
 
