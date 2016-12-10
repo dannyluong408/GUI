@@ -10,4 +10,5 @@ public:
     uint32_t getCursorID();
 
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
+    void dropEvent(QDropEvent *event);
 };

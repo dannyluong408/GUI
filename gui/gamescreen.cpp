@@ -10,11 +10,14 @@ GameScreen::GameScreen(QWidget *parent)
 
 uint32_t GameScreen::getCursorID(){
     MainWindow *info = (MainWindow*)parent();
-    qDebug() << "Grabbing ID:" << info->cursorID;
+    qDebug() << "Grabbing GS ID:" << info->cursorID;
     return info->cursorID;
 }
 
 
 void GameScreen::dragEnterEvent(QDragEnterEvent *event){
     event->accept();
+}
+void GameScreen::dropEvent(QDropEvent *event){
+    qDebug() << "DroppedGS :)";
 }

@@ -121,7 +121,7 @@ SpellBook::SpellBook(QWidget *parent)
 
 uint32_t SpellBook::getCursorID(){
     GameScreen *info = (GameScreen*)parent();
-    qDebug() << "Grabbing ID:" << info->getCursorID();
+    qDebug() << "Grabbing SB ID:" << info->getCursorID();
     return info->getCursorID();
 }
 

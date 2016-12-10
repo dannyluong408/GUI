@@ -33,7 +33,7 @@ ActionBar::ActionBar(QWidget *parent)
 
 uint32_t ActionBar::getCursorID() {
     GameScreen *info = (GameScreen*)parent();
-    qDebug() << "Grabbing ID:" << info->getCursorID();
+    qDebug() << "Grabbing AB ID:" << info->getCursorID();
     return info->getCursorID();
 }
 

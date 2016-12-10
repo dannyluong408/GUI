@@ -220,6 +220,9 @@ void MainWindow::spellPickedUp(const uint32_t spellId){
     qDebug() << "Set cursorID to " << cursorID;
 }
 
+void MainWindow::dropEvent(QDropEvent *event){
+    qDebug() << "Dropped :)";
+}
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
     QString keyCombo;
