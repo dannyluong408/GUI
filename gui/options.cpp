@@ -90,19 +90,6 @@ OptionsFrame::OptionsFrame(QWidget *parent)
     optionLayout->addWidget(optionsStacked);
 
     for (int j = 0; j < 6; j++){
-//        if(j == 4){
-//            keybindMenu = new KeybindMenu(optionsStacked);
-//            keybindMenu->resize(450,450);
-//            connect(keybindMenu,SIGNAL(disableShortcuts()),this,SIGNAL(disableShortcuts()));
-//            connect(keybindMenu,SIGNAL(enableShortcuts()),this,SIGNAL(enableShortcuts()));
-//            connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,int)),this,SIGNAL(newBindSend(QKeySequence,int)));
-//            connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
-//            connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
-//            optionFrameLayout = new QVBoxLayout(
-//            optionsStacked->addWidget(keybindMenu);
-//        }
-
-//        else{
             optionFrame[j] = new QFrame(optionsStacked);
             optionFrame[j]->resize(450,450);
             optionFrame[j]->setSizePolicy(sizePolicy);
@@ -133,11 +120,6 @@ OptionsFrame::OptionsFrame(QWidget *parent)
                     keybindMenu = new KeybindMenu(this);
                     keybindMenu->resize(450,450);
                     keybindMenu->setSizePolicy(sizePolicy);
-                    connect(keybindMenu,SIGNAL(disableShortcuts()),this,SIGNAL(disableShortcuts()));
-                    connect(keybindMenu,SIGNAL(enableShortcuts()),this,SIGNAL(enableShortcuts()));
-                    connect(keybindMenu,SIGNAL(newBindSend(QKeySequence,unsigned int)),this,SIGNAL(newBindSend(QKeySequence,unsigned int)));
-                    connect(keybindMenu,SIGNAL(saveBinds()),this,SIGNAL(saveBinds()));
-                    connect(keybindMenu,SIGNAL(defaultBinds()),this,SIGNAL(defaultBinds()));
                     connect(this,SIGNAL(resizeChildren(QSize)),keybindMenu,SLOT(resizeMe(QSize)));
                     optionFrameLayout[j]->addWidget(keybindMenu);
                     break;

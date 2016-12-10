@@ -14,7 +14,7 @@ class KeybindDialog: public QFrame
         int num;
 
     signals:
-        void newBind(QKeySequence newBind, int num);
+        void newBind(QKeySequence newBind, const int num);
         //void newMouseBind(QMouseEvent bindStr, int num);
 
     private:

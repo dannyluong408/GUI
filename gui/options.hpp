@@ -12,15 +12,10 @@ class OptionsFrame : public QFrame
 
     public slots:
         void currentOption();
-        void updateKeybinds(QString *keybinds);
         void resizeMe(QSize newSize);
+        void updateKeybinds(QString *keybinds);
 
     signals:
-        void disableShortcuts();
-        void enableShortcuts();
-        void newBindSend(QKeySequence newBind, unsigned int num);
-        void saveBinds();
-        void defaultBinds();
         void resizeChildren(QSize newSize);
 
     private:

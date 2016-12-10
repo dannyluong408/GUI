@@ -76,7 +76,7 @@ public slots:
     void openOption(QString name);
     void disableShortcuts();
     void enableShortcuts();
-    void newBindRecv(QKeySequence newKeybind, unsigned int num);
+    void newBindRecv(QKeySequence newKeybind, const int num);
     void saveKeybinds();
     void defaultKeybinds();
     void saveActionBars();

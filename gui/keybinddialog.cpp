@@ -1,4 +1,5 @@
 #include "GUI/keybindialog.hpp"
+#include "GUI/mainwindow.h"
 
 KeybindDialog::KeybindDialog(QWidget *parent)
     : QFrame(parent)

@@ -156,11 +156,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //init keybinds on load check for file, else default
     connect(this,SIGNAL(pushKeybinds(QString*)),optionsMenu,SLOT(updateKeybinds(QString*)));
-    connect(optionsMenu,SIGNAL(disableShortcuts()),this,SLOT(disableShortcuts()));
-    connect(optionsMenu,SIGNAL(enableShortcuts()),this,SLOT(enableShortcuts()));
-    connect(optionsMenu,SIGNAL(newBindSend(QKeySequence,unsigned int)),this,SLOT(newBindRecv(QKeySequence,unsigned int)));
-    connect(optionsMenu,SIGNAL(saveBinds()),this,SLOT(saveKeybinds()));
-    connect(optionsMenu,SIGNAL(defaultBinds()),this,SLOT(defaultKeybinds()));
 
     qDebug() << "Initializing Keybinds";
     initKeybinds();
@@ -310,7 +305,7 @@ void MainWindow::defaultKeybinds(){
     initDefaultKeybinds();
 }
 
-void MainWindow::newBindRecv(QKeySequence newKeybind, unsigned int num){
+void MainWindow::newBindRecv(QKeySequence newKeybind, const int num){
     qDebug() << "Setting shortcut:" << num << " to "<< newKeybind.toString();
     shortcut[num]->setKey(newKeybind);
 }

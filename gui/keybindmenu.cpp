@@ -1,6 +1,5 @@
 #include "GUI/keybindmenu.hpp"
-
-//blah
+#include "GUI/mainwindow.h"
 
 const QString moveKeybindDescName[7] = {"Move Forward",
                                   "Move Backward",
@@ -467,7 +466,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrameButtons[0]->setObjectName("Defaults");
     secondFrameButtons[0]->setText("Defaults");
     secondFrameButtons[0]->setGeometry(135,30,70,40);
-    connect(secondFrameButtons[0],SIGNAL(clicked(bool)),this,SIGNAL(defaultBinds()));
+    connect(secondFrameButtons[0],SIGNAL(clicked(bool)),this,SLOT(defaultBinds()));
     secondFrameVLayout[1]->addWidget(secondFrameButtons[0]);
 
 
@@ -482,7 +481,7 @@ KeybindMenu::KeybindMenu(QWidget *parent)
     secondFrameButtons[2]->setObjectName("Apply");
     secondFrameButtons[2]->setText("Apply");
     secondFrameButtons[2]->setGeometry(290,30,70,40);
-    connect(secondFrameButtons[2],SIGNAL(clicked(bool)),this,SIGNAL(saveBinds()));
+    connect(secondFrameButtons[2],SIGNAL(clicked(bool)),this,SLOT(saveBinds()));
     secondFrameVLayout[3]->addWidget(secondFrameButtons[2]);
 
     secondLayout->setStretch(0,5);
@@ -507,12 +506,17 @@ KeybindMenu::KeybindMenu(QWidget *parent)
 
 }
 
-//void KeybindMenu::defaultBinds(){
-//}
-//void KeybindMenu::removeBinds(){
-//}
+void KeybindMenu::defaultBinds(){
+    mainwindow->initDefaultKeybinds();
+}
 
-void KeybindMenu::updateBind(QKeySequence newKeybind, const unsigned int num){
+void KeybindMenu::saveBinds(){
+    mainwindow->saveKeybinds();
+}
+
+
+
+void KeybindMenu::updateBind(QKeySequence newKeybind, const int num){
     qDebug() << "Detected" << newKeybind.toString() << num;
     QString keyText = newKeybind.toString();
     keyText.replace(QString("F31"),"Mouse-Up");
@@ -571,38 +575,27 @@ void KeybindMenu::updateBind(QKeySequence newKeybind, const unsigned int num){
     }
 }
 
-void KeybindMenu::updateText(const unsigned int num){
+void KeybindMenu::updateText(const int num){
     assert(num < KEYBINDCOUNT);
 
     qDebug() << "Updating at:" << num;
 
     keybind[num]->setText("");
-    emit newBindSend(QKeySequence(),num);
+    mainwindow->newBindRecv(QKeySequence(),num);
 }
 
-void KeybindMenu::newBindRecv(QKeySequence newKeybind, const unsigned int num){
+void KeybindMenu::newBindRecv(QKeySequence newKeybind, const int num){
     updateBind(newKeybind,num);
-    emit newBindSend(newKeybind,num);
+    mainwindow->newBindRecv(newKeybind,num);
 }
 
 void KeybindMenu::copyShortcuts(QShortcut *copyshort[]){
     shortcuts = copyshort;
 }
 
-//void KeybindMenu::updateShortcut(){
-
-//}
-
 
 void KeybindMenu::setBindMain(int num){
-    /* design
-    popup msg to ask for keybind change
-    use event/keyfilter to capture sequence
-    emit new keybind back to mainwindow to update
-    close window
-    */
-
-    assert(num < KEYBINDCOUNT);
+    assert(num >= 0 && num < KEYBINDCOUNT);
 
     if(this->findChild<KeybindDialog*>("keybindDialog")){
         qDebug() << "One is open right now";
@@ -612,16 +605,12 @@ void KeybindMenu::setBindMain(int num){
         //cannot rebind esc
         return;
     }
-    emit disableShortcuts();
-
-//    for(int i = 0; i < 73; i++){
-//        qDebug() << shortcuts[i]->key();
-//    }
+    mainwindow->disableShortcuts();
 
     KeybindDialog *keybindPrompt = new KeybindDialog(this);
     keybindPrompt->num = num;
-    connect(keybindPrompt,SIGNAL(newBind(QKeySequence,int)),this,SLOT(newBindRecv(QKeySequence,int)));
-    connect(keybindPrompt,SIGNAL(destroyed(QObject*)),this,SIGNAL(enableShortcuts()));
+    connect(keybindPrompt,SIGNAL(newBind(QKeySequence, int)),this,SLOT(newBindRecv(QKeySequence, int)));
+    connect(keybindPrompt,SIGNAL(destroyed(QObject*)),mainwindow,SLOT(enableShortcuts()));
 
     qDebug() << "\n\nSetting Keybind Num:" << num;
 }
@@ -674,7 +663,6 @@ void KeybindMenu::updateKeybinds(QString *shortcut){
     for(i=0; i<KEYBINDCOUNT; i++){
         keybind[i]->setText(shortcut[i]);
     }
-
 }
 
 void KeybindMenu::resizeMe(QSize newSize){
