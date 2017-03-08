@@ -1,2 +1,4 @@
 # GUI
-GUI made in Qt
+
+
+Wow-Style GUI made with C++ and Qt Frameworks
