@@ -21,8 +21,6 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     a.setStyle("fusion");
     a.setQuitOnLastWindowClosed(false);
-    //a.setWindowIcon( HEY NEVIN THIS LOOKS COOL ADD AN ICON
-
 
     mainwindow = new MainWindow;
     mainwindow->setWindowFlags(Qt::CustomizeWindowHint |
